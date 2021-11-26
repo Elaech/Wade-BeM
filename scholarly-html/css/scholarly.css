@@ -164,6 +164,18 @@ p.issue {
   padding: 0.5em 1em;
 }
 
+/* bibliography */
+#bibliography {
+  list-style:none;
+}
+#bibliography i {
+  font-size:13px;
+  color:var(--dark-brownish-red);
+  margin-top: 15px;
+}
+
+
+
 @media screen and (max-width: 577px) {
   div.status {
     width: auto;
