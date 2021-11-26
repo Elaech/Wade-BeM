@@ -12,6 +12,7 @@
 :root{
   --white: #fff;
   --background-color: #F1DEDE;
+  --lighter-background-color: #F5E7E7;
  
   --extra-light-brown: #E2C4BA;
   --very-light-brown: #D9B5A6; 
@@ -30,7 +31,7 @@
 }
 
 body {
-  max-width: 25cm;
+  max-width: 23cm;
   margin: auto;
   background-color: var(--background-color);
   line-height: 1.6;
@@ -125,6 +126,26 @@ code, pre {
 a {
   color: var(--dark-brown);
 }
+
+/* table styles */
+caption{
+  font-weight: bold;
+}
+
+#beverage-category-table{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: left;
+  color: var(--light-brownish-red);
+}
+#beverage-category-table td, #beverage-category-table th {
+  padding: 5px;
+}
+#beverage-category-table th{
+  color: var(--light-brownish-red);
+  background-color: var(--extra-light-brown);
+}
+#beverage-category-table tr:hover {background-color: var(--lighter-background-color)}
 
 /* special boxes */
 p.issue {

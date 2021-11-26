@@ -98,29 +98,119 @@
           and use it in order to perform SPARQL queries, inferences, etc. 
         </li>
         <li><a href="https://cloud.google.com/container-registry">Google Container Registry</a> & <a href="https://cloud.google.com/run">Google Cloud Run</a>. 
-            We will use these services in order to deploy our knowledge base in Google Cloud. 
-            Starting with a local Stardog Docker image, we will store it in the cloud with Google Container Registry and we will further create
-             and run the resulted container using Google Cloud Run.
+          We will use these services in order to deploy our knowledge base in Google Cloud. 
+          Starting with a local Stardog Docker image, we will store it in the cloud with Google Container Registry and we will further create
+          and run the resulted container using Google Cloud Run.
        </li>
-        <li><a href="https://firebase.google.com/">Firebase</a>. We will use Firebase in order to authenticate users and perform related tasks such as email verification
-             when a new user registers on our platform. 
+        <li><a href="https://firebase.google.com/">Firebase</a>. We will use Firebase in order to authenticate users and perform related tasks
+          such as email verificationwhen a new user registers on our platform. 
         </li>
      </ul>
     </section>
 
-    
     <section id="external-data">
-      <h2>External Data & Provenance</h2>
-      <p>Example text</p>
-      <section id="example-id1">
-        <h3>Example</h3>
-        <p>Example</p>
-        <p>Example</p>
+      <h2>External data sources used for building the knowledge base</h2>
+      <p>In order to build the knowledge base for our project, we collected data from public API(s), open database(s) and other datasets. 
+        The used data sources are as follows: </p>
+      <ul id="external-data-sources">
+          <li property="schema:Dataset"><a href="https://world.openfoodfacts.org/">Open Food Facts database</a></li>
+          <li property="schema:WebAPI"><a href="https://developer.edamam.com/edamam-recipe-api">EDAMAM recipe API</a></li>
+          <li property="schema:Dataset">Public (small) datasets (<a href="https://untermportal.un.org/unterm/download/country">list of countries</a>
+          & <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview">
+          nationalities)</a></li>
+      </ul>
+      <p>Before creating the knowledge-base we also tested (and considered using) APIs such as: </p>
+      <ul id="external-data-sources-not-used">
+        <li property="schema:WebAPI"><a href="https://spoonacular.com/food-api">Spoonacular API</a></li>
+        <li property="schema:WebAPI"><a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a></li>
+        <li property="schema:WebAPI"><a href="https://fdc.nal.usda.gov/api-guide.html">FoodData Central API</a></li>
+      </ul>
+      <p>Next, we will discuss only about the data sources actually used in our application.</p>
+      <section id="open-food-facts">
+        <h3>Open Food Facts database</h3>
+        <p >From here we extracted data regarding most common (not necessarily disjoint) categories of non-alcoholic beverage products.
+           In case of beverages with a potential small alcohol content, we checked that the alcohol by volume value is below 1% (chosen convention).
+            The table below summarizes the number of products extracted for each category.
+        </p>
+        <figure typeof="sa:table">
+          <table id="beverage-category-table">
+            <caption>Table 1. Number of products extracted per each beverage category</caption>
+            <tr>
+              <th scope="col">Category</th>                             
+              <th scope="col">Number of products extracted </th>                                                     
+            </tr>
+            <tr>
+              <td>water</td>     
+              <td>9940</td>                 
+            </tr>
+            <tr>
+              <td>tea</td>
+              <td>5942</td>                    
+            </tr>
+            <tr>
+              <td>syrup</td>   
+              <td>5650</td>                  
+            </tr>
+            <tr>
+              <td>smoothie</td> 
+              <td>568</td>                    
+            </tr>
+            <tr>
+              <td>non-alcoholic beer</td>    
+              <td>614</td>                  
+            </tr>
+            <tr>
+              <td>mocktail</td>  
+              <td>13</td>                    
+            </tr>
+            <tr>
+              <td>milkshake</td>   
+              <td>44</td>                  
+            </tr>
+            <tr>
+              <td>nectar</td> 
+              <td>11738</td>                    
+            </tr>
+            <tr>
+              <td>juice</td>   
+              <td>2571</td>                  
+            </tr>
+            <tr>
+              <td>energy drink</td>  
+              <td>1144</td>                    
+            </tr>
+            <tr>
+              <td>dairy-based drink</td>   
+              <td>3504</td>                  
+            </tr>
+            <tr>
+              <td>coffee</td>  
+              <td>5982</td>                    
+            </tr>
+          </table>
+        </figure>
+        <p>In case of juices and nectars categories we further split them in subcategories (AppleJuice, PearNectar, etc.) so that we could correlate
+           these drinks in the future with the associated names of fruits and vegetables. The data was downloaded in csv and excel formats. 
+        </p>
       </section>
-      <section id="example-id2">
-        <h3>Example 2</h3>
-        <p>Text example</p>
+      <section id="edamam">
+        <h3>EDAMAM recipe API</h3>
+        <p>We used this API in order to extract data regarding non-alcoholic beverage recipes.
+           We chose it because it offered a high amount of quality data (beverage recipes along with associated URI, image, ingredients,
+           calories and detailed nutritional information).  Recipes are also split by categories: <i>Smoothie</i>, <i>Syrup</i>, <i>Tea</i>,
+           <i>Coffee</i>, <i>Chocolate Drink</i>,  <i>Juice</i>, <i>Milkshake</i>.
+           We automatically extracted the data using a script (because at one request we could only extract 20 recipes and we could only make 10 requests
+           per minute). The total number of extracted recipes was <span style="color: var(--light-brown);font-weight: bold;">17714</span>. The data was downloaded in excel format.
+        </p>
       </section>
+      <section id="countries-and-nationalities-dataset">
+        <h3>Public (small) datasets</h3>
+        <p>We used datasets which offered us the <a href="https://untermportal.un.org/unterm/download/country">list of world-wide countries</a> and
+          <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview">
+          nationalities</a>. We will use this data to provide metadata about users and beverages and to make correlations. 
+        </p>
+      </section>
+
     </section>
     <section id="acks">
       <!-- Replace the acknowledgements for our work -->
