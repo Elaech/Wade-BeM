@@ -287,7 +287,49 @@
     </section>
     <section id="data-modifications-creating-the-kb">
        <h2>Data Modifications. Creating the knowledge base</h2>
-
+       We will further describe the data processing and aggregation steps that we had to go through in order to obtain the knowledge base. 
+       <section id= "data-enginnering">
+          <h3>Data enginnering</h3>
+       </section>
+       <section id= "aggregation-and-final-outcome">
+        <h3>Aggregation and final outcome</h3>
+        <p>
+          The final step for creating our knowledge base was to aggregate the sanitized and translated datasets into our ontological model. 
+          In order to to this, we used the  <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a> Protégé plugin which
+          converts spreadsheet data (excels) into OWL format. 
+          We created the transformation rules using <a href="https://github.com/protegeproject/mapping-master/wiki/MappingMasterDSL">MappingMaster language</a>,
+          a language which describes possible excel to OWL mappings. 
+          There was a total of 11 general rules (3 for recipe data, 6 for products data and 2 for nationalities and countries). 
+          The process of aggregation of all data was very slow (a few days) because of the large sizes of the datasets and the multitude of realized mappings.
+        </p>
+       </section>
+    </section>
+    <section id="linked-data-principles-conformation">
+      <h2>How our solution conforms to Linked Data Principles</h2>
+      <p>
+        Below are some reasons regarding why we consider that our proposed solution follows the Linked Data Principles:
+      </p>
+      <ul id="linked-data-principles-conformation-reasons">
+        <li>We use a knowledge model (an ontology) in order to model the data in our application (OWL is language is built on top of RDF, 
+          so the modelling respects the linked data principles).
+        </li>
+        <li>When defining the ontological model, we tried as much as possible to reuse existing vocabularies and ontologies 
+            (details <a href="#ontological-model-used-vocabularies">here</a>). 
+            This increases reusability and increases the value of our model because of its interconnections with well-known vocabularies and ontologies. 
+        </li>
+        <li>We use URIs for identifying any resources from the knowledge base. 
+          Therefore, beverage products, recipes, offers, reviews and most of their properties (ex: images) are/will be all identified by URIs.
+          We will also use URIs for identifying other resources (non-informational) that will be part of our application.
+        </li>
+        <li>We use/will use HTTP schema when defining URIs for the resources in our application
+           (for example, this is already true for all of the URIs in our knowledge base).
+        </li>
+        <li>Users of the application will be provided various useful related metadata when accessing one of the resources in our application
+           (For example, the user will have access to nutritional information, health labels when accessing a beverage). 
+           We will also include important related information (For example, for a given recipe, the user will have access to the website from where the recipe was collected). 
+           We already ensured we can do these things mentioned above because of the way we have designed our knowledge base.
+        </li>
+      </ul>
     </section>
     <section id="acks">
       <!-- Replace the acknowledgements for our work -->
