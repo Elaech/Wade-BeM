@@ -9,11 +9,14 @@
     <title>BeM Technical Report</title>
     <link rel="icon" role="presentation" href="/res/logo.ico" />
     <link rel="stylesheet" href="css/scholarly.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <!-- Fontawesome license: https://fontawesome.com/license/free -->
     <script src="js/scholarly.min.js"></script>
   </head>
-  <body prefix="schema: http://schema.org">
+  <body prefix="sa:https://ns.science.ai">
     <header>
       <div class="banner">
         <img src="res/logo.png" width="130" height="80" alt="BeM Logo" />
@@ -25,21 +28,21 @@
       <dl>
         <dt>Content Authors</dt>
         <dd typeof="sa:AuthorsList">
-            <span property="schema:author" typeof="sa:ContributorRole">
-              <meta property="schema:familyName" content="Cornei" />
-              <meta property="schema:givenName" content="Laura-Maria" />
-              <span property="schema:name">Cornei Laura-Maria</span>
-            </span>
-            <span> & </span>
-            <span property="schema:author" typeof="sa:ContributorRole">
-              <meta property="schema:familyName" content="Minut" />
-              <meta property="schema:givenName" content="Mihai-Dimitrie" />
-              <span property="schema:name">Minut Mihai-Dimitrie</span>
-            </span>
+          <span property="schema:author" typeof="sa:ContributorRole">
+            <meta property="schema:familyName" content="Cornei" />
+            <meta property="schema:givenName" content="Laura-Maria" />
+            <span property="schema:name">Cornei Laura-Maria</span>
+          </span>
+          <span> & </span>
+          <span property="schema:author" typeof="sa:ContributorRole">
+            <meta property="schema:familyName" content="Minut" />
+            <meta property="schema:givenName" content="Mihai-Dimitrie" />
+            <span property="schema:name">Minut Mihai-Dimitrie</span>
+          </span>
         </dd>
 
         <dt>Content License</dt>
-        <dd property="schema:license" typeof="CreativeWork" >
+        <dd property="schema:license" typeof="CreativeWork">
           <a href="https://choosealicense.com/licenses/mit/#">MIT License</a>
         </dd>
 
@@ -55,28 +58,37 @@
             <meta property="schema:familyName" content="Berjon" />
             <meta property="schema:givenName" content="Robin" />
             <span property="schema:name"> Tzviya Siegman (Wiley)</span>
-          </span> 
+          </span>
         </dd>
 
         <dt>Scholarly HTML Format License</dt>
         <dd property="schema:license" typeof="CreativeWork">
-          <a href="http://creativecommons.org/licenses/by/4.0/">CC-BY License</a>
+          <a href="http://creativecommons.org/licenses/by/4.0/"
+            >CC-BY License</a
+          >
         </dd>
-
       </dl>
     </div>
     <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
       <h2>Abstract</h2>
-      <p>This report describes preliminary considerations regarding our <a href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/web-projects.html">WADE project</a>, Beverage Manager. 
-        We describe the general structure of our proposed solution, the technologies (Web services, APIs, triple store(s) etc.) 
-        that will be managed or used by our application. We also provide details about our ontological model and about the process
-         of creating the knowledge base (collection, sanitization, translation and aggregation of data).  
-         We conclude by giving reasons why we think our solution conforms to Linked Data Principles.</p>
+      <p>
+        This report describes preliminary considerations regarding our
+        <a
+          href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/web-projects.html"
+          >WADE project</a
+        >, Beverage Manager. We describe the general structure of our proposed
+        solution, the technologies (Web services, APIs, triple store(s) etc.)
+        that will be managed or used by our application. We also provide details
+        about our ontological model and about the process of creating the
+        knowledge base (collection, sanitization, translation and aggregation of
+        data). We conclude by giving reasons why we think our solution conforms
+        to Linked Data Principles.
+      </p>
     </section>
     <section id="keywords">
       <h2>Keywords</h2>
       <ul id="keywords-list">
-        <li property="schema:keywords" >Ontology</li>
+        <li property="schema:keywords">Ontology</li>
         <li property="schema:keywords">Semantic Web</li>
         <li property="schema:keywords">Linked Data Principles</li>
       </ul>
@@ -84,131 +96,204 @@
 
     <section id="introduction" role="doc-introduction">
       <h2>Introduction</h2>
-      <p>Our application will use a single knowledge base both for user and beverages (meta-)data storage. 
-        This knowledge base will interact with our Search & Filter, Beverage Profile, User Profile and Recommendations services.
-       The process of data collection is described in section X, whereas the steps for creating the knowledge base are discussed 
-       in section Y. A description of the ontological model is given in section Z. 
+      <p>
+        Our application will use a single knowledge base both for user and
+        beverages (meta-)data storage. This knowledge base will interact with
+        our Search & Filter, Beverage Profile, User Profile and Recommendations
+        services. The process of data collection is described in section X,
+        whereas the steps for creating the knowledge base are discussed in
+        section Y. A description of the ontological model is given in section Z.
       </p>
     </section>
 
     <section id="technologies">
-     <h2>Web services, APIs and other technologies used as part of the application</h2>
-     <p>In order to build our application we will use:</p>
-     <ul id="technologies-list">
-        <li><a href="https://www.stardog.com/">Stardog</a>. This is our choice of a triplestore. We will store in Stardog our created knowledge base 
-          and use it in order to perform SPARQL queries, inferences, etc. 
+      <h2>
+        Web services, APIs and other technologies used as part of the
+        application
+      </h2>
+      <p>In order to build our application we will use:</p>
+      <ul id="technologies-list">
+        <li>
+          <a href="https://www.stardog.com/">Stardog</a>. This is our choice of
+          a triplestore. We will store in Stardog our created knowledge base and
+          use it in order to perform SPARQL queries, inferences, etc.
         </li>
-        <li><a href="https://cloud.google.com/container-registry">Google Container Registry</a> & <a href="https://cloud.google.com/run">Google Cloud Run</a>. 
-          We will use these services in order to deploy our knowledge base in Google Cloud. 
-          Starting with a local Stardog Docker image, we will store it in the cloud with Google Container Registry and we will further create
+        <li>
+          <a href="https://cloud.google.com/container-registry"
+            >Google Container Registry</a
+          >
+          & <a href="https://cloud.google.com/run">Google Cloud Run</a>. We will
+          use these services in order to deploy our knowledge base in Google
+          Cloud. Starting with a local Stardog Docker image, we will store it in
+          the cloud with Google Container Registry and we will further create
           and run the resulted container using Google Cloud Run.
-       </li>
-        <li><a href="https://firebase.google.com/">Firebase</a>. We will use Firebase in order to authenticate users and perform related tasks
-          such as email verificationwhen a new user registers on our platform. 
         </li>
-     </ul>
+        <li>
+          <a href="https://firebase.google.com/">Firebase</a>. We will use
+          Firebase in order to authenticate users and perform related tasks such
+          as email verificationwhen a new user registers on our platform.
+        </li>
+      </ul>
     </section>
 
     <section id="external-data">
       <h2>External data sources used for building the knowledge base</h2>
-      <p>In order to build the knowledge base for our project, we collected data from public API(s), open database(s) and other datasets. 
-        The used data sources are as follows: </p>
+      <p>
+        In order to build the knowledge base for our project, we collected data
+        from public API(s), open database(s) and other datasets. The used data
+        sources are as follows:
+      </p>
       <ul id="external-data-sources">
-          <li property="schema:Dataset"><a href="https://world.openfoodfacts.org/">Open Food Facts database</a></li>
-          <li property="schema:WebAPI"><a href="https://developer.edamam.com/edamam-recipe-api">EDAMAM recipe API</a></li>
-          <li property="schema:Dataset">Public (small) datasets (<a href="https://untermportal.un.org/unterm/download/country">list of countries</a>
-          & <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview">
-          nationalities)</a></li>
+        <li property="schema:Dataset">
+          <a href="https://world.openfoodfacts.org/"
+            >Open Food Facts database</a
+          >
+        </li>
+        <li property="schema:WebAPI">
+          <a href="https://developer.edamam.com/edamam-recipe-api"
+            >EDAMAM recipe API</a
+          >
+        </li>
+        <li property="schema:Dataset">
+          Public (small) datasets (<a
+            href="https://untermportal.un.org/unterm/download/country"
+            >list of countries</a
+          >
+          &
+          <a
+            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview"
+          >
+            nationalities)</a
+          >
+        </li>
       </ul>
-      <p>Before creating the knowledge-base we also tested (and considered using) APIs such as: </p>
+      <p>
+        Before creating the knowledge-base we also tested (and considered using)
+        APIs such as:
+      </p>
       <ul id="external-data-sources-not-used">
-        <li property="schema:WebAPI"><a href="https://spoonacular.com/food-api">Spoonacular API</a></li>
-        <li property="schema:WebAPI"><a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a></li>
-        <li property="schema:WebAPI"><a href="https://fdc.nal.usda.gov/api-guide.html">FoodData Central API</a></li>
+        <li property="schema:WebAPI">
+          <a href="https://spoonacular.com/food-api">Spoonacular API</a>
+        </li>
+        <li property="schema:WebAPI">
+          <a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a>
+        </li>
+        <li property="schema:WebAPI">
+          <a href="https://fdc.nal.usda.gov/api-guide.html"
+            >FoodData Central API</a
+          >
+        </li>
       </ul>
-      <p>Next, we will discuss only about the data sources actually used in our application.</p>
+      <p>
+        Next, we will discuss only about the data sources actually used in our
+        application.
+      </p>
       <section id="open-food-facts">
         <h3>Open Food Facts database</h3>
-        <p >From here we extracted data regarding most common (not necessarily disjoint) categories of non-alcoholic beverage products.
-           In case of beverages with a potential small alcohol content, we checked that the alcohol by volume value is below 1% (chosen convention).
-            The table below summarizes the number of products extracted for each category.
+        <p>
+          From here we extracted data regarding most common (not necessarily
+          disjoint) categories of non-alcoholic beverage products. In case of
+          beverages with a potential small alcohol content, we checked that the
+          alcohol by volume value is below 1% (chosen convention). The table
+          below summarizes the number of products extracted for each category.
         </p>
         <figure typeof="sa:table">
           <table id="beverage-category-table">
-            <caption>Table 1. Number of products extracted per each beverage category</caption>
+            <caption>
+              Table 1. Number of products extracted per each beverage category
+            </caption>
             <tr>
-              <th scope="col">Category</th>                             
-              <th scope="col">Number of products extracted </th>                                                     
+              <th scope="col">Category</th>
+              <th scope="col">Number of products extracted</th>
             </tr>
             <tr>
-              <td>water</td>     
-              <td>9940</td>                 
+              <td>water</td>
+              <td>9940</td>
             </tr>
             <tr>
               <td>tea</td>
-              <td>5942</td>                    
+              <td>5942</td>
             </tr>
             <tr>
-              <td>syrup</td>   
-              <td>5650</td>                  
+              <td>syrup</td>
+              <td>5650</td>
             </tr>
             <tr>
-              <td>smoothie</td> 
-              <td>568</td>                    
+              <td>smoothie</td>
+              <td>568</td>
             </tr>
             <tr>
-              <td>non-alcoholic beer</td>    
-              <td>614</td>                  
+              <td>non-alcoholic beer</td>
+              <td>614</td>
             </tr>
             <tr>
-              <td>mocktail</td>  
-              <td>13</td>                    
+              <td>mocktail</td>
+              <td>13</td>
             </tr>
             <tr>
-              <td>milkshake</td>   
-              <td>44</td>                  
+              <td>milkshake</td>
+              <td>44</td>
             </tr>
             <tr>
-              <td>nectar</td> 
-              <td>11738</td>                    
+              <td>nectar</td>
+              <td>11738</td>
             </tr>
             <tr>
-              <td>juice</td>   
-              <td>2571</td>                  
+              <td>juice</td>
+              <td>2571</td>
             </tr>
             <tr>
-              <td>energy drink</td>  
-              <td>1144</td>                    
+              <td>energy drink</td>
+              <td>1144</td>
             </tr>
             <tr>
-              <td>dairy-based drink</td>   
-              <td>3504</td>                  
+              <td>dairy-based drink</td>
+              <td>3504</td>
             </tr>
             <tr>
-              <td>coffee</td>  
-              <td>5982</td>                    
+              <td>coffee</td>
+              <td>5982</td>
             </tr>
           </table>
         </figure>
-        <p>In case of juices and nectars categories we further split them in subcategories (AppleJuice, PearNectar, etc.) so that we could correlate
-           these drinks in the future with the associated names of fruits and vegetables. The data was downloaded in csv and excel formats. 
+        <p>
+          In case of juices and nectars categories we further split them in
+          subcategories (AppleJuice, PearNectar, etc.) so that we could
+          correlate these drinks in the future with the associated names of
+          fruits and vegetables. The data was downloaded in csv and excel
+          formats.
         </p>
       </section>
       <section id="edamam">
         <h3>EDAMAM recipe API</h3>
-        <p>We used this API in order to extract data regarding non-alcoholic beverage recipes.
-           We chose it because it offered a high amount of quality data (beverage recipes along with associated URI, image, ingredients,
-           calories and detailed nutritional information).  Recipes are also split by categories: <i>Smoothie</i>, <i>Syrup</i>, <i>Tea</i>,
-           <i>Coffee</i>, <i>Chocolate Drink</i>,  <i>Juice</i>, <i>Milkshake</i>.
-           We automatically extracted the data using a script (because at one request we could only extract 20 recipes and we could only make 10 requests
-           per minute). The total number of extracted recipes was <span class="highlight-term">17714</span>. The data was downloaded in excel format.
+        <p>
+          We used this API in order to extract data regarding non-alcoholic
+          beverage recipes. We chose it because it offered a high amount of
+          quality data (beverage recipes along with associated URI, image,
+          ingredients, calories and detailed nutritional information). Recipes
+          are also split by categories: <i>Smoothie</i>, <i>Syrup</i>,
+          <i>Tea</i>, <i>Coffee</i>, <i>Chocolate Drink</i>, <i>Juice</i>,
+          <i>Milkshake</i>. We automatically extracted the data using a script
+          (because at one request we could only extract 20 recipes and we could
+          only make 10 requests per minute). The total number of extracted
+          recipes was <span class="highlight-term">17714</span>. The data was
+          downloaded in excel format.
         </p>
       </section>
       <section id="countries-and-nationalities-dataset">
         <h3>Public (small) datasets</h3>
-        <p>We used datasets which offered us the <a href="https://untermportal.un.org/unterm/download/country">list of world-wide countries</a> and
-          <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview">
-          nationalities</a>. We will use this data to provide metadata about users and beverages and to make correlations. 
+        <p>
+          We used datasets which offered us the
+          <a href="https://untermportal.un.org/unterm/download/country"
+            >list of world-wide countries</a
+          >
+          and
+          <a
+            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview"
+          >
+            nationalities</a
+          >. We will use this data to provide metadata about users and beverages
+          and to make correlations.
         </p>
       </section>
     </section>
@@ -216,145 +301,314 @@
       <h2>Ontological Model</h2>
       <section id="ontological-model-used-vocabularies">
         <h3>Used ontologies and vocabularies</h3>
-        In order to create the ontological model we used <a href="https://schema.org/">schema.org</a>
-         (mostly for describing <a href="https://schema.org/NutritionInformation">the nutrition information of beverages</a>, 
-         <a href="https://schema.org/Recipe">recipes</a>, 
-         <a href="https://schema.org/Review">reviews</a>,
-         <a href="https://schema.org/Offer">offers</a>),
-        <a href="http://xmlns.com/foaf/spec/">FOAF  vocabulary</a> (for describing users of the application),
-        <a href="https://www.dbpedia.org/">Dbpedia</a> (mostly for describing general categories of beverages),
+        In order to create the ontological model we used
+        <a href="https://schema.org/">schema.org</a> (mostly for describing
+        <a href="https://schema.org/NutritionInformation"
+          >the nutrition information of beverages</a
+        >, <a href="https://schema.org/Recipe">recipes</a>,
+        <a href="https://schema.org/Review">reviews</a>,
+        <a href="https://schema.org/Offer">offers</a>),
+        <a href="http://xmlns.com/foaf/spec/">FOAF vocabulary</a> (for
+        describing users of the application),
+        <a href="https://www.dbpedia.org/">Dbpedia</a> (mostly for describing
+        general categories of beverages),
         <a href="http://rdfs.co/bevon/latest/html">BEVON ontology </a>
-        (for describing general properties of a beverage) and also our own vocabulary (when we couldn’t map a concept/property to an existing vocabulary terms). 
+        (for describing general properties of a beverage) and also our own
+        vocabulary (when we couldn’t map a concept/property to an existing
+        vocabulary terms).
       </section>
       <section id="ontological-model-tools">
         <h3>Tools (editors, plugins) for creating the ontology</h3>
-        We created the ontology using <a href="https://protege.stanford.edu/">Protégé</a>. Some metrics about out ontological model can be found below:
+        We created the ontology using
+        <a href="https://protege.stanford.edu/">Protégé</a>. Some metrics about
+        out ontological model can be found below:
         <figure typeof="sa:image">
-          <img src="res/ontologymetrics.PNG" alt="Ontology metrics image" style="width:100%">
+          <img
+            src="res/ontologymetrics.PNG"
+            alt="Ontology metrics image"
+            style="width: 100%"
+          />
           <figcaption>Fig. 1 Ontology metrics (Protégé)</figcaption>
-        </figure> 
-        <p>As a mention, we uploaded data into our ontology (in order to create the knowledge base) semi-automatically using a plugin named 
-           <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a> (details in <a href="#data-modifications-creating-the-kb">next section</a>).
+        </figure>
+        <p>
+          As a mention, we uploaded data into our ontology (in order to create
+          the knowledge base) semi-automatically using a plugin named
+          <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a>
+          (details in
+          <a href="#data-modifications-creating-the-kb">next section</a>).
         </p>
       </section>
       <section id="ontological-model-description">
         <h3>Ontological model description</h3>
-        <p>We described categories of beverages through a hierarchy of classes (corresponding to categories from table 1).
-           We opted for this type of modelling in order to ensure an easy extension of the ontology in the future, in case of adding other subcategories or categories of drinks.
-           The root class of this taxonomy is class Beverage.
+        <p>
+          We described categories of beverages through a hierarchy of classes
+          (corresponding to categories from table 1). We opted for this type of
+          modelling in order to ensure an easy extension of the ontology in the
+          future, in case of adding other subcategories or categories of drinks.
+          The root class of this taxonomy is class Beverage.
         </p>
         <p>
-          In case of beverages such as juices and nectar we decided to define subcategories by splitting these beverages based on the kind(s) of fruits and/or vegetables
-          they contain (ex: AppleJuice, PearNectar, etc.).  We correlated these subclasses with classes Fruit and Vegetable through object properties isMadeOfFruit and 
-          isMadeOfVegetable. Figure 2 highlights the subclasses representing types of beverages:
+          In case of beverages such as juices and nectar we decided to define
+          subcategories by splitting these beverages based on the kind(s) of
+          fruits and/or vegetables they contain (ex: AppleJuice, PearNectar,
+          etc.). We correlated these subclasses with classes Fruit and Vegetable
+          through object properties isMadeOfFruit and isMadeOfVegetable. Figure
+          2 highlights the subclasses representing types of beverages:
         </p>
         <figure typeof="sa:image">
-          <img src="res/figonto.png" alt="Part of ontology image" style="width:100%">
-          <figcaption>Fig. 2 Part of the ontology (with highlight on the categories and subcategories of beverages)</figcaption>
-        </figure> 
-        <p>Next, we will provide a general overview on classes and their associated properties (data properties and object properties) we used in our model:</p>
+          <img
+            src="res/figonto.png"
+            alt="Part of ontology image"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 2 Part of the ontology (with highlight on the categories and
+            subcategories of beverages)
+          </figcaption>
+        </figure>
+        <p>
+          Next, we will provide a general overview on classes and their
+          associated properties (data properties and object properties) we used
+          in our model:
+        </p>
         <ul id="ontology-description-classes-and-properties">
-           <li><span class="highlight-term">classes Country and Nationality</span>. Useful for describing beverage provenance, 
-               the country where a user lives in or the user’s nationality. </li>
-           <li><span class="highlight-term">class Beverage</span>. We associated this class with classes Review, Recipe, Offer because a beverage can have associated one or more reviews,
-              recipes, offers. We also associated it with class Country through an object property that indicates the provenance(s) of the beverage. 
-              Beverage was also connected to class Category and to class Ingredient (connections explained below). 
-              
-              <p>Both beverages and recipes have associated nutritional information (22 indicators, such as calories, calciumContent, sugarContent, vitaminAContent, vitaminB6Content, etc.)
-              and a health label (that indicate the existence or non-existence of an important or potentially dangerous ingredient in the beverage or a certain property of the beverage, 
-              for example: milk-free, for-vegans, guarana-extract, etc.). We created the set nutritional information and the set of health labels by hand, by correlating information 
-              regarding these that we found in Open Food Facts and Edamam. Thus, we created and used the same convention over both products and recipes.</p> 
-            </li>
-           <li><span class="highlight-term">class HealthLabel</span>. Defines the health labels that are used to describe beverages and recipes.</li>
-           <li><span class="highlight-term">class Ingredient</span>. Associated with classes Beverage and Recipe, describes the ingredients that a beverage/recipe can have.</li>
-           <li><span class="highlight-term">class Category</span>. Defines the fine-grained categories that a beverage can belong to. We used the hierarchy of classes for defining main classes of beverages,
-              but we also needed a mechanism to associate more expressive and/or detailed categories to beverages (such as squeezed-juices, instant-coffees, flavoured-syrups, etc.).
-               These categories have been previously collected from the data extracted from Open Food Facts. It was almost impossible and impractical to model all of those 
-               categories as a set of classes, so we decided to create this new class to capture the small categories that a beverage can have.
-            </li>
-           <li><span class="highlight-term">class Person</span>. Models the user information. This class is connected through object properties with classes Nationality, Country, HealthRestriction, 
-             meaning that a user with a certain nationality lives in a certain country and may have some health restrictions (such as lactose intolerance or diabetes).
-              We also defined object properties to express the fact that a user may have one or more beverage preferences and/or one or more beverage category preferences 
-              (for example: a user prefers plant-based products). Person is also connected to classes Recipe, Offer and Review with object properties that express the fact 
-              that a user can add a review for a beverage, make a beverage offer or add a beverage recipe.
-            </li>
-           <li><span class="highlight-term">classes Recipe, Offer, Review</span>. Connected to class Person and Beverage as explained above.
-              Recipes, offers and reviews have all a description and an associated score (as data properties). 
-              Offers have among others price as a data property, while recipes have URIs to images, URI to source (from where the recipe was collected) and other data properties. 
-            </li>
-        </ul>
+          <li>
+            <span class="highlight-term">classes Country and Nationality</span>.
+            Useful for describing beverage provenance, the country where a user
+            lives in or the user’s nationality.
+          </li>
+          <li>
+            <span class="highlight-term">class Beverage</span>. We associated
+            this class with classes Review, Recipe, Offer because a beverage can
+            have associated one or more reviews, recipes, offers. We also
+            associated it with class Country through an object property that
+            indicates the provenance(s) of the beverage. Beverage was also
+            connected to class Category and to class Ingredient (connections
+            explained below).
 
+            <p>
+              Both beverages and recipes have associated nutritional information
+              (22 indicators, such as calories, calciumContent, sugarContent,
+              vitaminAContent, vitaminB6Content, etc.) and a health label (that
+              indicate the existence or non-existence of an important or
+              potentially dangerous ingredient in the beverage or a certain
+              property of the beverage, for example: milk-free, for-vegans,
+              guarana-extract, etc.). We created the set nutritional information
+              and the set of health labels by hand, by correlating information
+              regarding these that we found in Open Food Facts and Edamam. Thus,
+              we created and used the same convention over both products and
+              recipes.
+            </p>
+          </li>
+          <li>
+            <span class="highlight-term">class HealthLabel</span>. Defines the
+            health labels that are used to describe beverages and recipes.
+          </li>
+          <li>
+            <span class="highlight-term">class Ingredient</span>. Associated
+            with classes Beverage and Recipe, describes the ingredients that a
+            beverage/recipe can have.
+          </li>
+          <li>
+            <span class="highlight-term">class Category</span>. Defines the
+            fine-grained categories that a beverage can belong to. We used the
+            hierarchy of classes for defining main classes of beverages, but we
+            also needed a mechanism to associate more expressive and/or detailed
+            categories to beverages (such as squeezed-juices, instant-coffees,
+            flavoured-syrups, etc.). These categories have been previously
+            collected from the data extracted from Open Food Facts. It was
+            almost impossible and impractical to model all of those categories
+            as a set of classes, so we decided to create this new class to
+            capture the small categories that a beverage can have.
+          </li>
+          <li>
+            <span class="highlight-term">class Person</span>. Models the user
+            information. This class is connected through object properties with
+            classes Nationality, Country, HealthRestriction, meaning that a user
+            with a certain nationality lives in a certain country and may have
+            some health restrictions (such as lactose intolerance or diabetes).
+            We also defined object properties to express the fact that a user
+            may have one or more beverage preferences and/or one or more
+            beverage category preferences (for example: a user prefers
+            plant-based products). Person is also connected to classes Recipe,
+            Offer and Review with object properties that express the fact that a
+            user can add a review for a beverage, make a beverage offer or add a
+            beverage recipe.
+          </li>
+          <li>
+            <span class="highlight-term">classes Recipe, Offer, Review</span>.
+            Connected to class Person and Beverage as explained above. Recipes,
+            offers and reviews have all a description and an associated score
+            (as data properties). Offers have among others price as a data
+            property, while recipes have URIs to images, URI to source (from
+            where the recipe was collected) and other data properties.
+          </li>
+        </ul>
       </section>
     </section>
     <section id="data-modifications-creating-the-kb">
-       <h2>Data Modifications. Creating the knowledge base</h2>
-       We will further describe the data processing and aggregation steps that we had to go through in order to obtain the knowledge base. 
-       <section id= "data-enginnering">
-          <h3>Data enginnering</h3>
-       </section>
-       <section id= "aggregation-and-final-outcome">
+      <h2>Data Modifications. Creating the knowledge base</h2>
+      We will further describe the data processing and aggregation steps that we
+      had to go through in order to obtain the knowledge base.
+      <section id="data-enginnering">
+        <h3>Data enginnering</h3>
+      </section>
+      <section id="aggregation-and-final-outcome">
         <h3>Aggregation and final outcome</h3>
         <p>
-          The final step for creating our knowledge base was to aggregate the sanitized and translated datasets into our ontological model. 
-          In order to to this, we used the  <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a> Protégé plugin which
-          converts spreadsheet data (excels) into OWL format. 
-          We created the transformation rules using <a href="https://github.com/protegeproject/mapping-master/wiki/MappingMasterDSL">MappingMaster language</a>,
-          a language which describes possible excel to OWL mappings. 
-          There was a total of 11 general rules (3 for recipe data, 6 for products data and 2 for nationalities and countries). 
-          The process of aggregation of all data was very slow (a few days) because of the large sizes of the datasets and the multitude of realized mappings.
+          The final step for creating our knowledge base was to aggregate the
+          sanitized and translated datasets into our ontological model. In order
+          to to this, we used the
+          <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a>
+          Protégé plugin which converts spreadsheet data (excels) into OWL
+          format. We created the transformation rules using
+          <a
+            href="https://github.com/protegeproject/mapping-master/wiki/MappingMasterDSL"
+            >MappingMaster language</a
+          >, a language which describes possible excel to OWL mappings. There
+          was a total of 11 general rules (3 for recipe data, 6 for products
+          data and 2 for nationalities and countries). The process of
+          aggregation of all data was very slow (a few days) because of the
+          large sizes of the datasets and the multitude of realized mappings.
         </p>
-       </section>
+      </section>
     </section>
     <section id="linked-data-principles-conformation">
       <h2>How our solution conforms to Linked Data Principles</h2>
       <p>
-        Below are some reasons regarding why we consider that our proposed solution follows the Linked Data Principles:
+        Below are some reasons regarding why we consider that our proposed
+        solution follows the Linked Data Principles:
       </p>
       <ul id="linked-data-principles-conformation-reasons">
-        <li>We use a knowledge model (an ontology) in order to model the data in our application (OWL is language is built on top of RDF, 
-          so the modelling respects the linked data principles).
+        <li>
+          We use a knowledge model (an ontology) in order to model the data in
+          our application (OWL is language is built on top of RDF, so the
+          modelling respects the linked data principles).
         </li>
-        <li>When defining the ontological model, we tried as much as possible to reuse existing vocabularies and ontologies 
-            (details <a href="#ontological-model-used-vocabularies">here</a>). 
-            This increases reusability and increases the value of our model because of its interconnections with well-known vocabularies and ontologies. 
+        <li>
+          When defining the ontological model, we tried as much as possible to
+          reuse existing vocabularies and ontologies (details
+          <a href="#ontological-model-used-vocabularies">here</a>). This
+          increases reusability and increases the value of our model because of
+          its interconnections with well-known vocabularies and ontologies.
         </li>
-        <li>We use URIs for identifying any resources from the knowledge base. 
-          Therefore, beverage products, recipes, offers, reviews and most of their properties (ex: images) are/will be all identified by URIs.
-          We will also use URIs for identifying other resources (non-informational) that will be part of our application.
+        <li>
+          We use URIs for identifying any resources from the knowledge base.
+          Therefore, beverage products, recipes, offers, reviews and most of
+          their properties (ex: images) are/will be all identified by URIs. We
+          will also use URIs for identifying other resources (non-informational)
+          that will be part of our application.
         </li>
-        <li>We use/will use HTTP schema when defining URIs for the resources in our application
-           (for example, this is already true for all of the URIs in our knowledge base).
+        <li>
+          We use/will use HTTP schema when defining URIs for the resources in
+          our application (for example, this is already true for all of the URIs
+          in our knowledge base).
         </li>
-        <li>Users of the application will be provided various useful related metadata when accessing one of the resources in our application
-           (For example, the user will have access to nutritional information, health labels when accessing a beverage). 
-           We will also include important related information (For example, for a given recipe, the user will have access to the website from where the recipe was collected). 
-           We already ensured we can do these things mentioned above because of the way we have designed our knowledge base.
+        <li>
+          Users of the application will be provided various useful related
+          metadata when accessing one of the resources in our application (For
+          example, the user will have access to nutritional information, health
+          labels when accessing a beverage). We will also include important
+          related information (For example, for a given recipe, the user will
+          have access to the website from where the recipe was collected). We
+          already ensured we can do these things mentioned above because of the
+          way we have designed our knowledge base.
         </li>
       </ul>
     </section>
     <section role="doc-bibliography" id="references">
       <h2>References</h2>
       <ol id="bibliography">
-        <li><i class="fa fa-coffee"></i> <a href="https://www.stardog.com/">Stardog</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://cloud.google.com/container-registry">Google Container Registry</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://cloud.google.com/run">Google Cloud Run</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://firebase.google.com/">Firebase</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://world.openfoodfacts.org/">Open Food Facts database</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://developer.edamam.com/edamam-recipe-api">EDAMAM recipe API</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://untermportal.un.org/unterm/download/country">List of countries (small dataset)</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview">
-          List of nationalities (small dataset)</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://spoonacular.com/food-api">Spoonacular API</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://fdc.nal.usda.gov/api-guide.html">FoodData Central API</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://schema.org/">schema.org</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="http://xmlns.com/foaf/spec/">FOAF  vocabulary</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://www.dbpedia.org/">Dbpedia</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="http://rdfs.co/bevon/latest/html">BEVON ontology </a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://protege.stanford.edu/">Protégé</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a></li>
-        <li><i class="fa fa-coffee"></i> <a href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/presentations/web07ArhitecturaAplicatiilorRDF-LinkedData.pdf"> Wade course 7 </a>(for justifications regarding linked data principles)</li>
-  
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://www.stardog.com/">Stardog</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://cloud.google.com/container-registry"
+            >Google Container Registry</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://cloud.google.com/run">Google Cloud Run</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://firebase.google.com/">Firebase</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://world.openfoodfacts.org/"
+            >Open Food Facts database</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://developer.edamam.com/edamam-recipe-api"
+            >EDAMAM recipe API</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://untermportal.un.org/unterm/download/country"
+            >List of countries (small dataset)</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a
+            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview"
+          >
+            List of nationalities (small dataset)</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://spoonacular.com/food-api">Spoonacular API</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://fdc.nal.usda.gov/api-guide.html"
+            >FoodData Central API</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://schema.org/">schema.org</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="http://xmlns.com/foaf/spec/">FOAF vocabulary</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://www.dbpedia.org/">Dbpedia</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="http://rdfs.co/bevon/latest/html">BEVON ontology </a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://protege.stanford.edu/">Protégé</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a
+            href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/presentations/web07ArhitecturaAplicatiilorRDF-LinkedData.pdf"
+          >
+            Wade course 7 </a
+          >(for justifications regarding linked data principles)
+        </li>
       </ol>
     </section>
   </body>
