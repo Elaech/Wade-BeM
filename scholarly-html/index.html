@@ -200,7 +200,7 @@
            calories and detailed nutritional information).  Recipes are also split by categories: <i>Smoothie</i>, <i>Syrup</i>, <i>Tea</i>,
            <i>Coffee</i>, <i>Chocolate Drink</i>,  <i>Juice</i>, <i>Milkshake</i>.
            We automatically extracted the data using a script (because at one request we could only extract 20 recipes and we could only make 10 requests
-           per minute). The total number of extracted recipes was <span style="color: var(--light-brown);font-weight: bold;">17714</span>. The data was downloaded in excel format.
+           per minute). The total number of extracted recipes was <span class="highlight-term">17714</span>. The data was downloaded in excel format.
         </p>
       </section>
       <section id="countries-and-nationalities-dataset">
@@ -210,6 +210,83 @@
           nationalities</a>. We will use this data to provide metadata about users and beverages and to make correlations. 
         </p>
       </section>
+    </section>
+    <section id="ontological-model">
+      <h2>Ontological Model</h2>
+      <section id="ontological-model-used-vocabularies">
+        <h3>Used ontologies and vocabularies</h3>
+        In order to create the ontological model we used <a href="https://schema.org/">schema.org</a>
+         (mostly for describing <a href="https://schema.org/NutritionInformation">the nutrition information of beverages</a>, 
+         <a href="https://schema.org/Recipe">recipes</a>, 
+         <a href="https://schema.org/Review">reviews</a>,
+         <a href="https://schema.org/Offer">offers</a>),
+        <a href="http://xmlns.com/foaf/spec/">FOAF  vocabulary</a> (for describing users of the application),
+        <a href="https://www.dbpedia.org/">Dbpedia</a> (mostly for describing general categories of beverages),
+        <a href="http://rdfs.co/bevon/latest/html">BEVON ontology </a>
+        (for describing general properties of a beverage) and also our own vocabulary (when we couldn’t map a concept/property to an existing vocabulary terms). 
+      </section>
+      <section id="ontological-model-tools">
+        <h3>Tools (editors, plugins) for creating the ontology</h3>
+        We created the ontology using <a href="https://protege.stanford.edu/">Protégé</a>. Some metrics about out ontological model can be found below:
+        <figure typeof="sa:image">
+          <img src="res/ontologymetrics.PNG" alt="Ontology metrics image" style="width:100%">
+          <figcaption>Fig. 1 Ontology metrics (Protégé)</figcaption>
+        </figure> 
+        <p>As a mention, we uploaded data into our ontology (in order to create the knowledge base) semi-automatically using a plugin named 
+           <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a> (details in <a href="#data-modifications-creating-the-kb">next section</a>).
+        </p>
+      </section>
+      <section id="ontological-model-description">
+        <h3>Ontological model description</h3>
+        <p>We described categories of beverages through a hierarchy of classes (corresponding to categories from table 1).
+           We opted for this type of modelling in order to ensure an easy extension of the ontology in the future, in case of adding other subcategories or categories of drinks.
+           The root class of this taxonomy is class Beverage.
+        </p>
+        <p>
+          In case of beverages such as juices and nectar we decided to define subcategories by splitting these beverages based on the kind(s) of fruits and/or vegetables
+          they contain (ex: AppleJuice, PearNectar, etc.).  We correlated these subclasses with classes Fruit and Vegetable through object properties isMadeOfFruit and 
+          isMadeOfVegetable. Figure 2 highlights the subclasses representing types of beverages:
+        </p>
+        <figure typeof="sa:image">
+          <img src="res/figonto.png" alt="Part of ontology image" style="width:100%">
+          <figcaption>Fig. 2 Part of the ontology (with highlight on the categories and subcategories of beverages)</figcaption>
+        </figure> 
+        <p>Next, we will provide a general overview on classes and their associated properties (data properties and object properties) we used in our model:</p>
+        <ul id="ontology-description-classes-and-properties">
+           <li><span class="highlight-term">classes Country and Nationality</span>. Useful for describing beverage provenance, 
+               the country where a user lives in or the user’s nationality. </li>
+           <li><span class="highlight-term">class Beverage</span>. We associated this class with classes Review, Recipe, Offer because a beverage can have associated one or more reviews,
+              recipes, offers. We also associated it with class Country through an object property that indicates the provenance(s) of the beverage. 
+              Beverage was also connected to class Category and to class Ingredient (connections explained below). 
+              
+              <p>Both beverages and recipes have associated nutritional information (22 indicators, such as calories, calciumContent, sugarContent, vitaminAContent, vitaminB6Content, etc.)
+              and a health label (that indicate the existence or non-existence of an important or potentially dangerous ingredient in the beverage or a certain property of the beverage, 
+              for example: milk-free, for-vegans, guarana-extract, etc.). We created the set nutritional information and the set of health labels by hand, by correlating information 
+              regarding these that we found in Open Food Facts and Edamam. Thus, we created and used the same convention over both products and recipes.</p> 
+            </li>
+           <li><span class="highlight-term">class HealthLabel</span>. Defines the health labels that are used to describe beverages and recipes.</li>
+           <li><span class="highlight-term">class Ingredient</span>. Associated with classes Beverage and Recipe, describes the ingredients that a beverage/recipe can have.</li>
+           <li><span class="highlight-term">class Category</span>. Defines the fine-grained categories that a beverage can belong to. We used the hierarchy of classes for defining main classes of beverages,
+              but we also needed a mechanism to associate more expressive and/or detailed categories to beverages (such as squeezed-juices, instant-coffees, flavoured-syrups, etc.).
+               These categories have been previously collected from the data extracted from Open Food Facts. It was almost impossible and impractical to model all of those 
+               categories as a set of classes, so we decided to create this new class to capture the small categories that a beverage can have.
+            </li>
+           <li><span class="highlight-term">class Person</span>. Models the user information. This class is connected through object properties with classes Nationality, Country, HealthRestriction, 
+             meaning that a user with a certain nationality lives in a certain country and may have some health restrictions (such as lactose intolerance or diabetes).
+              We also defined object properties to express the fact that a user may have one or more beverage preferences and/or one or more beverage category preferences 
+              (for example: a user prefers plant-based products). Person is also connected to classes Recipe, Offer and Review with object properties that express the fact 
+              that a user can add a review for a beverage, make a beverage offer or add a beverage recipe.
+            </li>
+           <li><span class="highlight-term">classes Recipe, Offer, Review</span>. Connected to class Person and Beverage as explained above.
+              Recipes, offers and reviews have all a description and an associated score (as data properties). 
+              Offers have among others price as a data property, while recipes have URIs to images, URI to source (from where the recipe was collected) and other data properties. 
+            </li>
+        </ul>
+
+      </section>
+    </section>
+    <section id="data-modifications-creating-the-kb">
+       <h2>Data Modifications. Creating the knowledge base</h2>
 
     </section>
     <section id="acks">

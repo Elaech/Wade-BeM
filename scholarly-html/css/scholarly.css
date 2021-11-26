@@ -114,6 +114,12 @@ code, pre {
   font-family: "Roboto Mono", monospace;
 }
 
+/* figure caption */
+figcaption{
+  text-align: center;
+  color: var(--dark-brown);
+}
+
 /* list */
 /* ul { list-style:none; } */
 
@@ -125,6 +131,11 @@ code, pre {
 /* links */
 a {
   color: var(--dark-brown);
+}
+
+.highlight-term {
+  color: var(--light-brown);
+  font-weight: bold;
 }
 
 /* table styles */
