@@ -9,10 +9,30 @@
   links
 */
 
+:root{
+  --white: #fff;
+  --background-color: #F1DEDE;
+ 
+  --extra-light-brown: #E2C4BA;
+  --very-light-brown: #D9B5A6; 
+  --light-brown: #b57753;
+  --dark-brown: #582406;
+
+  --dark-red: #8D0F0F;
+  --red: red;
+
+  --dark-brownish-red:  #982B22;
+  --brownish-red: #A24532;
+  --light-brownish-red: #AA5B40; 
+
+  --dark-grey: #434343;
+
+}
+
 body {
-  max-width: 21cm;
+  max-width: 25cm;
   margin: auto;
-  background-color: #F1DEDE;
+  background-color: var(--background-color);
   line-height: 1.6;
   font-weight: 300;
   font-family: "Roboto", sans-serif;
@@ -22,7 +42,7 @@ body {
 header > h1 {
   margin: 0;
   font-size: 3em;
-  padding-top: 4em;
+  padding-top: 3em;
 }
 div.banner {
   display: flex;
@@ -32,24 +52,22 @@ div.banner > img {
   height: 100%;
 }
 div.banner > div.status {
-  color: #fff;
-  background: #582406;
+  color: var(--dark-brownish-red);
+  background: var(--extra-light-brown);
   width: 350px;
   font-weight: bold;
   padding: 10px;
   text-align: right;
+  
 }
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.0375em;
 }
-h1, h2 {
-  color: #8D0F0F  ;
-}
 h2 {
-  margin-top: 3em;
+  margin-top: 2.5em;
 }
 h3 {
-  margin-top: 2.5em;
+  margin-top: 2.0em;
 }
 h4 {
   font-weight: 300;
@@ -57,8 +75,18 @@ h4 {
   font-variant: small-caps;
   margin: 2em 0 0.5em 0;
 }
+h1, h2 {
+  color: var(--brownish-red);
+}
+h3, h4{
+  color: var(--light-brownish-red);
+}
+
 
 /* contentinfo */
+dt{
+  color: var(--light-brownish-red);
+}
 [role="contentinfo"] a {
   text-decoration: none;
 }
@@ -76,8 +104,8 @@ ol[role="directory"], [role="directory"] ol {
 a.onto {
   font-family: "Roboto Mono", monospace;
   text-decoration: none;
-  background: linear-gradient(to top, rgba(255, 0, 0, 0.4), rgba(255, 0, 0, 0.4) 15%, #fff 16%);
-  color: #434343;
+  background: linear-gradient(to top, rgba(255, 0, 0, 0.4), rgba(255, 0, 0, 0.4) 15%, var(--white) 16%);
+  color: var(--dark-grey);
 }
 
 /* code */
@@ -85,9 +113,22 @@ code, pre {
   font-family: "Roboto Mono", monospace;
 }
 
+/* list */
+/* ul { list-style:none; } */
+
+/* keywords */
+#keywords-list {
+  color: var(--light-brownish-red);
+}
+
+/* links */
+a {
+  color: var(--dark-brown);
+}
+
 /* special boxes */
 p.issue {
-  border-left: 3px solid red;
+  border-left: 3px solid var(--red);
   padding: 0.5em 1em;
 }
 
