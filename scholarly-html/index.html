@@ -83,8 +83,32 @@
 
     <section id="introduction" role="doc-introduction">
       <h2>Introduction</h2>
-      <p>The introduction</p>
+      <p>Our application will use a single knowledge base both for user and beverages (meta-)data storage. 
+        This knowledge base will interact with our Search & Filter, Beverage Profile, User Profile and Recommendations services.
+       The process of data collection is described in section X, whereas the steps for creating the knowledge base are discussed 
+       in section Y. A description of the ontological model is given in section Z. 
+      </p>
     </section>
+
+    <section id="technologies">
+     <h2>Web services, APIs and other technologies used as part of the application</h2>
+     <p>In order to build our application we will use:</p>
+     <ul id="technologies-list">
+        <li><a href="https://www.stardog.com/">Stardog</a>. This is our choice of a triplestore. We will store in Stardog our created knowledge base 
+          and use it in order to perform SPARQL queries, inferences, etc. 
+        </li>
+        <li><a href="https://cloud.google.com/container-registry">Google Container Registry</a> & <a href="https://cloud.google.com/run">Google Cloud Run</a>. 
+            We will use these services in order to deploy our knowledge base in Google Cloud. 
+            Starting with a local Stardog Docker image, we will store it in the cloud with Google Container Registry and we will further create
+             and run the resulted container using Google Cloud Run.
+       </li>
+        <li><a href="https://firebase.google.com/">Firebase</a>. We will use Firebase in order to authenticate users and perform related tasks such as email verification
+             when a new user registers on our platform. 
+        </li>
+     </ul>
+    </section>
+
+    
     <section id="external-data">
       <h2>External Data & Provenance</h2>
       <p>Example text</p>
