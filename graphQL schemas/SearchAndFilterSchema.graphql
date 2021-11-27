@@ -1,0 +1,231 @@
+const nutritionInformation = `
+  calciumContent: Int
+  calories: Int
+  carbohydrateContent:Int
+  cholesterolContent: Int
+  fatContent: Int
+  fiberContent: Int
+  ironContent: Int
+  magnesiumContent: Int
+  phosphorusContent: Int
+  potassiumContent: Int
+  proteinContent: Int
+  quantity: Int
+  sodiumContent: Int
+  sugarContent: Int
+  vitaminAContent: Int
+  vitaminB12Content: Int
+  vitaminB6Content: Int
+  vitaminCContent: Int
+  vitaminDContent: Int
+  vitaminEContent: Int
+  vitaminKContent: Int
+  zincContent: Int
+`
+type Score{
+  scoreID: ID!
+  scoreValue: Int!
+  userEmail: String!
+  beverageID: ID!
+}
+
+type Beverage{
+  beverageID: ID!
+  beverageName: String!
+  beverageUrl: String
+  beverageImageUrl: String
+  beverageIngredientsImageUrl: String
+  beverageNutritionImageUrl: String
+  beverageDescription: String
+  isMadeOfFruit: Fruit
+  isMadeOfVegetable: Vegetable
+  hasHealthLabel: HealthLabel
+  ${nutritionInformation}
+  hasProvenanceCountry: Country
+  hasCategory: Category
+  hasIngredient: Ingredient
+  hasOffer: Offer
+  hasReview: Review
+  hasRecipe: Recipe
+  hasBeverageScores: [Score!]
+}
+
+type Recipe{
+  recipeID: ID!
+  recipeName: String!
+  recipeDescription: String
+  recipeImageUrl: String
+  recipeShareAs: String
+  recipeSource: String
+  recipeURI: String
+  recipeURL: String
+  ${nutritionInformation}
+  hasHealthLabel: HealthLabel
+  hasIngredient: Ingredient
+  isRecipeFor: Beverage
+  hasRecipeScores: [Score!]
+}
+
+
+type Review{
+  reviewID: ID!
+  reviewDescription: String!
+  hasReviewScores: [Score!]
+}
+
+enum Currency{
+  EURO
+  LEU
+  AMERICANDOLLAR
+  YEN
+}
+
+type Offer{
+  offerID: ID!
+  offerPrice: Int
+  offerCurrency: Currency
+  offerDescription: String
+}
+
+type Ingredient{
+  ingredientName: String
+}
+
+type Category{
+  categoryName: String
+}
+
+type Country{
+  countryName: String
+}
+
+type Nationality{
+  nationalityName: String
+}
+
+type HealthRestriction{
+  healthRestrictionName: String 
+}
+
+type HealthLabel{
+  healthLabelName: String
+}
+
+type Fruit{
+  fruitName: String
+}
+type Vegetable{
+   vegetableName: String
+}
+
+enum BeverageType {
+  COFFEE
+  DAIRYDRINK
+  ENERGYDRINK
+  JUICE
+  NECTAR
+  MILKSHAKE
+  MOCKTAIL
+  NONALCOHOLICBEER
+  SMOOTHIE
+  SYRUP
+  TEA
+  WATER
+}
+
+const nutritionInformationLessThan = `
+  calciumContentLessThan: Int
+  caloriesLessThan: Int
+  carbohydrateContentLessThan:Int
+  cholesterolContentLessThan: Int
+  fatContentLessThan: Int
+  fiberContentLessThan: Int
+  ironContentLessThan: Int
+  magnesiumContentLessThan: Int
+  phosphorusContentLessThan: Int
+  potassiumContentLessThan: Int
+  proteinContentLessThan: Int
+  quantityLessThan: Int
+  sodiumContentLessThan: Int
+  sugarContentLessThan: Int
+  vitaminAContentLessThan: Int
+  vitaminB12ContentLessThan: Int
+  vitaminB6ContentLessThan: Int
+  vitaminCContentLessThan: Int
+  vitaminDContentLessThan: Int
+  vitaminEContentLessThan: Int
+  vitaminKContentLessThan: Int
+  zincContentLessThan: Int
+`
+
+const nutritionInformationMoreThan = `
+  calciumContentMoreThan: Int
+  caloriesMoreThan: Int
+  carbohydrateContentMoreThan:Int
+  cholesterolContentMoreThan: Int
+  fatContentMoreThan: Int
+  fiberContentMoreThan: Int
+  ironContentMoreThan: Int
+  magnesiumContentMoreThan: Int
+  phosphorusContentMoreThan: Int
+  potassiumContentMoreThan: Int
+  proteinContentMoreThan: Int
+  quantityMoreThan: Int
+  sodiumContentMoreThan: Int
+  sugarContentMoreThan: Int
+  vitaminAContentMoreThan: Int
+  vitaminB12ContentMoreThan: Int
+  vitaminB6ContentMoreThan: Int
+  vitaminCContentMoreThan: Int
+  vitaminDContentMoreThan: Int
+  vitaminEContentMoreThan: Int
+  vitaminKContentMoreThan: Int
+  zincContentMoreThan: Int
+`
+
+type BeverageQuery{
+  textPartOfBeverageName: String
+  ${nutritionInformationLessThan}
+  ${nutritionInformationMoreThan}
+  hasbeverageType: BeverageType
+  hasProvenanceCountry: Country
+  containsHealthLabels: [HealthLabel!]
+  doesNotContainHealthLabels: [HealthLabel!]
+  hasCategories: [Category!]
+  isMadeOfFruits: [Fruit!]
+  isMadeOfVegetables: [Vegetable!]
+  containsTextsPartOfIngredientsNames: [String!]
+
+}
+
+type RecipeQuery{
+  textPartOfRecipeName: String
+  isRecipeFor: [BeverageType!]
+  ${nutritionInformationLessThan}
+  ${nutritionInformationMoreThan}
+  containsTextsPartOfIngredientsNames: [String!]
+  containsHealthLabels: [HealthLabel!]
+  doesNotContainHealthLabels: [HealthLabel!]
+}
+
+const hasAuthorUserInformation = `
+  firstName: String
+  lastName: String
+  age: Int
+  gender: Gender
+  livesInCountry: Country
+  hasNationality: Nationality
+  hasHealthRestriction: [HealthRestriction!]
+`
+
+type ReviewQuery{
+   correspondsToBeverage: BeverageType
+   ${hasAuthorUserInformation}
+}
+
+type OfferQuery{
+   hasPriceLessThan: Int
+   hasPriceMoreThan: Int
+   hasCurrency: Currency
+   ${hasAuthorUserInformation}
+}
