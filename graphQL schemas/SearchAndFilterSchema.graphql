@@ -1,92 +1,3 @@
-const nutritionInformation = `
-  calciumContent: Int
-  calories: Int
-  carbohydrateContent:Int
-  cholesterolContent: Int
-  fatContent: Int
-  fiberContent: Int
-  ironContent: Int
-  magnesiumContent: Int
-  phosphorusContent: Int
-  potassiumContent: Int
-  proteinContent: Int
-  quantity: Int
-  sodiumContent: Int
-  sugarContent: Int
-  vitaminAContent: Int
-  vitaminB12Content: Int
-  vitaminB6Content: Int
-  vitaminCContent: Int
-  vitaminDContent: Int
-  vitaminEContent: Int
-  vitaminKContent: Int
-  zincContent: Int
-`
-type Score{
-  scoreID: ID!
-  scoreValue: Int!
-  userEmail: String!
-  beverageID: ID!
-}
-
-type Beverage{
-  beverageID: ID!
-  beverageName: String!
-  beverageUrl: String
-  beverageImageUrl: String
-  beverageIngredientsImageUrl: String
-  beverageNutritionImageUrl: String
-  beverageDescription: String
-  isMadeOfFruit: Fruit
-  isMadeOfVegetable: Vegetable
-  hasHealthLabel: HealthLabel
-  ${nutritionInformation}
-  hasProvenanceCountry: Country
-  hasCategory: Category
-  hasIngredient: Ingredient
-  hasOffer: Offer
-  hasReview: Review
-  hasRecipe: Recipe
-  hasBeverageScores: [Score!]
-}
-
-type Recipe{
-  recipeID: ID!
-  recipeName: String!
-  recipeDescription: String
-  recipeImageUrl: String
-  recipeShareAs: String
-  recipeSource: String
-  recipeURI: String
-  recipeURL: String
-  ${nutritionInformation}
-  hasHealthLabel: HealthLabel
-  hasIngredient: Ingredient
-  isRecipeFor: Beverage
-  hasRecipeScores: [Score!]
-}
-
-
-type Review{
-  reviewID: ID!
-  reviewDescription: String!
-  hasReviewScores: [Score!]
-}
-
-enum Currency{
-  EURO
-  LEU
-  AMERICANDOLLAR
-  YEN
-}
-
-type Offer{
-  offerID: ID!
-  offerPrice: Int
-  offerCurrency: Currency
-  offerDescription: String
-}
-
 type Ingredient{
   ingredientName: String
 }
@@ -224,8 +135,8 @@ type ReviewQuery{
 }
 
 type OfferQuery{
-   hasPriceLessThan: Int
-   hasPriceMoreThan: Int
-   hasCurrency: Currency
+   offerPriceLessThan: Int
+   offerPriceMoreThan: Int
+   offerCurrency: String
    ${hasAuthorUserInformation}
 }
