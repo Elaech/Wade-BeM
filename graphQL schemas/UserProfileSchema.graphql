@@ -1,0 +1,69 @@
+type UserProfile {
+  email: String!
+  firstName: String
+  lastName: String
+  age: Int
+  gender: Gender
+  livesInCountry: Country
+  hasNationality: Nationality
+  hasHealthRestriction: [HealthRestriction!]
+}
+
+enum Gender {
+  FEMALE
+  MALE
+}
+
+type Country{
+  name: String
+}
+
+type Nationality{
+  name: String
+}
+
+type HealthRestriction{
+  name: String 
+}
+
+type Query{
+  email: String!
+  firstName: String
+  lastName: String
+  age: Int
+  gender: Gender
+  livesInCountry: Country
+  hasNationality: Nationality
+  hasHealthRestriction: [HealthRestriction!]
+}
+
+type AddUserMutation{
+  email: String!
+  firstName: String
+  lastName: String
+  age: Int
+  gender: Gender
+  livesInCountry: Country
+  hasNationality: Nationality
+  hasHealthRestriction: [HealthRestriction!]
+}
+
+type DeleteUserFieldsMutation{
+  firstName(email:String!): String
+  lastName(email:String!): String
+  age(email:String!): Int
+  gender(email:String!): Gender
+  livesInCountry(email:String!): Country
+  hasNationality(email:String!): Nationality
+  hasHealthRestriction(email:String!): [HealthRestriction!]
+}
+
+type UpdateUserFieldsMutation{
+  firstName(email:String!): String
+  lastName(email:String!): String
+  age(email:String!): Int
+  gender(email:String!): Gender
+  livesInCountry(email:String!): Country
+  hasNationality(email:String!): Nationality
+  hasHealthRestriction(email:String!): [HealthRestriction!]
+}
