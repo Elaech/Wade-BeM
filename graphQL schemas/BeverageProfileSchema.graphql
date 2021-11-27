@@ -136,53 +136,53 @@ type DeleteRecipeScoreMutation{
 
 
 type OfferQuery{
-  offerID: ID!
-  offerPrice: Int
-  offerCurrency: String
-  offerDescription: String
+  offerID(email:String!): ID!
+  offerPrice(email:String!): Int
+  offerCurrency(email:String!): String
+  offerDescription(email:String!): String
 }
 
 type AddOfferMutation{
-  offerPrice: Int!
-  offerCurrency: String!
-  offerDescription: String!
+  offerPrice(email:String!): Int!
+  offerCurrency(email:String!): String!
+  offerDescription(email:String!): String!
 }
 
 type UpdateOfferMutation{
-  offerID: ID!
-  offerPrice: Int
-  offerCurrency: String
-  offerDescription: String
+  offerID(email:String!): ID!
+  offerPrice(email:String!): Int
+  offerCurrency(email:String!): String
+  offerDescription(email:String!): String
 }
 
 type DeleteOfferMutation{
-  offerID: ID!
-  offerPrice: Int
-  offerCurrency: String
-  offerDescription: String
+  offerID(email:String!): ID!
+  offerPrice(email:String!): Int
+  offerCurrency(email:String!): String
+  offerDescription(email:String!): String
 }
 
 
 
 type ReviewQuery{
-  reviewID: ID!
-  reviewDescription: String
-  hasReviewRating: Int
+  reviewID(email:String!): ID!
+  reviewDescription(email:String!): String
+  hasReviewRating(email:String!): Int
 }
 
 type AddReviewMutation{
-  reviewDescription: String!
-  hasReviewRating: Int!
+  reviewDescription(email:String!): String!
+  hasReviewRating(email:String!): Int!
 }
 
 type UpdateReviewMutation{
-  reviewID: ID!
-  reviewDescription: String
-  hasReviewRating: Int
+  reviewID(email:String!): ID!
+  reviewDescription(email:String!): String
+  hasReviewRating(email:String!): Int
 }
 
 type DeleteReviewMutation{
-  reviewID: ID!
-  reviewDescription: String
-  hasReviewRating: Int
+  reviewID(email:String!): ID!
+  reviewDescription(email:String!): String
+  hasReviewRating(email:String!): Int
 }
