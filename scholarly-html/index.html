@@ -135,7 +135,107 @@
         </li>
       </ul>
     </section>
+    <section id="services">
+        <h2>Services/Components of our application</h2>
+        <section id="frontend">
+          <h3>Beverage Manager Client</h3>
+        </section>
+        <section id="gateway">
+          <h3>Beverage Manager Gateway</h3>
+        </section>
+        <section id="user-profile-service">
+          <h3>User Profile Service</h3>
+          <p>The User Profile Service enables the user to visualize and modify personal account information.
+            The C3 diagram below highlights the fact that this service receives information from Beverage Manager Gateway as a GraphQL query/mutation
+            and performs a validation over the given data, converting it afterwards into a SPARQL query which is sent to the Stardog triple store.
+            The results are after that formatted and sent back to the Beverage Manager Gateway.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/UserProfileServiceC3Diagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. X User Profile Service - C3 Diagram</figcaption>
+          </figure>
 
+           <p>The task flow diagram below indicates the steps and decisions that a user has to make in order to access and modify
+            his personal account user information. As a mention, all account metadata can be modified using this service, except
+            for the password, which is modified in the Beverage Manager Client component.</p> 
+         
+          <figure typeof="sa:image">
+            <img
+              src="res/UserProfileTaskFlowDiagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. X User Profile - Task flow diagram</figcaption>
+        </section>
+        <section id="beverage-profile-service">
+          <h3>Beverage Profile Service</h3>
+          <p>The Beverage Profile Service enables the user to visualize and modify information regarding his personal beverage profile.
+            Beverage profile information include an updatable list of beverages with scores given by the user (depending on his preferences),
+            a list of recipes with scores given by the user (scores also indicate preferences). The user can also add, delete, update and 
+            visualize offers and reviews.
+          </p>
+          <p>Same as before, the C3 diagram below highlights the fact that this service receives information from Beverage Manager Gateway 
+            as a GraphQL query/mutation and performs a validation over the given data, converting it afterwards into a SPARQL query 
+            which is sent to the Stardog triple store. The results are after that formatted and sent back to the Beverage Manager Gateway.</p>
+          <figure typeof="sa:image">
+            <img
+              src="res/BeverageProfileServiceC3Diagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. X Beverage Profile Service - C3 Diagram</figcaption>
+          </figure>
+          <p>The task flow diagram below indicates the steps and decisions that a user has to make in order to visualize and modify 
+            information regarding the personal beverage profile. The diagram also includes data that describe elements contained 
+            by an offer and by a review.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/BeverageProfileTaskFlowDiagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. X Beverage Profile - Task flow diagram</figcaption>
+        </section>
+        <section id="search-and-filter-service">
+          <h3>Search and filter service</h3>
+          <p>The search and filter service allows the user to perform searches and apply filters. A user can search and apply filters for beverages,
+            recipes, offers and reviews. Same as before, the C3 diagram below highlights the fact that this service receives information 
+            from Beverage Manager Gateway as a GraphQL query and performs a validation over the given data, converting it afterwards into a SPARQL query 
+            which is sent to the Stardog triple store. The results are after that formatted and sent back to the Beverage Manager Gateway.</p>
+          <figure typeof="sa:image">
+            <img
+              src="res/Search&FilterServiceC3Diagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. X Search and Filter Service - C3 Diagram</figcaption>
+          </figure>
+          <p>The task flow diagram below describes the steps and decisions that a user has to make in order to perform searches and apply filters.
+             If a user searches for a beverage, he can do this by using combinations of 11 criteria (criteria are given in the left side of the diagram).
+             The process of filtering is done using the same criteria as the process of searching (and this is true also in case of recipes, offers, reviews).
+             If a user searches for a recipe, he can use combinations of 7 search criteria (criteria are given in the right side of the diagram).
+             In case of offers there are 9 different search criteria, while in the case of reviews there are 8 different search criteria.
+             As a mention, when searching (or applying filters) for offers and reviews, the users have the possibility to search/filter after information
+             corresponding to users that added the offer / review.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/Search&FilterTaskFlowDiagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. X Search and Filter - Task flow diagram</figcaption>
+        </section>
+        <section id="recommendations">
+          <h3>Recommendations service</h3>
+        </section>
+
+    </section>
     <section id="external-data">
       <h2>External data sources used for building the knowledge base</h2>
       <p>
