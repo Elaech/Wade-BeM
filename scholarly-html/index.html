@@ -744,10 +744,72 @@
     </section>
     <section id="data-modifications-creating-the-kb">
       <h2>Data Modifications. Creating the knowledge base</h2>
-      We will further describe the data processing and aggregation steps that we
-      had to go through in order to obtain the knowledge base.
+      <p>We will further describe the data processing and aggregation steps that we
+        had to go through in order to obtain the knowledge base.
+      </p>
       <section id="data-enginnering">
         <h3>Data enginnering</h3>
+        <p>
+          For the data to get to a state of being able to be put into the ontology many steps for sanitization, filtration
+      and translation have been done. Each set of data, the one from the Open Food Facts and the one from Edamam, have been
+      separately treated to respect the ontology structure as well as the data structures in which they will be stored and used.
+        </p>
+        <section>
+          <h4> Open Food Facts data</h4>
+          <p>
+              The raw Open Food Facts data was presented in a very bad initial state: lists as strings, text from various
+              languages invalid numeric formats.. etc. The diagram bellow shows how the data has been sanitized, filtrated, 
+              transformed and translated to be able to fit the ontology predetermined criteria.  
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/off_data_eng.png"
+              alt="Data flow diagram for Open Food Facts"
+              style="width: 150%"
+            />
+            <figcaption>
+              Fig. 10.A Data flow diagram for Open Food Facts
+            </figcaption>
+          </figure>
+        </section>
+        <section>
+          <h4> Words English Translation Algorithm</h4>
+          <p>
+            For translating the Open Food Facts texts the API from DeepL was used. The free capacity of
+            characters translated provided by the API is 500k. Because of this limitation text was translated as words,
+            not as full text. The algorithm, show in the diagram bellow, is build for character efficiency and data integrity
+            while also providing a way to store the progress of translation in the middle of execution. The total amount of characters
+            from the texts that needed to be translated was 2.4 millions, but with the help of the algorithm it was reduced to 470k,
+            just within bounds for the DeepL API to be a viable solution. 
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/translate_data.png"
+              alt="Text Translation Algorithm Diagram"
+              style="width: 120%"
+            />
+            <figcaption>
+              Fig. 10.B Text Translation Algorithm Diagram
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h4> Edamam data</h4>
+          <p>
+              The raw Edamam data was presented in a pretty good initial state, the only downside being the lists stored as strings.
+              The diagram bellow shows how the data has been sanitized, filtrated and transformed to be able to fit the ontology predetermined criteria. 
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/edm_data_eng.png"
+              alt="Data flow diagram for Edamam data"
+              style="width: 150%"
+            />
+            <figcaption>
+              Fig. 10.C Data flow diagram for Edamam data 
+            </figcaption>
+        </section>
       </section>
       <section id="aggregation-and-final-outcome">
         <h3>Aggregation and final outcome</h3>
