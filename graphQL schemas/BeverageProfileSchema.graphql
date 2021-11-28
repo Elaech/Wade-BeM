@@ -1,4 +1,4 @@
-const nutritionInformation = `
+type NutritionInformation {
   calciumContent: Int
   calories: Int
   carbohydrateContent:Int
@@ -21,7 +21,8 @@ const nutritionInformation = `
   vitaminEContent: Int
   vitaminKContent: Int
   zincContent: Int
-`
+}
+
 type Score{
   scoreID: ID!
   scoreValue: Int!
@@ -82,7 +83,7 @@ type BeverageQuery{
   isMadeOfFruit: Fruit
   isMadeOfVegetable: Vegetable
   hasHealthLabel: HealthLabel
-  ${nutritionInformation}
+  nutritionInformation: NutritionInformation
   hasProvenanceCountry: Country
   hasCategory: Category
   hasIngredient: Ingredient
@@ -115,7 +116,7 @@ type RecipeQuery{
   recipeSource: String
   recipeURI: String
   recipeURL: String
-  ${nutritionInformation}
+  nutritionInformation: NutritionInformation
   hasHealthLabel: HealthLabel
   hasIngredient: Ingredient
   isRecipeFor: Beverage

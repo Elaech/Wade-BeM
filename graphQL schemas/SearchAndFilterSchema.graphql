@@ -44,7 +44,7 @@ enum BeverageType {
   WATER
 }
 
-const nutritionInformationLessThan = `
+type NutritionInformationLessThan {
   calciumContentLessThan: Int
   caloriesLessThan: Int
   carbohydrateContentLessThan:Int
@@ -67,9 +67,9 @@ const nutritionInformationLessThan = `
   vitaminEContentLessThan: Int
   vitaminKContentLessThan: Int
   zincContentLessThan: Int
-`
+}
 
-const nutritionInformationMoreThan = `
+type NutritionInformationMoreThan {
   calciumContentMoreThan: Int
   caloriesMoreThan: Int
   carbohydrateContentMoreThan:Int
@@ -92,12 +92,12 @@ const nutritionInformationMoreThan = `
   vitaminEContentMoreThan: Int
   vitaminKContentMoreThan: Int
   zincContentMoreThan: Int
-`
+}
 
 type BeverageQuery{
   textPartOfBeverageName: String
-  ${nutritionInformationLessThan}
-  ${nutritionInformationMoreThan}
+  nutritionInformationLessThan: NutritionInformationLessThan
+  nutritionInformationMoreThan: NutritionInformationMoreThan
   hasbeverageType: BeverageType
   hasProvenanceCountry: Country
   containsHealthLabels: [HealthLabel!]
@@ -112,14 +112,14 @@ type BeverageQuery{
 type RecipeQuery{
   textPartOfRecipeName: String
   isRecipeFor: [BeverageType!]
-  ${nutritionInformationLessThan}
-  ${nutritionInformationMoreThan}
+  nutritionInformationLessThan: NutritionInformationLessThan
+  nutritionInformationMoreThan: NutritionInformationMoreThan
   containsTextsPartOfIngredientsNames: [String!]
   containsHealthLabels: [HealthLabel!]
   doesNotContainHealthLabels: [HealthLabel!]
 }
 
-const hasAuthorUserInformation = `
+type AuthorUserInformation {
   firstName: String
   lastName: String
   age: Int
@@ -127,16 +127,16 @@ const hasAuthorUserInformation = `
   livesInCountry: Country
   hasNationality: Nationality
   hasHealthRestriction: [HealthRestriction!]
-`
+}
 
 type ReviewQuery{
    correspondsToBeverage: BeverageType
-   ${hasAuthorUserInformation}
+   authorUserInformation: AuthorUserInformation
 }
 
 type OfferQuery{
    offerPriceLessThan: Int
    offerPriceMoreThan: Int
    offerCurrency: String
-   ${hasAuthorUserInformation}
+   authorUserInformation: AuthorUserInformation
 }
