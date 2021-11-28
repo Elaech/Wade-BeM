@@ -1,22 +1,39 @@
+"""
+The user profile schema defines queries and mutations regarding personal user information (all except password).
+"""
 userProfileSchema{
   query{
+    """Given a user email get a subset of his personal information."""
     getUser(email: String!){
       user:User
     }
   }
   mutation{
+    """Given personal user information (required only email) create a new user entity and return the created entity."""
     addUser(user:User){
       user:User
     }
+    """Given personal user information (required only email) add fields to the entity and return the updated entity."""
+    addUserFields(user:User){
+      user:User
+    }
+    """Given personal user information (required only email) delete fields from the entity and return the updated entity."""
     deleteUserFields(user:User){
       user:User
     }
+    """Given personal user information (required only email) update the given fields and return the updated entity."""
     updateUserFields(user:User){
       user:User
     }
   }
 }
 
+"""
+User: entity that describes the user. Only the email field is required (at registration step). 
+The email field is used to uniquely identify a user.
+The user password is only stored in Firebase.
+The user can update/add values for/delete other fields in his user profile.
+"""
 type User {
   email: String!
   firstName: String
@@ -28,6 +45,9 @@ type User {
   hasHealthRestriction: [HealthRestriction!]
 }
 
+"""
+Types and enums below describe a user entity. 
+"""
 enum Gender {
   FEMALE
   MALE
