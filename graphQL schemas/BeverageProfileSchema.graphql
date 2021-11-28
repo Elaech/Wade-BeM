@@ -1,3 +1,127 @@
+beverageProfileSchema{
+  query{
+    getBeverages(userEmail:String!){
+      beverageID: ID!
+      beverageName: String!
+      beverageUrl: String
+      beverageImageUrl: String
+      beverageIngredientsImageUrl: String
+      beverageNutritionImageUrl: String
+      beverageDescription: String
+      isMadeOfFruit: Fruit
+      isMadeOfVegetable: Vegetable
+      hasHealthLabel: HealthLabel
+      nutritionInformation: NutritionInformation
+      hasProvenanceCountry: Country
+      hasCategory: Category
+      hasIngredient: Ingredient
+      hasOffer: Offer
+      hasReview: Review
+      hasRecipe: Recipe
+      hasBeverageScore: Score!
+    }  
+    getRecipes(userEmail:String!){
+      recipeID: ID!
+      recipeName: String!
+      recipeDescription: String
+      recipeImageUrl: String
+      recipeShareAs: String
+      recipeSource: String
+      recipeURI: String
+      recipeURL: String
+      nutritionInformation: NutritionInformation
+      hasHealthLabel: HealthLabel
+      hasIngredient: Ingredient
+      isRecipeFor: Beverage
+      hasRecipeScore: Score!
+    }
+    getOffers(userEmail:String!){
+      offerAuthorEmail: String!
+      offerID: ID!
+      offerPrice: Int
+      offerCurrency: String
+      offerDescription: String
+    }
+    getReviews(userEmail:String!){
+      reviewAuthorEmail: String!
+      reviewID: ID!
+      reviewDescription: String
+      hasReviewRating: Int
+    }
+  }
+  mutation{
+    addBeverageScore(beverageScore: Score!){
+      beverageScore: Score!
+    }
+    updateBeverageScore(beverageScore: Score!){
+      beverageScore: Score!
+    }
+    deleteBeverageScore(beverageScore: Score!){
+      beverageScore: Score!
+    }
+
+    
+    addRecipeScore(recipeScore: Score!){
+      recipeScore: Score!
+    }
+    updateRecipeScore(recipeScore: Score!){
+      recipeScore: Score!
+    }
+    deleteRecipeScore(recipeScore: Score!){
+      recipeScore: Score!
+    }
+
+
+    addOffer(offerAuthorEmail:String!, offerPrice: Int!, offerCurrency: String!, offerDescription: String!){
+      offerAuthorEmail: String!
+      offerID: ID!
+      offerPrice: Int!
+      offerCurrency: String!
+      offerDescription: String!
+    }
+    updateOffer(offerAuthorEmail:String!, offerID:ID!, offerPrice: Int, offerCurrency: String, offerDescription: String){
+      offerAuthorEmail: String!
+      offerID: ID!
+      offerPrice: Int
+      offerCurrency: String
+      offerDescription: String
+    }
+    deleteOffer(offerAuthorEmail:String!, offerID: ID!){
+      offerAuthorEmail: String!
+      offerID: ID!
+      offerPrice: Int
+      offerCurrency: String
+      offerDescription: String
+    }
+
+    addReview(reviewAuthorEmail:String!, reviewDescription: String!, hasReviewRating: Int!){
+      reviewAuthorEmail:String!
+      reviewDescription: String!
+      hasReviewRating: Int!
+    }
+    updateReview(reviewAuthorEmail:String!, reviewID: ID!,  reviewDescription: String, hasReviewRating: Int){
+      reviewAuthorEmail:String!
+      reviewID: ID!
+      reviewDescription: String
+      hasReviewRating: Int
+    }
+    deleteReview(reviewAuthorEmail:String!, reviewID: ID!){
+      reviewAuthorEmail:String!
+      reviewID: ID!
+      reviewDescription: String
+      hasReviewRating: Int
+    }
+
+  }
+}
+
+type Score{
+  scoreID: ID!
+  scoreValue: Int!
+  userEmail: String!
+  beverageID: ID!
+}
+
 type NutritionInformation {
   calciumContent: Int
   calories: Int
@@ -21,13 +145,6 @@ type NutritionInformation {
   vitaminEContent: Int
   vitaminKContent: Int
   zincContent: Int
-}
-
-type Score{
-  scoreID: ID!
-  scoreValue: Int!
-  userEmail: String!
-  beverageID: ID!
 }
 
 type Ingredient{
@@ -72,118 +189,24 @@ enum BeverageType {
   WATER
 }
 
-type BeverageQuery{
-  beverageID: ID!
-  beverageName: String!
-  beverageUrl: String
-  beverageImageUrl: String
-  beverageIngredientsImageUrl: String
-  beverageNutritionImageUrl: String
-  beverageDescription: String
-  isMadeOfFruit: Fruit
-  isMadeOfVegetable: Vegetable
-  hasHealthLabel: HealthLabel
-  nutritionInformation: NutritionInformation
-  hasProvenanceCountry: Country
-  hasCategory: Category
-  hasIngredient: Ingredient
-  hasOffer: Offer
-  hasReview: Review
-  hasRecipe: Recipe
-  hasBeverageScore: Score!
-}
-
-type AddBeverageScoreMutation{
-  beverageScore: Score!
-}
-
-type UpdateBeverageScoreMutation{
-  beverageScore: Score!
-}
-
-type DeleteBeverageScoreMutation{
-  beverageScore: Score!
-}
 
 
 
-type RecipeQuery{
-  recipeID: ID!
-  recipeName: String!
-  recipeDescription: String
-  recipeImageUrl: String
-  recipeShareAs: String
-  recipeSource: String
-  recipeURI: String
-  recipeURL: String
-  nutritionInformation: NutritionInformation
-  hasHealthLabel: HealthLabel
-  hasIngredient: Ingredient
-  isRecipeFor: Beverage
-  hasRecipeScore: Score!
-}
-
-type AddRecipeScoreMutation{
-  recipeScore: Score!
-}
-
-type UpdateRecipeScoreMutation{
-  recipeScore: Score!
-}
-
-type DeleteRecipeScoreMutation{
-  recipeScore: Score!
-}
-
-
-type OfferQuery{
-  offerID(email:String!): ID!
-  offerPrice(email:String!): Int
-  offerCurrency(email:String!): String
-  offerDescription(email:String!): String
-}
-
-type AddOfferMutation{
-  offerPrice(email:String!): Int!
-  offerCurrency(email:String!): String!
-  offerDescription(email:String!): String!
-}
-
-type UpdateOfferMutation{
-  offerID(email:String!): ID!
-  offerPrice(email:String!): Int
-  offerCurrency(email:String!): String
-  offerDescription(email:String!): String
-}
-
-type DeleteOfferMutation{
-  offerID(email:String!): ID!
-  offerPrice(email:String!): Int
-  offerCurrency(email:String!): String
-  offerDescription(email:String!): String
-}
 
 
 
-type ReviewQuery{
-  reviewID(email:String!): ID!
-  reviewDescription(email:String!): String
-  hasReviewRating(email:String!): Int
-}
 
-type AddReviewMutation{
-  reviewDescription(email:String!): String!
-  hasReviewRating(email:String!): Int!
-}
 
-type UpdateReviewMutation{
-  reviewID(email:String!): ID!
-  reviewDescription(email:String!): String
-  hasReviewRating(email:String!): Int
-}
 
-type DeleteReviewMutation{
-  reviewID(email:String!): ID!
-  reviewDescription(email:String!): String
-  hasReviewRating(email:String!): Int
-}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,51 @@
+userProfileSchema{
+  query{
+    getUser(email: String!){
+      email: String!
+      firstName: String
+      lastName: String
+      age: Int
+      gender: Gender
+      livesInCountry: Country
+      hasNationality: Nationality
+      hasHealthRestriction: [HealthRestriction!]
+    }
+  }
+  mutation{
+    addUser(email: String!, firstName:String, lastName:String, age:Int, gender: Gender,livesInCountry: Country,
+            hasNationality: Nationality, hasHealthRestriction: [HealthRestriction!] ){
+      email: String!
+      firstName: String
+      lastName: String
+      age: Int
+      gender: Gender
+      livesInCountry: Country
+      hasNationality: Nationality
+      hasHealthRestriction: [HealthRestriction!]
+    }
+    deleteUserFields(email: String!, firstName:String, lastName:String, age:Int, gender: Gender,livesInCountry: Country,
+                      hasNationality: Nationality, hasHealthRestriction: [HealthRestriction!] ){
+      firstName: String
+      lastName: String
+      age: Int
+      gender: Gender
+      livesInCountry: Country
+      hasNationality: Nationality
+      hasHealthRestriction: [HealthRestriction!]
+    }
+    updateUserFields(email: String!, firstName:String, lastName:String, age:Int, gender: Gender,livesInCountry: Country,
+                      hasNationality: Nationality, hasHealthRestriction: [HealthRestriction!] ){
+      firstName: String
+      lastName: String
+      age: Int
+      gender: Gender
+      livesInCountry: Country
+      hasNationality: Nationality
+      hasHealthRestriction: [HealthRestriction!]
+    }
+  }
+}
+
 type UserProfile {
   email: String!
   firstName: String
@@ -26,44 +74,9 @@ type HealthRestriction{
   name: String 
 }
 
-type Query{
-  email: String!
-  firstName: String
-  lastName: String
-  age: Int
-  gender: Gender
-  livesInCountry: Country
-  hasNationality: Nationality
-  hasHealthRestriction: [HealthRestriction!]
-}
 
-type AddUserMutation{
-  email: String!
-  firstName: String
-  lastName: String
-  age: Int
-  gender: Gender
-  livesInCountry: Country
-  hasNationality: Nationality
-  hasHealthRestriction: [HealthRestriction!]
-}
 
-type DeleteUserFieldsMutation{
-  firstName(email:String!): String
-  lastName(email:String!): String
-  age(email:String!): Int
-  gender(email:String!): Gender
-  livesInCountry(email:String!): Country
-  hasNationality(email:String!): Nationality
-  hasHealthRestriction(email:String!): [HealthRestriction!]
-}
 
-type UpdateUserFieldsMutation{
-  firstName(email:String!): String
-  lastName(email:String!): String
-  age(email:String!): Int
-  gender(email:String!): Gender
-  livesInCountry(email:String!): Country
-  hasNationality(email:String!): Nationality
-  hasHealthRestriction(email:String!): [HealthRestriction!]
-}
+
+
+
