@@ -1,5 +1,5 @@
 """
-The user profile schema defines queries and mutations regarding personal user information (all except password).
+The userProfileSchema defines queries and mutations regarding personal user information (all except password).
 """
 userProfileSchema{
   query{
