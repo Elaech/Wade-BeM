@@ -1,47 +1,57 @@
 searchAndFilterSchema{
   query{
-    searchBeverage(textPartOfBeverageName: String, nutritionInformationLessThan: NutritionInformationLessThan, 
-                    nutritionInformationMoreThan: NutritionInformationMoreThan, hasbeverageType: BeverageType,
-                    hasProvenanceCountry: Country, containsHealthLabels: [HealthLabel!], doesNotContainHealthLabels: [HealthLabel!], 
-                    hasCategories: [Category!], isMadeOfFruits: [Fruit!], isMadeOfVegetables: [Vegetable!], containsTextsPartOfIngredientsNames: [String!]){
-      textPartOfBeverageName: String
-      nutritionInformationLessThan: NutritionInformationLessThan
-      nutritionInformationMoreThan: NutritionInformationMoreThan
-      hasbeverageType: BeverageType
-      hasProvenanceCountry: Country
-      containsHealthLabels: [HealthLabel!]
-      doesNotContainHealthLabels: [HealthLabel!]
-      hasCategories: [Category!]
-      isMadeOfFruits: [Fruit!]
-      isMadeOfVegetables: [Vegetable!]
-      containsTextsPartOfIngredientsNames: [String!]
+    searchBeverage(searchBeverageCriteria: SearchBeverageCriteria){
+      searchBeverageCriteria: SearchBeverageCriteria
     }
-    searchRecipe(textPartOfRecipeName: String, isRecipeFor: [BeverageType!], nutritionInformationLessThan: NutritionInformationLessThan,
-                 nutritionInformationMoreThan: NutritionInformationMoreThan, containsTextsPartOfIngredientsNames: [String!],
-                 containsHealthLabels: [HealthLabel!], doesNotContainHealthLabels: [HealthLabel!]){
-      textPartOfRecipeName: String
-      isRecipeFor: [BeverageType!]
-      nutritionInformationLessThan: NutritionInformationLessThan
-      nutritionInformationMoreThan: NutritionInformationMoreThan
-      containsTextsPartOfIngredientsNames: [String!]
-      containsHealthLabels: [HealthLabel!]
-      doesNotContainHealthLabels: [HealthLabel!]
+    searchRecipe(searchRecipeCriteria: SearchRecipeCriteria){
+      searchRecipeCriteria: SearchRecipeCriteria
     }
-    searchReview(correspondsToBeverage: BeverageType,authorUserInformation: AuthorUserInformation){
-      correspondsToBeverage: BeverageType
-      authorUserInformation: AuthorUserInformation
+    searchReview(searchReviewCriteria: SearchReviewCriteria){
+      searchReviewCriteria: SearchReviewCriteria
     }
-    searchOffer(offerPriceLessThan: Int, offerPriceMoreThan: Int,offerCurrency: String, 
-                authorUserInformation: AuthorUserInformation) {
-      offerPriceLessThan: Int
-      offerPriceMoreThan: Int
-      offerCurrency: String
-      authorUserInformation: AuthorUserInformation
+    searchOffer(searchOfferCriteria: SearchOfferCriteria) {
+      searchOfferCriteria: SearchOfferCriteria
     }
   }
   mutations{
-    
+
   }
+}
+
+type SearchBeverageCriteria{
+  textPartOfBeverageName: String
+  nutritionInformationLessThan: NutritionInformationLessThan
+  nutritionInformationMoreThan: NutritionInformationMoreThan
+  hasbeverageType: BeverageType
+  hasProvenanceCountry: Country
+  containsHealthLabels: [HealthLabel!]
+  doesNotContainHealthLabels: [HealthLabel!]
+  hasCategories: [Category!]
+  isMadeOfFruits: [Fruit!]
+  isMadeOfVegetables: [Vegetable!]
+  containsTextsPartOfIngredientsNames: [String!]
+}
+
+type SearchRecipeCriteria{
+  textPartOfRecipeName: String
+  isRecipeFor: [BeverageType!]
+  nutritionInformationLessThan: NutritionInformationLessThan
+  nutritionInformationMoreThan: NutritionInformationMoreThan
+  containsTextsPartOfIngredientsNames: [String!]
+  containsHealthLabels: [HealthLabel!]
+  doesNotContainHealthLabels: [HealthLabel!]
+}
+
+type SearchReviewCriteria{
+  correspondsToBeverage: BeverageType
+  authorUserInformation: AuthorUserInformation
+}
+
+type SearchOfferCriteria{
+  offerPriceLessThan: Int
+  offerPriceMoreThan: Int
+  offerCurrency: String
+  authorUserInformation: AuthorUserInformation
 }
 
 type Ingredient{

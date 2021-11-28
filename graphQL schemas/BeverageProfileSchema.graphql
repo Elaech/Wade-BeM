@@ -1,52 +1,16 @@
 beverageProfileSchema{
   query{
     getBeverages(userEmail:String!){
-      beverageID: ID!
-      beverageName: String!
-      beverageUrl: String
-      beverageImageUrl: String
-      beverageIngredientsImageUrl: String
-      beverageNutritionImageUrl: String
-      beverageDescription: String
-      isMadeOfFruit: Fruit
-      isMadeOfVegetable: Vegetable
-      hasHealthLabel: HealthLabel
-      nutritionInformation: NutritionInformation
-      hasProvenanceCountry: Country
-      hasCategory: Category
-      hasIngredient: Ingredient
-      hasOffer: Offer
-      hasReview: Review
-      hasRecipe: Recipe
-      hasBeverageScore: Score!
+      beverageList: [Beverage!]
     }  
     getRecipes(userEmail:String!){
-      recipeID: ID!
-      recipeName: String!
-      recipeDescription: String
-      recipeImageUrl: String
-      recipeShareAs: String
-      recipeSource: String
-      recipeURI: String
-      recipeURL: String
-      nutritionInformation: NutritionInformation
-      hasHealthLabel: HealthLabel
-      hasIngredient: Ingredient
-      isRecipeFor: Beverage
-      hasRecipeScore: Score!
+      recipeList: [Recipe!]
     }
     getOffers(userEmail:String!){
-      offerAuthorEmail: String!
-      offerID: ID!
-      offerPrice: Int
-      offerCurrency: String
-      offerDescription: String
+      offerList: [Offer!]
     }
     getReviews(userEmail:String!){
-      reviewAuthorEmail: String!
-      reviewID: ID!
-      reviewDescription: String
-      hasReviewRating: Int
+      reviewList: [Review!]
     }
   }
   mutation{
@@ -60,7 +24,6 @@ beverageProfileSchema{
       beverageScore: Score!
     }
 
-    
     addRecipeScore(recipeScore: Score!){
       recipeScore: Score!
     }
@@ -71,55 +34,94 @@ beverageProfileSchema{
       recipeScore: Score!
     }
 
-
-    addOffer(offerAuthorEmail:String!, offerPrice: Int!, offerCurrency: String!, offerDescription: String!){
-      offerAuthorEmail: String!
-      offerID: ID!
-      offerPrice: Int!
-      offerCurrency: String!
-      offerDescription: String!
+    addOffer(offer: Offer){
+      offer: Offer
     }
-    updateOffer(offerAuthorEmail:String!, offerID:ID!, offerPrice: Int, offerCurrency: String, offerDescription: String){
-      offerAuthorEmail: String!
-      offerID: ID!
-      offerPrice: Int
-      offerCurrency: String
-      offerDescription: String
+    updateOffer(offer: Offer){
+      offer: Offer
     }
-    deleteOffer(offerAuthorEmail:String!, offerID: ID!){
-      offerAuthorEmail: String!
-      offerID: ID!
-      offerPrice: Int
-      offerCurrency: String
-      offerDescription: String
+    deleteOffer(offer: Offer){
+      offer: Offer
     }
 
-    addReview(reviewAuthorEmail:String!, reviewDescription: String!, hasReviewRating: Int!){
-      reviewAuthorEmail:String!
-      reviewDescription: String!
-      hasReviewRating: Int!
+    addReview(review: Review){
+      review: Review
     }
-    updateReview(reviewAuthorEmail:String!, reviewID: ID!,  reviewDescription: String, hasReviewRating: Int){
-      reviewAuthorEmail:String!
-      reviewID: ID!
-      reviewDescription: String
-      hasReviewRating: Int
+    updateReview(review: Review){
+      review: Review
     }
-    deleteReview(reviewAuthorEmail:String!, reviewID: ID!){
-      reviewAuthorEmail:String!
-      reviewID: ID!
-      reviewDescription: String
-      hasReviewRating: Int
+    deleteReview(review: Review){
+      review: Review
     }
 
   }
 }
 
+enum ScorableItem{
+  BEVERAGE
+  RECIPE
+  REVIEW
+  OFFER
+}
+
 type Score{
-  scoreID: ID!
   scoreValue: Int!
   userEmail: String!
+  entityType: ScorableItem!
+  entityID: ID!
+}
+
+type Beverage{
   beverageID: ID!
+  beverageName: String!
+  beverageUrl: String
+  beverageImageUrl: String
+  beverageIngredientsImageUrl: String
+  beverageNutritionImageUrl: String
+  beverageDescription: String
+  isMadeOfFruit: Fruit
+  isMadeOfVegetable: Vegetable
+  hasHealthLabel: HealthLabel
+  nutritionInformation: NutritionInformation
+  hasProvenanceCountry: Country
+  hasCategory: Category
+  hasIngredient: Ingredient
+  hasOffer: Offer
+  hasReview: Review
+  hasRecipe: Recipe
+  hasBeverageScores: [Score!]
+}
+
+type Recipe{
+  recipeID: ID!
+  recipeName: String!
+  recipeDescription: String
+  recipeImageUrl: String
+  recipeShareAs: String
+  recipeSource: String
+  recipeURI: String
+  recipeURL: String
+  nutritionInformation: NutritionInformation
+  hasHealthLabel: HealthLabel
+  hasIngredient: Ingredient
+  isRecipeFor: Beverage
+  hasRecipeScores: [Score!]
+}
+
+type Review{
+  reviewAuthorEmail: String!
+  reviewID: ID!
+  reviewDescription: String!
+  hasReviewScores: [Score!]
+}
+
+type Offer{
+  offerAuthorEmail: String!
+  offerID: ID!
+  offerPrice: Int
+  offerCurrency: Currency
+  offerDescription: String
+  hasOfferScores: [Score!]
 }
 
 type NutritionInformation {
@@ -187,56 +189,6 @@ enum BeverageType {
   SYRUP
   TEA
   WATER
-}
-
-type Beverage{
-  beverageID: ID!
-  beverageName: String!
-  beverageUrl: String
-  beverageImageUrl: String
-  beverageIngredientsImageUrl: String
-  beverageNutritionImageUrl: String
-  beverageDescription: String
-  isMadeOfFruit: Fruit
-  isMadeOfVegetable: Vegetable
-  hasHealthLabel: HealthLabel
-  nutritionInformation: NutritionInformation
-  hasProvenanceCountry: Country
-  hasCategory: Category
-  hasIngredient: Ingredient
-  hasOffer: Offer
-  hasReview: Review
-  hasRecipe: Recipe
-  hasBeverageScores: [Score!]
-}
-
-type Recipe{
-  recipeID: ID!
-  recipeName: String!
-  recipeDescription: String
-  recipeImageUrl: String
-  recipeShareAs: String
-  recipeSource: String
-  recipeURI: String
-  recipeURL: String
-  nutritionInformation: NutritionInformation
-  hasHealthLabel: HealthLabel
-  hasIngredient: Ingredient
-  isRecipeFor: Beverage
-  hasRecipeScores: [Score!]
-}
-
-type Review{
-  reviewID: ID!
-  reviewDescription: String!
-  hasReviewScores: [Score!]
-}
-
-type Offer{
-  offerID: ID!
-  offerPrice: Int
-  offerCurrency: Currency
-  offerDescription: String
 }
 
 

@@ -1,52 +1,23 @@
 userProfileSchema{
   query{
     getUser(email: String!){
-      email: String!
-      firstName: String
-      lastName: String
-      age: Int
-      gender: Gender
-      livesInCountry: Country
-      hasNationality: Nationality
-      hasHealthRestriction: [HealthRestriction!]
+      user:User
     }
   }
   mutation{
-    addUser(email: String!, firstName:String, lastName:String, age:Int, gender: Gender,livesInCountry: Country,
-            hasNationality: Nationality, hasHealthRestriction: [HealthRestriction!] ){
-      email: String!
-      firstName: String
-      lastName: String
-      age: Int
-      gender: Gender
-      livesInCountry: Country
-      hasNationality: Nationality
-      hasHealthRestriction: [HealthRestriction!]
+    addUser(user:User){
+      user:User
     }
-    deleteUserFields(email: String!, firstName:String, lastName:String, age:Int, gender: Gender,livesInCountry: Country,
-                      hasNationality: Nationality, hasHealthRestriction: [HealthRestriction!] ){
-      firstName: String
-      lastName: String
-      age: Int
-      gender: Gender
-      livesInCountry: Country
-      hasNationality: Nationality
-      hasHealthRestriction: [HealthRestriction!]
+    deleteUserFields(user:User){
+      user:User
     }
-    updateUserFields(email: String!, firstName:String, lastName:String, age:Int, gender: Gender,livesInCountry: Country,
-                      hasNationality: Nationality, hasHealthRestriction: [HealthRestriction!] ){
-      firstName: String
-      lastName: String
-      age: Int
-      gender: Gender
-      livesInCountry: Country
-      hasNationality: Nationality
-      hasHealthRestriction: [HealthRestriction!]
+    updateUserFields(user:User){
+      user:User
     }
   }
 }
 
-type UserProfile {
+type User {
   email: String!
   firstName: String
   lastName: String
