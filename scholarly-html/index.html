@@ -812,6 +812,77 @@
         </li>
       </ul>
     </section>
+    <section id="statecharts">
+      <h2>Statecharts for our services</h2>
+      <section id="statechart-user-profile">
+        <h3>Statechart for User Profile service</h3>
+        <p>The User Profile statechart indicates the fact that a user can perform different operations (view/update/add/delete)
+          on the fields corresponding to his user profile (first name, last name, age, etc.). This service requires that the user is logged in into his account.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForUserProfile.png"
+            alt="Statechart for User Profile service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.A Statechart for User Profile service
+          </figcaption>
+        </figure>
+      </section>
+      <section id="statechart-beverage-profile">
+        <h3>Statechart for Beverage Profile service</h3>
+        <p>The Beverage Profile statechart indicates that a user can perform different operations on his beverage profile.
+          Recipes and beverages are treated the same in terms of operations (the user can view/add/update/delete a score for a beverage or for a recipe).
+          Offers and reviews are also treated the same in terms of operations (the user ca view/add/update/delete an offer or a review).
+          This service requires that the user is logged in into his account.</p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForBeverageProfile.png"
+            alt="Statechart for Beverage Profile service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.B Statechart for Beverage Profile service
+          </figcaption>
+        </figure>
+      </section>
+      <section id="statechart-search&filter">
+        <h3>Statechart for Search&Filter service</h3>
+        <p>The Search&Filter statechart describes the fact that in order to perform a search the user has to first decide over the type of entity
+          to be searched (beverage/recipe/offer/review). After that he can choose a subset of criteria and perform the actual search/filtering.
+          This service requires that the user is logged in into his account.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForSearch&Filter.png"
+            alt="Statechart for Search&Filter service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.C Statechart for Search&Filter service
+          </figcaption>
+        </figure>
+      </section>
+      <section id="statechart-recommendations">
+        <h3>Statechart for Recommendations service</h3>
+        <p>
+          The Recommendations statechart describe the process for making recommendations. 
+          First, the type of recommendation is identified and after that, searches, data aggregations and transformations are performed 
+          in order to construct the recommendation. This service requires that the user is logged in into his account.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForRecommendations.png"
+            alt="Statechart for Recommendations service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.D Statechart for Recommendations service
+          </figcaption>
+        </figure>
+      </section>
+    </section>
     <section role="doc-bibliography" id="references">
       <h2>References</h2>
       <ol id="bibliography">
