@@ -1,16 +1,24 @@
+"""
+The searchAndFilterSchema defines queries regarding the search & filter operations that 
+can be realized by any user.
+"""
 searchAndFilterSchema{
   query{
+    """Given a set of search criteria for beverages, apply them in order to get a list of beverages."""
     searchBeverage(searchBeverageCriteria: SearchBeverageCriteria){
-      searchBeverageCriteria: SearchBeverageCriteria
+      beverageList: [Beverage!]
     }
+    """Given a set of search criteria for recipes, apply them in order to get a list of recipes."""
     searchRecipe(searchRecipeCriteria: SearchRecipeCriteria){
-      searchRecipeCriteria: SearchRecipeCriteria
+      recipeList: [Recipe!]
     }
+    """Given a set of search criteria for reviews, apply them in order to get a list of reviews."""
     searchReview(searchReviewCriteria: SearchReviewCriteria){
-      searchReviewCriteria: SearchReviewCriteria
+      reviewList: [Review!]
     }
+    """Given a set of search criteria for offers, apply them in order to get a list of offers."""
     searchOffer(searchOfferCriteria: SearchOfferCriteria) {
-      searchOfferCriteria: SearchOfferCriteria
+      offerList: [Offer!]
     }
   }
   mutations{
@@ -18,6 +26,7 @@ searchAndFilterSchema{
   }
 }
 
+"""Type that indicates the search (&filter) criteria for a beverage"""
 type SearchBeverageCriteria{
   textPartOfBeverageName: String
   nutritionInformationLessThan: NutritionInformationLessThan
@@ -32,6 +41,7 @@ type SearchBeverageCriteria{
   containsTextsPartOfIngredientsNames: [String!]
 }
 
+"""Type that indicates the search (&filter) criteria for a recipe"""
 type SearchRecipeCriteria{
   textPartOfRecipeName: String
   isRecipeFor: [BeverageType!]
@@ -42,16 +52,88 @@ type SearchRecipeCriteria{
   doesNotContainHealthLabels: [HealthLabel!]
 }
 
+"""Type that indicates the search (&filter) criteria for a review"""
 type SearchReviewCriteria{
   correspondsToBeverage: BeverageType
   authorUserInformation: AuthorUserInformation
 }
 
+"""Type that indicates the search (&filter) criteria for an offer"""
 type SearchOfferCriteria{
   offerPriceLessThan: Int
   offerPriceMoreThan: Int
   offerCurrency: String
   authorUserInformation: AuthorUserInformation
+}
+
+"""Basic type for beverage"""
+type Beverage{
+  beverageID: ID!
+  beverageName: String!
+  beverageUrl: String
+  beverageImageUrl: String
+  beverageIngredientsImageUrl: String
+  beverageNutritionImageUrl: String
+  beverageDescription: String
+  isMadeOfFruit: Fruit
+  isMadeOfVegetable: Vegetable
+  hasHealthLabel: HealthLabel
+  nutritionInformation: NutritionInformation
+  hasProvenanceCountry: Country
+  hasCategory: Category
+  hasIngredient: Ingredient
+  hasOffer: Offer
+  hasReview: Review
+  hasRecipe: Recipe
+  hasBeverageScores: [Score!]
+}
+
+"""Basic type for recipe"""
+type Recipe{
+  recipeID: ID!
+  recipeName: String!
+  recipeDescription: String
+  recipeImageUrl: String
+  recipeShareAs: String
+  recipeSource: String
+  recipeURI: String
+  recipeURL: String
+  nutritionInformation: NutritionInformation
+  hasHealthLabel: HealthLabel
+  hasIngredient: Ingredient
+  isRecipeFor: Beverage
+  hasRecipeScores: [Score!]
+}
+
+"""Basic type for review"""
+type Review{
+  reviewAuthorEmail: String!
+  reviewID: ID!
+  reviewDescription: String!
+  hasReviewScores: [Score!]
+}
+
+"""Basic type for offer"""
+type Offer{
+  offerAuthorEmail: String!
+  offerID: ID!
+  offerPrice: Int
+  offerCurrency: Currency
+  offerDescription: String
+  hasOfferScores: [Score!]
+}
+
+
+"""Types that are used for describing search (and filtering) criteria recipes, beverages, reviews, offers."""
+
+type AuthorUserInformation {
+  firstName: String
+  lastName: String
+  age: Int
+  gender: Gender
+  livesInCountry: Country
+  hasNationality: Nationality
+  hasHealthRestriction: [HealthRestriction!]
 }
 
 type Ingredient{
@@ -150,13 +232,4 @@ type NutritionInformationMoreThan {
   zincContentMoreThan: Int
 }
 
-type AuthorUserInformation {
-  firstName: String
-  lastName: String
-  age: Int
-  gender: Gender
-  livesInCountry: Country
-  hasNationality: Nationality
-  hasHealthRestriction: [HealthRestriction!]
-}
 
