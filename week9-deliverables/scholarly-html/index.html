@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>BeM Technical Report</title>
+    <link rel="icon" role="presentation" href="/res/logo.ico" />
+    <link rel="stylesheet" href="css/scholarly.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- Fontawesome license: https://fontawesome.com/license/free -->
+    <script src="js/scholarly.min.js"></script>
+  </head>
+  <body prefix="sa:https://ns.science.ai">
+    <header>
+      <div class="banner">
+        <img src="res/logo2.png" width="130" height="80" alt="BeM Logo" />
+        <div class="status">Beverage Manager - WADe Project</div>
+      </div>
+      <h1>Table of Contents</h1>
+    </header>
+    <div role="contentinfo">
+      <dl>
+        <dt>Content Authors</dt>
+        <dd typeof="sa:AuthorsList">
+          <span property="schema:author" typeof="sa:ContributorRole">
+            <meta property="schema:familyName" content="Cornei" />
+            <meta property="schema:givenName" content="Laura-Maria" />
+            <span property="schema:name">Cornei Laura-Maria</span>
+          </span>
+          <span> & </span>
+          <span property="schema:author" typeof="sa:ContributorRole">
+            <meta property="schema:familyName" content="Minut" />
+            <meta property="schema:givenName" content="Mihai-Dimitrie" />
+            <span property="schema:name">Minut Mihai-Dimitrie</span>
+          </span>
+        </dd>
+
+        <dt>Content License</dt>
+        <dd property="schema:license" typeof="CreativeWork">
+          <a href="https://choosealicense.com/licenses/mit/#">MIT License</a>
+        </dd>
+
+        <dt>Scholarly HTML Format Authors</dt>
+        <dd>
+          <span property="schema:Person">
+            <meta property="schema:familyName" content="Siegman (Wiley)" />
+            <meta property="schema:givenName" content="Tzviya" />
+            <span property="schema:name"> Tzviya Siegman (Wiley)</span>
+          </span>
+          <span> & </span>
+          <span property="schema:Person">
+            <meta property="schema:familyName" content="Berjon" />
+            <meta property="schema:givenName" content="Robin" />
+            <span property="schema:name"> Tzviya Siegman (Wiley)</span>
+          </span>
+        </dd>
+
+        <dt>Scholarly HTML Format License</dt>
+        <dd property="schema:license" typeof="CreativeWork">
+          <a href="http://creativecommons.org/licenses/by/4.0/"
+            >CC-BY License</a
+          >
+        </dd>
+      </dl>
+    </div>
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+      <h2>Abstract</h2>
+      <p>
+        This report describes preliminary considerations regarding our
+        <a
+          href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/web-projects.html"
+          >WADE project</a
+        >, Beverage Manager. We describe the general structure of our proposed
+        solution, the technologies (Web services, APIs, triple store(s) etc.)
+        that will be managed or used by our application. We also provide details
+        about our ontological model and about the process of creating the
+        knowledge base (collection, sanitization, translation and aggregation of
+        data). We conclude by giving reasons why we think our solution conforms
+        to Linked Data Principles.
+      </p>
+    </section>
+    <section id="keywords">
+      <h2>Keywords</h2>
+      <ul id="keywords-list">
+        <li property="schema:keywords">Ontology</li>
+        <li property="schema:keywords">Semantic Web</li>
+        <li property="schema:keywords">Linked Data Principles</li>
+      </ul>
+    </section>
+
+    <section id="introduction" role="doc-introduction">
+      <h2>Introduction</h2>
+      <p>
+        The whole project will consist in multiple services, each with their own functionality,
+        thus creating the SOA architecture. Those services can be clustered into 4 categories:
+        front end, back end, data related and database.
+      </p>
+      <p>
+        The application exposes all of its features to the user with the help of HTML5 pages
+        loaded with dynamic and static data. The pages will be offered through the BeM Frontend service.
+        The data will come through the Gateway Service, a service to which the Frontend will make all the requests.
+        The gateway will further ask for data from other services that have their own way to query and format data
+        from the database.
+      </p>
+      <figure typeof="sa:image">
+        <img
+          src="res/web_architerure_diagram.png"
+          alt="Ontology metrics image"
+          style="width: 100%"
+        />
+        <figcaption>Fig. 3.A Project Overview - Web Architecture Diagram</figcaption>
+      </figure>
+      <p>
+        Our application will use a single knowledge base both for user and
+        beverages (meta-)data storage. This knowledge base will interact with
+        our Search & Filter, Beverage Profile, User Profile and Recommendations
+        services. The process of data collection is described in section 8,
+        whereas the steps for creating the knowledge base are discussed in
+        section 10. A description of the ontological model is given in section 9.
+      </p>
+    </section>
+
+    <section id="final-users">
+      <h2>Final Users</h2>
+      <p>
+        The target for the application is to have a place where people can search with ease
+        through beverages and find offers, recipes, reviews or even other users.
+        By completing some of the preferential user fields, such as nationality, age or preferred beverages,
+        the users will also be able to regularly find beverages, offers, other users or reviews
+        that are more suited to them. Instead of searching each time for a specific topic, the user will be presented
+        with the option of checking a feed of recommendations in which popular or personally customized user or beverage
+        related data can be seen.
+        The application will act as a powerful beverage based search tool in which people interact with
+        beverage data and each other by doing actions only related to beverages.
+      </p>
+    </section>
+
+
+    <section id="technologies">
+      <h2>
+        Web services, APIs and other technologies used as part of the
+        application
+      </h2>
+      <p>In order to build our application we will use:</p>
+      <ul id="technologies-list">
+        <li>
+          <a href="https://www.stardog.com/">Stardog</a>. This is our choice of
+          a triplestore. We will store in Stardog our created knowledge base and
+          use it in order to perform SPARQL queries, inferences, etc.
+        </li>
+        <li>
+          <a href="https://cloud.google.com/container-registry"
+            >Google Container Registry</a
+          >
+          & <a href="https://cloud.google.com/run">Google Cloud Run</a>. We will
+          use these services in order to deploy our knowledge base in Google
+          Cloud. Starting with a local Stardog Docker image, we will store it in
+          the cloud with Google Container Registry and we will further create
+          and run the resulted container using Google Cloud Run.
+        </li>
+        <li>
+          <a href="https://firebase.google.com/">Firebase</a>. We will use
+          Firebase in order to authenticate users and perform related tasks such
+          as email verificationwhen a new user registers on our platform.
+        </li>
+      </ul>
+    </section>
+
+    <section id="usecase">
+      <h2>Application Use Case</h2>
+      <p>
+        The user will be provided with different tools for interacting with the application.
+        The interaction implies either data searching, filtering, visualization, modification or creation. 
+      </p>
+      <section id="account-use-case">
+        <h3>User Account & Authentication</h3>
+        <p>
+          The be able to use the application to its full capacity the user is required to make an account,
+          the process also includes the user as a semantic object into the database. After the creation of
+          the account the user will be able to perform CRUD operations on his account data, operations that include even
+          account termination.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/user_authentication.png"
+            alt="Ontology metrics image"
+            style="width: 100%"
+          />
+          <figcaption>Fig. 6.A User Account & Authentication - Use Case Diagram</figcaption>
+        </figure>
+      </section>
+      <section id="beverage-user-profile-use-case">
+        <h3>Beverage and User Profile</h3>
+        <p>
+          The user will be able to modify metadata associated with his account through his Beverage Profile Page
+          while also be able to add Beverage Offers, Recipes, Scores or Reviews. All the actions that the user does
+          will be used in the future to provide better Item Searches and Recommendations.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/beverage_and_user_profile.png"
+            alt="Ontology metrics image"
+            style="width: 100%"
+          />
+          <figcaption>Fig. 6.B Beverage and User Profile - Use Case Diagram</figcaption>
+        </figure>
+      </section>
+      <section id="search-and-filter-use-case">
+        <h3>Smart Item Search & Filter</h3>
+        <p>
+          By default, the user can search through any type of item, including users and beverages, while also
+          being able to filter the items by their corresponding data or metadata. Each Item will comply with the
+          linked data principles and the application will also guide the user on how to access the data sources and
+          related items. 
+        </p>
+        <p>
+          By having a rich Beverage Profile the users will be able to do smart searches which will be augmented
+          with additional parameters, which will organize the data from most to least relevant for each specific user.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/smart_search_and_filter.png"
+            alt="Ontology metrics image"
+            style="width: 100%"
+          />
+          <figcaption>Fig. 6.C Smart Item Search & Filter - Use Case Diagram</figcaption>
+        </figure>
+      </section>
+      <section id="item-recommendation-use-case">
+        <h3>Smart Item Recommendation</h3>
+        <p>
+          The users can view a feed of recommendations for each category of items. The feed, by default, will contain
+          popular items, but can be switched to containing items that are similar to that type of items that are associated
+          with the user. 
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/user_authentication.png"
+            alt="Ontology metrics image"
+            style="width: 100%"
+          />
+          <figcaption>Fig. 6.D Smart Item Recommendation - Use Case Diagram</figcaption>
+        </figure>
+      </section>
+    </section>
+    <section id="services">
+        <h2>Services/Components of our application</h2>
+        <section id="frontend">
+          <h3>Beverage Manager Client</h3>
+          <p>
+            The beverage Front End service will allow the user to navigate through different sections of the application.
+            Each section has associated a HTML5 page filled with dynamic or static data, either user or beverage related.
+            The Front End service will call to the Firebase service for authentication services and to
+            the Back End Gateway API for semantic data related requests.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/c32_front_end.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.A Front End / Client - C3 Diagram</figcaption>
+          </figure>
+          <p>
+            The task diagram bellow explains the process that is executed for each action done by the user
+            within the Front End Application. The actions after the login need to be authorized for the user.
+            Some actions that can load data will be done in an async/await matter, the data being loaded dynamically;
+            while others need to be done on the server side and the data will be statically integrated.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/task_frontend.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.B Front End / Client - Task Flow Diagram</figcaption>
+          </figure>
+        </section>
+        <section id="gateway">
+          <h3>Beverage Manager Gateway</h3>
+          <p>
+            The Gateway exposes a GraphQL API for the Front End service to access, which will provide access
+            to all of the required data. Each request is validated, and mapped to sub requests that need to be sent
+            to other services that process data and have direct contact with the database. By combining the results of
+            the sub requests, the final response will be formed and it will be return to the front end.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/c32_api_gateway.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.C Back End / API Gateway - C3 Diagram</figcaption>
+          </figure>
+          <p>
+            The Back End task flow diagram provides a step by step representation of the above described process.
+            The diagram also shows a list of the services to which the Gateway will send the sub requests.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/task_api_gateway.png"
+              alt="Ontology metrics image"
+              style="width: 60%"
+            />
+            <figcaption>Fig. 7.D Back End / API Gateway - Task Flow Diagram</figcaption>
+          </figure>
+        </section>
+        <section id="user-profile-service">
+          <h3>User Profile Service</h3>
+          <p>The User Profile Service enables the user to visualize and modify personal account information.
+            The C3 diagram below highlights the fact that this service receives information from Beverage Manager Gateway as a GraphQL query/mutation
+            and performs a validation over the given data, converting it afterwards into a SPARQL query which is sent to the Stardog triple store.
+            The results are after that formatted and sent back to the Beverage Manager Gateway.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/UserProfileServiceC3Diagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.E User Profile Service - C3 Diagram</figcaption>
+          </figure>
+
+           <p>The task flow diagram below indicates the steps and decisions that a user has to make in order to access and modify
+            his personal account user information. As a mention, all account metadata can be modified using this service, except
+            for the password, which is modified in the Beverage Manager Client component.</p> 
+         
+          <figure typeof="sa:image">
+            <img
+              src="res/UserProfileTaskFlowDiagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.F User Profile - Task flow diagram</figcaption>
+          </figure>
+        </section>
+        <section id="beverage-profile-service">
+          <h3>Beverage Profile Service</h3>
+          <p>The Beverage Profile Service enables the user to visualize and modify information regarding his personal beverage profile.
+            Beverage profile information include an updatable list of beverages with scores given by the user (depending on his preferences),
+            a list of recipes with scores given by the user (scores also indicate preferences). The user can also add, delete, update and 
+            visualize offers and reviews.
+          </p>
+          <p>Same as before, the C3 diagram below highlights the fact that this service receives information from Beverage Manager Gateway 
+            as a GraphQL query/mutation and performs a validation over the given data, converting it afterwards into a SPARQL query 
+            which is sent to the Stardog triple store. The results are after that formatted and sent back to the Beverage Manager Gateway.</p>
+          <figure typeof="sa:image">
+            <img
+              src="res/BeverageProfileServiceC3Diagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.G Beverage Profile Service - C3 Diagram</figcaption>
+          </figure>
+          <p>The task flow diagram below indicates the steps and decisions that a user has to make in order to visualize and modify 
+            information regarding the personal beverage profile. The diagram also includes data that describe elements contained 
+            by an offer and by a review.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/BeverageProfileTaskFlowDiagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.H Beverage Profile - Task flow diagram</figcaption>
+          </figure>
+        </section>
+        <section id="search-and-filter-service">
+          <h3>Search and filter service</h3>
+          <p>The search and filter service allows the user to perform searches and apply filters. A user can search and apply filters for beverages,
+            recipes, offers and reviews. Same as before, the C3 diagram below highlights the fact that this service receives information 
+            from Beverage Manager Gateway as a GraphQL query and performs a validation over the given data, converting it afterwards into a SPARQL query 
+            which is sent to the Stardog triple store. The results are after that formatted and sent back to the Beverage Manager Gateway.</p>
+          <figure typeof="sa:image">
+            <img
+              src="res/Search&FilterServiceC3Diagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.I Search and Filter Service - C3 Diagram</figcaption>
+          </figure>
+          <p>The task flow diagram below describes the steps and decisions that a user has to make in order to perform searches and apply filters.
+             If a user searches for a beverage, he can do this by using combinations of 11 criteria (criteria are given in the left side of the diagram).
+             The process of filtering is done using the same criteria as the process of searching (and this is true also in case of recipes, offers, reviews).
+             If a user searches for a recipe, he can use combinations of 7 search criteria (criteria are given in the right side of the diagram).
+             In case of offers there are 9 different search criteria, while in the case of reviews there are 8 different search criteria.
+             As a mention, when searching (or applying filters) for offers and reviews, the users have the possibility to search/filter after information
+             corresponding to users that added the offer / review.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/Search&FilterTaskFlowDiagram.drawio.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.J Search and Filter - Task flow diagram</figcaption>
+          </figure>
+        </section>
+        <section id="recommendations">
+          <h3>Item Recommendations Service</h3>
+          <p>
+            The Item Recommendations service provides a way to obtain recommendations on any item for a
+            specific user. By default it provides recommendations based on popularity, but by requesting to take
+            a user into account, it can provide customized recommendations based on that User's Beverage Profile.
+            The data can be accessed through request given to the exposed GraphQL API.  
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/c32_recommendations.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.K Item Recommendation Service - C3 Diagram</figcaption>
+          </figure>
+          <p>
+            The diagram bellow shows how the user actions and services interact together to provide a finished list
+            containing recommendations regarding a desired item. The user history of application usage, user Beverage
+            Profile, user metadata and also the user input will all be used to decide which data is more relevant in the
+            case of smart recommendations.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/task_recommendation.png"
+              alt="Ontology metrics image"
+              style="width: 100%"
+            />
+            <figcaption>Fig. 7.L Item Recommendation Service - Task Flow Diagram</figcaption>
+          </figure>
+        </section>
+
+    </section>
+    <section id="external-data">
+      <h2>External data sources used for building the knowledge base</h2>
+      <p>
+        In order to build the knowledge base for our project, we collected data
+        from public API(s), open database(s) and other datasets. The used data
+        sources are as follows:
+      </p>
+      <ul id="external-data-sources">
+        <li property="schema:Dataset">
+          <a href="https://world.openfoodfacts.org/"
+            >Open Food Facts database</a
+          >
+        </li>
+        <li property="schema:WebAPI">
+          <a href="https://developer.edamam.com/edamam-recipe-api"
+            >EDAMAM recipe API</a
+          >
+        </li>
+        <li property="schema:Dataset">
+          Public (small) datasets (<a
+            href="https://untermportal.un.org/unterm/download/country"
+            >list of countries</a
+          >
+          &
+          <a
+            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview"
+          >
+            nationalities)</a
+          >
+        </li>
+      </ul>
+      <p>
+        Before creating the knowledge-base we also tested (and considered using)
+        APIs such as:
+      </p>
+      <ul id="external-data-sources-not-used">
+        <li property="schema:WebAPI">
+          <a href="https://spoonacular.com/food-api">Spoonacular API</a>
+        </li>
+        <li property="schema:WebAPI">
+          <a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a>
+        </li>
+        <li property="schema:WebAPI">
+          <a href="https://fdc.nal.usda.gov/api-guide.html"
+            >FoodData Central API</a
+          >
+        </li>
+      </ul>
+      <p>
+        Next, we will discuss only about the data sources actually used in our
+        application.
+      </p>
+      <section id="open-food-facts">
+        <h3>Open Food Facts database</h3>
+        <p>
+          From here we extracted data regarding most common (not necessarily
+          disjoint) categories of non-alcoholic beverage products. In case of
+          beverages with a potential small alcohol content, we checked that the
+          alcohol by volume value is below 1% (chosen convention). The table
+          below summarizes the number of products extracted for each category.
+        </p>
+        <figure typeof="sa:table">
+          <table id="beverage-category-table">
+            <caption>
+              Table 8.A. Number of products extracted per each beverage category
+            </caption>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Number of products extracted</th>
+            </tr>
+            <tr>
+              <td>water</td>
+              <td>9940</td>
+            </tr>
+            <tr>
+              <td>tea</td>
+              <td>5942</td>
+            </tr>
+            <tr>
+              <td>syrup</td>
+              <td>5650</td>
+            </tr>
+            <tr>
+              <td>smoothie</td>
+              <td>568</td>
+            </tr>
+            <tr>
+              <td>non-alcoholic beer</td>
+              <td>614</td>
+            </tr>
+            <tr>
+              <td>mocktail</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>milkshake</td>
+              <td>44</td>
+            </tr>
+            <tr>
+              <td>nectar</td>
+              <td>11738</td>
+            </tr>
+            <tr>
+              <td>juice</td>
+              <td>2571</td>
+            </tr>
+            <tr>
+              <td>energy drink</td>
+              <td>1144</td>
+            </tr>
+            <tr>
+              <td>dairy-based drink</td>
+              <td>3504</td>
+            </tr>
+            <tr>
+              <td>coffee</td>
+              <td>5982</td>
+            </tr>
+          </table>
+        </figure>
+        <p>
+          In case of juices and nectars categories we further split them in
+          subcategories (AppleJuice, PearNectar, etc.) so that we could
+          correlate these drinks in the future with the associated names of
+          fruits and vegetables. The data was downloaded in csv and excel
+          formats.
+        </p>
+      </section>
+      <section id="edamam">
+        <h3>EDAMAM recipe API</h3>
+        <p>
+          We used this API in order to extract data regarding non-alcoholic
+          beverage recipes. We chose it because it offered a high amount of
+          quality data (beverage recipes along with associated URI, image,
+          ingredients, calories and detailed nutritional information). Recipes
+          are also split by categories: <i>Smoothie</i>, <i>Syrup</i>,
+          <i>Tea</i>, <i>Coffee</i>, <i>Chocolate Drink</i>, <i>Juice</i>,
+          <i>Milkshake</i>. We automatically extracted the data using a script
+          (because at one request we could only extract 20 recipes and we could
+          only make 10 requests per minute). The total number of extracted
+          recipes was <span class="highlight-term">17714</span>. The data was
+          downloaded in excel format.
+        </p>
+      </section>
+      <section id="countries-and-nationalities-dataset">
+        <h3>Public (small) datasets</h3>
+        <p>
+          We used datasets which offered us the
+          <a href="https://untermportal.un.org/unterm/download/country"
+            >list of world-wide countries</a
+          >
+          and
+          <a
+            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview"
+          >
+            nationalities</a
+          >. We will use this data to provide metadata about users and beverages
+          and to make correlations.
+        </p>
+      </section>
+    </section>
+    <section id="ontological-model">
+      <h2>Ontological Model</h2>
+      <section id="ontological-model-used-vocabularies">
+        <h3>Used ontologies and vocabularies</h3>
+        In order to create the ontological model we used
+        <a href="https://schema.org/">schema.org</a> (mostly for describing
+        <a href="https://schema.org/NutritionInformation"
+          >the nutrition information of beverages</a
+        >, <a href="https://schema.org/Recipe">recipes</a>,
+        <a href="https://schema.org/Review">reviews</a>,
+        <a href="https://schema.org/Offer">offers</a>),
+        <a href="http://xmlns.com/foaf/spec/">FOAF vocabulary</a> (for
+        describing users of the application),
+        <a href="https://www.dbpedia.org/">Dbpedia</a> (mostly for describing
+        general categories of beverages),
+        <a href="http://rdfs.co/bevon/latest/html">BEVON ontology </a>
+        (for describing general properties of a beverage) and also our own
+        vocabulary (when we couldn’t map a concept/property to an existing
+        vocabulary terms).
+      </section>
+      <section id="ontological-model-tools">
+        <h3>Tools (editors, plugins) for creating the ontology</h3>
+        We created the ontology using
+        <a href="https://protege.stanford.edu/">Protégé</a>. Some metrics about
+        out ontological model can be found below:
+        <figure typeof="sa:image">
+          <img
+            src="res/ontologymetrics.PNG"
+            alt="Ontology metrics image"
+            style="width: 100%"
+          />
+          <figcaption>Fig. 9.A Ontology metrics (Protégé)</figcaption>
+        </figure>
+        <p>
+          As a mention, we uploaded data into our ontology (in order to create
+          the knowledge base) semi-automatically using a plugin named
+          <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a>
+          (details in
+          <a href="#data-modifications-creating-the-kb">next section</a>).
+        </p>
+      </section>
+      <section id="ontological-model-description">
+        <h3>Ontological model description</h3>
+        <p>
+          We described categories of beverages through a hierarchy of classes
+          (corresponding to categories from table 1). We opted for this type of
+          modelling in order to ensure an easy extension of the ontology in the
+          future, in case of adding other subcategories or categories of drinks.
+          The root class of this taxonomy is class Beverage.
+        </p>
+        <p>
+          In case of beverages such as juices and nectar we decided to define
+          subcategories by splitting these beverages based on the kind(s) of
+          fruits and/or vegetables they contain (ex: AppleJuice, PearNectar,
+          etc.). We correlated these subclasses with classes Fruit and Vegetable
+          through object properties isMadeOfFruit and isMadeOfVegetable. Figure
+          2 highlights the subclasses representing types of beverages:
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/figonto.png"
+            alt="Part of ontology image"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 9.B Part of the ontology (with highlight on the categories and
+            subcategories of beverages)
+          </figcaption>
+        </figure>
+        <p>
+          Next, we will provide a general overview on classes and their
+          associated properties (data properties and object properties) we used
+          in our model:
+        </p>
+        <ul id="ontology-description-classes-and-properties">
+          <li>
+            <span class="highlight-term">classes Country and Nationality</span>.
+            Useful for describing beverage provenance, the country where a user
+            lives in or the user’s nationality.
+          </li>
+          <li>
+            <span class="highlight-term">class Beverage</span>. We associated
+            this class with classes Review, Recipe, Offer because a beverage can
+            have associated one or more reviews, recipes, offers. We also
+            associated it with class Country through an object property that
+            indicates the provenance(s) of the beverage. Beverage was also
+            connected to class Category and to class Ingredient (connections
+            explained below).
+
+            <p>
+              Both beverages and recipes have associated nutritional information
+              (22 indicators, such as calories, calciumContent, sugarContent,
+              vitaminAContent, vitaminB6Content, etc.) and a health label (that
+              indicate the existence or non-existence of an important or
+              potentially dangerous ingredient in the beverage or a certain
+              property of the beverage, for example: milk-free, for-vegans,
+              guarana-extract, etc.). We created the set nutritional information
+              and the set of health labels by hand, by correlating information
+              regarding these that we found in Open Food Facts and Edamam. Thus,
+              we created and used the same convention over both products and
+              recipes.
+            </p>
+          </li>
+          <li>
+            <span class="highlight-term">class HealthLabel</span>. Defines the
+            health labels that are used to describe beverages and recipes.
+          </li>
+          <li>
+            <span class="highlight-term">class Ingredient</span>. Associated
+            with classes Beverage and Recipe, describes the ingredients that a
+            beverage/recipe can have.
+          </li>
+          <li>
+            <span class="highlight-term">class Category</span>. Defines the
+            fine-grained categories that a beverage can belong to. We used the
+            hierarchy of classes for defining main classes of beverages, but we
+            also needed a mechanism to associate more expressive and/or detailed
+            categories to beverages (such as squeezed-juices, instant-coffees,
+            flavoured-syrups, etc.). These categories have been previously
+            collected from the data extracted from Open Food Facts. It was
+            almost impossible and impractical to model all of those categories
+            as a set of classes, so we decided to create this new class to
+            capture the small categories that a beverage can have.
+          </li>
+          <li>
+            <span class="highlight-term">class Person</span>. Models the user
+            information. This class is connected through object properties with
+            classes Nationality, Country, HealthRestriction, meaning that a user
+            with a certain nationality lives in a certain country and may have
+            some health restrictions (such as lactose intolerance or diabetes).
+            We also defined object properties to express the fact that a user
+            may have one or more beverage preferences and/or one or more
+            beverage category preferences (for example: a user prefers
+            plant-based products). Person is also connected to classes Recipe,
+            Offer and Review with object properties that express the fact that a
+            user can add a review for a beverage, make a beverage offer or add a
+            beverage recipe.
+          </li>
+          <li>
+            <span class="highlight-term">classes Recipe, Offer, Review</span>.
+            Connected to class Person and Beverage as explained above. Recipes,
+            offers and reviews have all a description and an associated score
+            (as data properties). Offers have among others price as a data
+            property, while recipes have URIs to images, URI to source (from
+            where the recipe was collected) and other data properties.
+          </li>
+        </ul>
+      </section>
+    </section>
+    <section id="data-modifications-creating-the-kb">
+      <h2>Data Modifications. Creating the knowledge base</h2>
+      <p>We will further describe the data processing and aggregation steps that we
+        had to go through in order to obtain the knowledge base.
+      </p>
+      <section id="data-enginnering">
+        <h3>Data enginnering</h3>
+        <p>
+          For the data to get to a state of being able to be put into the ontology many steps for sanitization, filtration
+      and translation have been done. Each set of data, the one from the Open Food Facts and the one from Edamam, have been
+      separately treated to respect the ontology structure as well as the data structures in which they will be stored and used.
+        </p>
+        <section>
+          <h4> Open Food Facts data</h4>
+          <p>
+              The raw Open Food Facts data was presented in a very bad initial state: lists as strings, text from various
+              languages invalid numeric formats.. etc. The diagram bellow shows how the data has been sanitized, filtrated, 
+              transformed and translated to be able to fit the ontology predetermined criteria.  
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/off_data_eng.png"
+              alt="Data flow diagram for Open Food Facts"
+              style="width: 150%"
+            />
+            <figcaption>
+              Fig. 10.A Data flow diagram for Open Food Facts
+            </figcaption>
+          </figure>
+        </section>
+        <section>
+          <h4> Words English Translation Algorithm</h4>
+          <p>
+            For translating the Open Food Facts texts the API from DeepL was used. The free capacity of
+            characters translated provided by the API is 500k. Because of this limitation text was translated as words,
+            not as full text. The algorithm, show in the diagram bellow, is build for character efficiency and data integrity
+            while also providing a way to store the progress of translation in the middle of execution. The total amount of characters
+            from the texts that needed to be translated was 2.4 millions, but with the help of the algorithm it was reduced to 470k,
+            just within bounds for the DeepL API to be a viable solution. 
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/translate_data.png"
+              alt="Text Translation Algorithm Diagram"
+              style="width: 120%"
+            />
+            <figcaption>
+              Fig. 10.B Text Translation Algorithm Diagram
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h4> Edamam data</h4>
+          <p>
+              The raw Edamam data was presented in a pretty good initial state, the only downside being the lists stored as strings.
+              The diagram bellow shows how the data has been sanitized, filtrated and transformed to be able to fit the ontology predetermined criteria. 
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="res/edm_data_eng.png"
+              alt="Data flow diagram for Edamam data"
+              style="width: 120%"
+            />
+            <figcaption>
+              Fig. 10.C Data flow diagram for Edamam data 
+            </figcaption>
+          </figure>
+        </section>
+      </section>
+      <section id="aggregation-and-final-outcome">
+        <h3>Aggregation and final outcome</h3>
+        <p>
+          The final step for creating our knowledge base was to aggregate the
+          sanitized and translated datasets into our ontological model. In order
+          to to this, we used the
+          <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a>
+          Protégé plugin which converts spreadsheet data (excels) into OWL
+          format. We created the transformation rules using
+          <a
+            href="https://github.com/protegeproject/mapping-master/wiki/MappingMasterDSL"
+            >MappingMaster language</a
+          >, a language which describes possible excel to OWL mappings. There
+          was a total of 11 general rules (3 for recipe data, 6 for products
+          data and 2 for nationalities and countries). The process of
+          aggregation of all data was very slow (a few days) because of the
+          large sizes of the datasets and the multitude of realized mappings.
+        </p>
+      </section>
+    </section>
+    <section id="linked-data-principles-conformation">
+      <h2>How our solution conforms to Linked Data Principles</h2>
+      <p>
+        Below are some reasons regarding why we consider that our proposed
+        solution follows the Linked Data Principles:
+      </p>
+      <ul id="linked-data-principles-conformation-reasons">
+        <li>
+          We use a knowledge model (an ontology) in order to model the data in
+          our application (OWL is language is built on top of RDF, so the
+          modelling respects the linked data principles).
+        </li>
+        <li>
+          When defining the ontological model, we tried as much as possible to
+          reuse existing vocabularies and ontologies (details
+          <a href="#ontological-model-used-vocabularies">here</a>). This
+          increases reusability and increases the value of our model because of
+          its interconnections with well-known vocabularies and ontologies.
+        </li>
+        <li>
+          We use URIs for identifying any resources from the knowledge base.
+          Therefore, beverage products, recipes, offers, reviews and most of
+          their properties (ex: images) are/will be all identified by URIs. We
+          will also use URIs for identifying other resources (non-informational)
+          that will be part of our application.
+        </li>
+        <li>
+          We use/will use HTTP schema when defining URIs for the resources in
+          our application (for example, this is already true for all of the URIs
+          in our knowledge base).
+        </li>
+        <li>
+          Users of the application will be provided various useful related
+          metadata when accessing one of the resources in our application (For
+          example, the user will have access to nutritional information, health
+          labels when accessing a beverage). We will also include important
+          related information (For example, for a given recipe, the user will
+          have access to the website from where the recipe was collected). We
+          already ensured we can do these things mentioned above because of the
+          way we have designed our knowledge base.
+        </li>
+      </ul>
+    </section>
+    <section id="statecharts">
+      <h2>Statecharts for our services</h2>
+      <section id="statechart-user-profile">
+        <h3>Statechart for User Profile service</h3>
+        <p>The User Profile statechart indicates the fact that a user can perform different operations (view/update/add/delete)
+          on the fields corresponding to his user profile (first name, last name, age, etc.). This service requires that the user is logged in into his account.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForUserProfile.png"
+            alt="Statechart for User Profile service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.A Statechart for User Profile service
+          </figcaption>
+        </figure>
+      </section>
+      <section id="statechart-beverage-profile">
+        <h3>Statechart for Beverage Profile service</h3>
+        <p>The Beverage Profile statechart indicates that a user can perform different operations on his beverage profile.
+          Recipes and beverages are treated the same in terms of operations (the user can view/add/update/delete a score for a beverage or for a recipe).
+          Offers and reviews are also treated the same in terms of operations (the user ca view/add/update/delete an offer or a review).
+          This service requires that the user is logged in into his account.</p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForBeverageProfile.png"
+            alt="Statechart for Beverage Profile service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.B Statechart for Beverage Profile service
+          </figcaption>
+        </figure>
+      </section>
+      <section id="statechart-search&filter">
+        <h3>Statechart for Search&Filter service</h3>
+        <p>The Search&Filter statechart describes the fact that in order to perform a search the user has to first decide over the type of entity
+          to be searched (beverage/recipe/offer/review). After that he can choose a subset of criteria and perform the actual search/filtering.
+          This service requires that the user is logged in into his account.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForSearch&Filter.png"
+            alt="Statechart for Search&Filter service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.C Statechart for Search&Filter service
+          </figcaption>
+        </figure>
+      </section>
+      <section id="statechart-recommendations">
+        <h3>Statechart for Recommendations service</h3>
+        <p>
+          The Recommendations statechart describe the process for making recommendations. 
+          First, the type of recommendation is identified and after that, searches, data aggregations and transformations are performed 
+          in order to construct the recommendation. This service requires that the user is logged in into his account.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="res/StatechartForRecommendations.png"
+            alt="Statechart for Recommendations service"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 12.D Statechart for Recommendations service
+          </figcaption>
+        </figure>
+      </section>
+    </section>
+    <section role="doc-bibliography" id="references">
+      <h2>References</h2>
+      <ol id="bibliography">
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://www.stardog.com/">Stardog</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://cloud.google.com/container-registry"
+            >Google Container Registry</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://cloud.google.com/run">Google Cloud Run</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://firebase.google.com/">Firebase</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://world.openfoodfacts.org/"
+            >Open Food Facts database</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://developer.edamam.com/edamam-recipe-api"
+            >EDAMAM recipe API</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://untermportal.un.org/unterm/download/country"
+            >List of countries (small dataset)</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a
+            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/664133/CH_Nationality_List_20171130_v1.csv/preview"
+          >
+            List of nationalities (small dataset)</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://spoonacular.com/food-api">Spoonacular API</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://www.thecocktaildb.com/api.php">CocktailDb API </a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://fdc.nal.usda.gov/api-guide.html"
+            >FoodData Central API</a
+          >
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://schema.org/">schema.org</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="http://xmlns.com/foaf/spec/">FOAF vocabulary</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://www.dbpedia.org/">Dbpedia</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="http://rdfs.co/bevon/latest/html">BEVON ontology </a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://protege.stanford.edu/">Protégé</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a href="https://github.com/protegeproject/cellfie-plugin">Cellfie</a>
+        </li>
+        <li>
+          <i class="fa fa-coffee"></i>
+          <a
+            href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/presentations/web07ArhitecturaAplicatiilorRDF-LinkedData.pdf"
+          >
+            Wade course 7 </a
+          >(for justifications regarding linked data principles)
+        </li>
+      </ol>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,192 @@
+
+@import "normalize.css/normalize.css";
+@import "../fonts/roboto.css";
+@import "../fonts/roboto-mono.css";
+
+/*
+  XXX
+  figure styles
+  links
+*/
+
+:root{
+  --white: #fff;
+  --background-color: #F1DEDE;
+  --lighter-background-color: #F5E7E7;
+ 
+  --extra-light-brown: #E2C4BA;
+  --very-light-brown: #D9B5A6; 
+  --light-brown: #b57753;
+  --dark-brown: #582406;
+
+  --dark-red: #8D0F0F;
+  --red: red;
+
+  --dark-brownish-red:  #982B22;
+  --brownish-red: #A24532;
+  --light-brownish-red: #AA5B40; 
+
+  --dark-grey: #434343;
+
+}
+
+body {
+  max-width: 23cm;
+  margin: auto;
+  background-color: var(--background-color);
+  line-height: 1.6;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
+}
+
+/* headers & headings */
+header > h1 {
+  margin: 0;
+  font-size: 3em;
+  padding-top: 3em;
+}
+div.banner {
+  display: flex;
+  justify-content: space-between;
+}
+div.banner > img {
+  height: 100%;
+}
+div.banner > div.status {
+  color: var(--dark-brownish-red);
+  background: var(--extra-light-brown);
+  width: 350px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: right;
+  
+}
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.0375em;
+}
+h2 {
+  margin-top: 2.5em;
+}
+h3 {
+  margin-top: 2.0em;
+}
+h4 {
+  font-weight: 300;
+  font-size: 1.2em;
+  font-variant: small-caps;
+  margin: 2em 0 0.5em 0;
+}
+h1, h2 {
+  color: var(--brownish-red);
+}
+h3, h4{
+  color: var(--light-brownish-red);
+}
+
+
+/* contentinfo */
+dt{
+  color: var(--light-brownish-red);
+}
+[role="contentinfo"] a {
+  text-decoration: none;
+}
+ol[role="directory"], [role="directory"] ol {
+  list-style-type: none;
+}
+[role="contentinfo"] dt {
+  font-weight: bold;
+}
+[role="contentinfo"] dd {
+  margin-bottom: 1em;
+}
+
+/* link types */
+a.onto {
+  font-family: "Roboto Mono", monospace;
+  text-decoration: none;
+  background: linear-gradient(to top, rgba(255, 0, 0, 0.4), rgba(255, 0, 0, 0.4) 15%, var(--white) 16%);
+  color: var(--dark-grey);
+}
+
+/* code */
+code, pre {
+  font-family: "Roboto Mono", monospace;
+}
+
+/* figure caption */
+figcaption{
+  text-align: center;
+  color: var(--dark-brown);
+}
+
+/* list */
+/* ul { list-style:none; } */
+
+/* keywords */
+#keywords-list {
+  color: var(--light-brownish-red);
+}
+
+/* links */
+a {
+  color: var(--dark-brown);
+}
+
+.highlight-term {
+  color: var(--light-brown);
+  font-weight: bold;
+}
+
+/* table styles */
+caption{
+  font-weight: bold;
+}
+
+#beverage-category-table{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: left;
+  color: var(--light-brownish-red);
+}
+#beverage-category-table td, #beverage-category-table th {
+  padding: 5px;
+}
+#beverage-category-table th{
+  color: var(--light-brownish-red);
+  background-color: var(--extra-light-brown);
+}
+#beverage-category-table tr:hover {background-color: var(--lighter-background-color)}
+
+/* special boxes */
+p.issue {
+  border-left: 3px solid var(--red);
+  padding: 0.5em 1em;
+}
+
+/* bibliography */
+#bibliography {
+  list-style:none;
+}
+#bibliography i {
+  font-size:13px;
+  color:var(--dark-brownish-red);
+  margin-top: 15px;
+}
+
+/* img */
+
+img.scaled {
+  width: 100%;
+}
+
+@media screen and (max-width: 577px) {
+  div.status {
+    width: auto;
+  }
+}
+@media screen and (max-width: 980px) {
+  body {
+    margin: 0 2em;
+  }
+}

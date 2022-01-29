@@ -1,0 +1,24 @@
+"""The graphql schema for the Item Recommendation service"""
+ItemRecommendationSchema{
+	query{
+		"""Recommendations for Users, that can be searched smart or, by default, by popularity"""
+		getUserRecommendations(email: String!, isSmart:Bool!){ 
+			recommendations: [User!]
+		}
+		"""Recommendations for Beverages, that can be searched smart or, by default, by popularity"""
+		getBeverageRecommendations(email: String!, isSmart:Bool!){ 
+			recommendations: [Beverage!]
+		}
+		"""Recommendations for Offers, that can be searched smart or, by default, by popularity"""
+		getOfferRecommendations(email: String!, isSmart: Bool!){
+			recommendations: [Offer!]
+		}
+		"""Recommendations for Recipes, that can be searched smart or, by default, by popularity"""
+		getRecipeRecommendations(email: String!, isSmart: Bool!){
+			recommendations: [Recipe!]
+		}
+	}
+	"""The service will not be able to modify the data"""
+	mutation{
+	}
+}

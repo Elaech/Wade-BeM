@@ -1,0 +1,235 @@
+"""
+The searchAndFilterSchema defines queries regarding the search & filter operations that 
+can be realized by any user.
+"""
+searchAndFilterSchema{
+  query{
+    """Given a set of search criteria for beverages, apply them in order to get a list of beverages."""
+    searchBeverage(searchBeverageCriteria: SearchBeverageCriteria){
+      beverageList: [Beverage!]
+    }
+    """Given a set of search criteria for recipes, apply them in order to get a list of recipes."""
+    searchRecipe(searchRecipeCriteria: SearchRecipeCriteria){
+      recipeList: [Recipe!]
+    }
+    """Given a set of search criteria for reviews, apply them in order to get a list of reviews."""
+    searchReview(searchReviewCriteria: SearchReviewCriteria){
+      reviewList: [Review!]
+    }
+    """Given a set of search criteria for offers, apply them in order to get a list of offers."""
+    searchOffer(searchOfferCriteria: SearchOfferCriteria) {
+      offerList: [Offer!]
+    }
+  }
+  mutations{
+
+  }
+}
+
+"""Type that indicates the search (&filter) criteria for a beverage"""
+type SearchBeverageCriteria{
+  textPartOfBeverageName: String
+  nutritionInformationLessThan: NutritionInformationLessThan
+  nutritionInformationMoreThan: NutritionInformationMoreThan
+  hasbeverageType: BeverageType
+  hasProvenanceCountry: Country
+  containsHealthLabels: [HealthLabel!]
+  doesNotContainHealthLabels: [HealthLabel!]
+  hasCategories: [Category!]
+  isMadeOfFruits: [Fruit!]
+  isMadeOfVegetables: [Vegetable!]
+  containsTextsPartOfIngredientsNames: [String!]
+}
+
+"""Type that indicates the search (&filter) criteria for a recipe"""
+type SearchRecipeCriteria{
+  textPartOfRecipeName: String
+  isRecipeFor: [BeverageType!]
+  nutritionInformationLessThan: NutritionInformationLessThan
+  nutritionInformationMoreThan: NutritionInformationMoreThan
+  containsTextsPartOfIngredientsNames: [String!]
+  containsHealthLabels: [HealthLabel!]
+  doesNotContainHealthLabels: [HealthLabel!]
+}
+
+"""Type that indicates the search (&filter) criteria for a review"""
+type SearchReviewCriteria{
+  correspondsToBeverage: BeverageType
+  authorUserInformation: AuthorUserInformation
+}
+
+"""Type that indicates the search (&filter) criteria for an offer"""
+type SearchOfferCriteria{
+  offerPriceLessThan: Int
+  offerPriceMoreThan: Int
+  offerCurrency: String
+  authorUserInformation: AuthorUserInformation
+}
+
+"""Basic type for beverage"""
+type Beverage{
+  beverageID: ID!
+  beverageName: String!
+  beverageUrl: String
+  beverageImageUrl: String
+  beverageIngredientsImageUrl: String
+  beverageNutritionImageUrl: String
+  beverageDescription: String
+  isMadeOfFruit: Fruit
+  isMadeOfVegetable: Vegetable
+  hasHealthLabel: HealthLabel
+  nutritionInformation: NutritionInformation
+  hasProvenanceCountry: Country
+  hasCategory: Category
+  hasIngredient: Ingredient
+  hasOffer: Offer
+  hasReview: Review
+  hasRecipe: Recipe
+  hasBeverageScores: [Score!]
+}
+
+"""Basic type for recipe"""
+type Recipe{
+  recipeID: ID!
+  recipeName: String!
+  recipeDescription: String
+  recipeImageUrl: String
+  recipeShareAs: String
+  recipeSource: String
+  recipeURI: String
+  recipeURL: String
+  nutritionInformation: NutritionInformation
+  hasHealthLabel: HealthLabel
+  hasIngredient: Ingredient
+  isRecipeFor: Beverage
+  hasRecipeScores: [Score!]
+}
+
+"""Basic type for review"""
+type Review{
+  reviewAuthorEmail: String!
+  reviewID: ID!
+  reviewDescription: String!
+  hasReviewScores: [Score!]
+}
+
+"""Basic type for offer"""
+type Offer{
+  offerAuthorEmail: String!
+  offerID: ID!
+  offerPrice: Int
+  offerCurrency: Currency
+  offerDescription: String
+  hasOfferScores: [Score!]
+}
+
+
+"""Types that are used for describing search (and filtering) criteria recipes, beverages, reviews, offers."""
+
+type AuthorUserInformation {
+  firstName: String
+  lastName: String
+  age: Int
+  gender: Gender
+  livesInCountry: Country
+  hasNationality: Nationality
+  hasHealthRestriction: [HealthRestriction!]
+}
+
+type Ingredient{
+  ingredientName: String
+}
+
+type Category{
+  categoryName: String
+}
+
+type Country{
+  countryName: String
+}
+
+type Nationality{
+  nationalityName: String
+}
+
+type HealthRestriction{
+  healthRestrictionName: String 
+}
+
+type HealthLabel{
+  healthLabelName: String
+}
+
+type Fruit{
+  fruitName: String
+}
+type Vegetable{
+   vegetableName: String
+}
+
+enum BeverageType {
+  COFFEE
+  DAIRYDRINK
+  ENERGYDRINK
+  JUICE
+  NECTAR
+  MILKSHAKE
+  MOCKTAIL
+  NONALCOHOLICBEER
+  SMOOTHIE
+  SYRUP
+  TEA
+  WATER
+}
+
+type NutritionInformationLessThan {
+  calciumContentLessThan: Int
+  caloriesLessThan: Int
+  carbohydrateContentLessThan:Int
+  cholesterolContentLessThan: Int
+  fatContentLessThan: Int
+  fiberContentLessThan: Int
+  ironContentLessThan: Int
+  magnesiumContentLessThan: Int
+  phosphorusContentLessThan: Int
+  potassiumContentLessThan: Int
+  proteinContentLessThan: Int
+  quantityLessThan: Int
+  sodiumContentLessThan: Int
+  sugarContentLessThan: Int
+  vitaminAContentLessThan: Int
+  vitaminB12ContentLessThan: Int
+  vitaminB6ContentLessThan: Int
+  vitaminCContentLessThan: Int
+  vitaminDContentLessThan: Int
+  vitaminEContentLessThan: Int
+  vitaminKContentLessThan: Int
+  zincContentLessThan: Int
+}
+
+type NutritionInformationMoreThan {
+  calciumContentMoreThan: Int
+  caloriesMoreThan: Int
+  carbohydrateContentMoreThan:Int
+  cholesterolContentMoreThan: Int
+  fatContentMoreThan: Int
+  fiberContentMoreThan: Int
+  ironContentMoreThan: Int
+  magnesiumContentMoreThan: Int
+  phosphorusContentMoreThan: Int
+  potassiumContentMoreThan: Int
+  proteinContentMoreThan: Int
+  quantityMoreThan: Int
+  sodiumContentMoreThan: Int
+  sugarContentMoreThan: Int
+  vitaminAContentMoreThan: Int
+  vitaminB12ContentMoreThan: Int
+  vitaminB6ContentMoreThan: Int
+  vitaminCContentMoreThan: Int
+  vitaminDContentMoreThan: Int
+  vitaminEContentMoreThan: Int
+  vitaminKContentMoreThan: Int
+  zincContentMoreThan: Int
+}
+
+

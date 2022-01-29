@@ -1,0 +1,148 @@
+"""The gateway schema provides multiple types of Query and Mutation that each corresponds to a sub service GraphQL Schema"""
+GatewaySchema{
+	recommendationQuery: Query{
+		"""Recommendations for Users, that can be searched smart or, by default, by popularity"""
+		getUserRecommendations(email: String!, isSmart:Bool!){
+			recommendations: [User!]
+		}
+		"""Recommendations for Beverages, that can be searched smart or, by default, by popularity"""
+		getBeverageRecommendations(email: String!, isSmart:Bool!){ 
+			recommendations: [Beverage!]
+		}
+		"""Recommendations for Offers, that can be searched smart or, by default, by popularity"""
+		getOfferRecommendations(email: String!, isSmart: Bool!){
+			recommendations: [Offer!]
+		}
+		"""Recommendations for Recipes, that can be searched smart or, by default, by popularity"""
+		getRecipeRecommendations(email: String!, isSmart: Bool!){
+			recommendations: [Recipe!]
+		}
+	}
+	
+	searchAndFilterQuery: Query{
+		"""Given a set of search criteria for beverages, apply them in order to get a list of beverages."""
+		searchBeverage(searchBeverageCriteria: SearchBeverageCriteria){
+		  beverageList: [Beverage!]
+		}
+		"""Given a set of search criteria for recipes, apply them in order to get a list of recipes."""
+		searchRecipe(searchRecipeCriteria: SearchRecipeCriteria){
+		  recipeList: [Recipe!]
+		}
+		"""Given a set of search criteria for reviews, apply them in order to get a list of reviews."""
+		searchReview(searchReviewCriteria: SearchReviewCriteria){
+		  reviewList: [Review!]
+		}
+		"""Given a set of search criteria for offers, apply them in order to get a list of offers."""
+		searchOffer(searchOfferCriteria: SearchOfferCriteria) {
+		  offerList: [Offer!]
+		}
+	}
+	
+	userQuery: Query{
+		"""Given a user email get a subset of his personal information."""
+		getUser(email: String!){
+		  user:User
+		}
+	}
+	
+	userMutation: Mutation {
+		"""Given personal user information (required only email) create a new user entity and return the created entity."""
+		addUser(user:User){
+		  user:User
+		}
+		"""Given personal user information (required only email) add fields to the entity and return the updated entity."""
+		addUserFields(user:User){
+		  user:User
+		}
+		"""Given personal user information (required only email) delete fields from the entity and return the updated entity."""
+		deleteUserFields(user:User){
+		  user:User
+		}
+		"""Given personal user information (required only email) update the given fields and return the updated entity."""
+		updateUserFields(user:User){
+		  user:User
+		}
+	}
+	
+	beverageProfileQuery: Query{
+		"""Given an user email get the list of beverages for which the user has associated a score"""
+		getBeverages(userEmail:String!){
+		  beverageList: [Beverage!]
+		}  
+		"""Given an user email get the list of recipes for which the user has associated a score"""
+		getRecipes(userEmail:String!){
+		  recipeList: [Recipe!]
+		}
+		"""Given an user email get the list of offers that the user has created"""
+		getOffers(userEmail:String!){
+		  offerList: [Offer!]
+		}
+		"""Given an user email get the list of reviews that the user has created"""
+		getReviews(userEmail:String!){
+		  reviewList: [Review!]
+		}
+	}
+	
+	beverageProfileMutation: Mutation{
+		"""Given an entity of type Score (which indicates that a user identified by an email gave a score to an entity
+		of type beverage/offer/recipe, review, add the score value to a specific beverage"""
+		addBeverageScore(beverageScore: Score!){
+		  beverageScore: Score!
+		}
+		"""Given an entity of type Score (which indicates that a user identified by an email gave a score to an entity
+		of type beverage/offer/recipe, review, update the score value for a specific beverage"""
+		updateBeverageScore(beverageScore: Score!){
+		  beverageScore: Score!
+		}
+		"""Given an entity of type Score (which indicates that a user identified by an email gave a score to an entity
+		of type beverage/offer/recipe, review, delete that score for a specific beverage"""
+		deleteBeverageScore(beverageScore: Score!){
+		  beverageScore: Score!
+		}
+		"""Given an entity of type Score (which indicates that a user identified by an email gave a score to an entity
+		of type beverage/offer/recipe, review, add the score value to a specific recipe"""
+		addRecipeScore(recipeScore: Score!){
+		  recipeScore: Score!
+		}
+		"""Given an entity of type Score (which indicates that a user identified by an email gave a score to an entity
+		of type beverage/offer/recipe, review, update the score value for a specific recipe"""
+		updateRecipeScore(recipeScore: Score!){
+		  recipeScore: Score!
+		}
+		"""Given an entity of type Score (which indicates that a user identified by an email gave a score to an entity
+		of type beverage/offer/recipe, review, delete that score for a specific recipe"""
+		deleteRecipeScore(recipeScore: Score!){
+		  recipeScore: Score!
+		}
+		"""Given an entity of type offer (it has a field that indicates the author of the offer),
+		add that offer in the beverage profile list of the user"""
+		addOffer(offer: Offer){
+		  offer: Offer
+		}
+		"""Given fields from an entity of type offer,
+		update that offer in the beverage profile list of the user"""
+		updateOffer(offer: Offer){
+		  offer: Offer
+		}
+		"""Given an offer added by a user indentified by an email,
+		delete that offer from the beverage profile list of the user"""
+		deleteOffer(offer: Offer){
+		  offer: Offer
+		}
+		"""Given an entity of type review (it has a field that indicates the author of the review),
+		add that review in the beverage profile list of the user"""
+		addReview(review: Review){
+		  review: Review
+		}
+		"""Given fields from an entity of type review,
+		update that review in the beverage profile list of the user"""
+		updateReview(review: Review){
+		  review: Review
+		}
+		"""Given a review added by a user identified by an email,
+		delete that review from the beverage profile list of the user"""
+		deleteReview(review: Review){
+		  review: Review
+		}
+	}
+}
