@@ -1,0 +1,44 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bevon: <http://rdfs.co/bevon/>
+PREFIX dbpedia: <https://dbpedia.org/resource/> 
+
+SELECT ?offer ?hasOfferOwner ?isOfferFor ?offerDescription 
+       ?offerPrice ?priceCurrency ?offerQuantity
+WHERE { 
+        ?offer rdf:type schema:Offer .
+        ?offer bem:hasOfferOwner ?hasOfferOwner .  
+        ?offer bem:isOfferFor ?isOfferFor .  
+        ?offer bem:offerDescription ?offerDescription .  
+        ?offer bem:offerPrice ?offerPrice .  
+        ?offer schema:priceCurrency ?priceCurrency .  
+        ?offer bem:offerQuantity ?offerQuantity . 
+        FILTER NOT EXISTS{
+                ?offer bem:hasOfferOwner ?hasOfferOwner .
+                FILTER ( CONTAINS (LCASE(str(?hasOfferOwner)), 'bhaycockm_at_e-recht24.de' ) ||  
+                        CONTAINS (LCASE(str(?hasOfferOwner)), 'alebatteurz_at_wisc.edu' )) 
+        }
+        FILTER NOT EXISTS{
+              ?offer bem:isOfferFor ?isOfferFor .
+              FILTER ( CONTAINS (LCASE(str(?isOfferFor)), 'tea' ) || 
+                       CONTAINS (LCASE(str(?isOfferFor)), 'coffee' ) || 
+                       CONTAINS (LCASE(str(?isOfferFor)), 'milkshake' ))
+         }
+        ?hasOfferOwner foaf:familyName ?familyName .
+        FILTER CONTAINS (LCASE(str( ?familyName)), 'a' )  
+        
+        FILTER NOT EXISTS{
+            ?hasOfferOwner bem:livesInCountry ?livesInCountry100 .
+            FILTER CONTAINS (LCASE(str( ?livesInCountry100)), 'france' ) 
+        }
+        
+        FILTER NOT EXISTS{
+            ?hasOfferOwner bem:livesInCountry ?livesInCountry99 .
+            FILTER CONTAINS (LCASE(str( ?livesInCountry99)), 'india' ) 
+        } 
+        
+        ?hasOfferOwner bem:hasNationality ?hasNationality .
+        FILTER CONTAINS (LCASE(str( ?hasNationality)), 'romanian' )  
+} 

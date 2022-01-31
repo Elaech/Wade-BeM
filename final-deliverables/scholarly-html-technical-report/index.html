@@ -15,6 +15,7 @@
     />
     <!-- Fontawesome license: https://fontawesome.com/license/free -->
     <script src="js/scholarly.min.js"></script>
+
   </head>
 
   <body prefix="sa:https://ns.science.ai">
@@ -792,7 +793,7 @@
           </figcaption>
         </figure>
         <p>
-          Next, we will provide a general overview on classes and their
+          Next, we will provide a general overview of classes and their
           associated properties (data properties and object properties) we used
           in our model:
         </p>
@@ -818,7 +819,7 @@
             Useful for describing beverage provenance, the country where a user
             lives in or the user’s nationality. Therefore, both the residence
             country and nationality of the user are taken into account, in order
-            to increase the expresiveness of our model.
+            to increase the expressiveness of our model.
           </li>
           <li>
             <span class="highlight-term">class Health Restriction</span>.
@@ -866,7 +867,7 @@
           </li>
           <li>
             <span class="highlight-term">class Recipe</span>. Recipes are
-            associate with the beverage category (eg.: Smoothie, Milkshake, Tea,
+            associated with the beverage category (eg.: Smoothie, Milkshake, Tea,
             etc.) via a data property. This association was possible due to the
             fact that we applied filters for the category of beverage recipe
             before extracting recipes from EDAMAM. Recipe class also includes
@@ -899,7 +900,7 @@
           <li><span class="highlight-term">class Review </span>
             The Review class describes reviews about beverages posted by the users of the application.
             Data properties associated with this class include starRating and reviewDescription (the rating and 
-            actual review given by the a user). Reviews are directly correlated to beverages via an object property.
+            actual review given by a user). Reviews are directly correlated to beverages via an object property.
           </li>
           <li><span class="highlight-term">class Offer </span>
             The Offer class describes offers of beverages added by the users of the application. 
@@ -907,7 +908,7 @@
             a property indicating the category of beverage for which the offer is posted (for example Lemon Juice/ Coffee).
           </li>
           <li><span class="highlight-term">class Score</span>
-            This class indicates the score that a user associates to different beverages and/or recipes.
+            This class indicates the score that a user associates with different beverages and/or recipes.
             It helps in indicating the preferences of a user for certain beverages/recipes.
           </li>
           <li>
@@ -918,14 +919,14 @@
             Classes are denoted by circles, data properties by green rectangles, object properties by arrows, individuals
             by purple rectangles and naming convention of individuals by orange rectangles. 
 
-            <p>Thus, offers are associated to beverage categories via isOfferFor data property. Relationship between 
+            <p>Thus, offers are associated with beverage categories via isOfferFor data property. Relationship between 
             offers and users who post the offer is made with the use of direct and inverse object properties: hasOfferOwner and ownsOffer.
             Each offer instance name includes the email of the user posting the offer and the beverage category for which the offer is posted
             (eg.: Tea, Coffee).
            </p>
  
            <p>
-             Reviews are associated both to Person and Beverage class via object properties. The name of review instances include 
+             Reviews are associated both to Person and Beverage class via object properties. The name of review instances includes
              the email of the user making the review and the code of the beverage for which the review is being made.
            </p>
 
@@ -933,7 +934,7 @@
               These scores are added by users in order to indicate their preference of certain beverages and/or recipes.
               The association is made via the Score class and object properties hasScore and its inverse, hasItemCode, that 
               connect beverage and recipe instances with associated score instances. Classes Score and Person are also connected via
-              a set of direct and inverse object properties. The name of score individuals include the email of the user giving the score,
+              a set of direct and inverse object properties. The name of score individuals includes the email of the user giving the score,
               the entity type for which the score is given (Recipe/Beverage) and the code of the item for which the score is attributed (a beverage/recipe code).
               Score class is also connected to Type property in order to search for and filter more efficiently scores for beverages from scores from recipes.
            </p>
@@ -952,6 +953,155 @@
           </li>
 
         </ul>
+      </section>
+      <section id="real-usage-ontological-model">
+        <h3>Real usage of proposed ontological model. SPARQL queries of interest <b>(new)</b></h3>
+        <p>
+          We used our ontology to implement all functionalities of our application.
+          Below are detailed usages of the ontological model in case of user profile, search & filter,
+          beverage profile and recommendations services. For almost all queries <span class="highlight-term">reasoning</span> should be enabled (for example, one simple example would be for determining that a subclass of the beverages taxonomy is also
+          a subclass of main class Beverage).
+        </p>
+        <section id="user-profile-real-usage">
+          <h4>User Profile Service</h4>
+          <p>This service manages the user information, thus it uses the ontology part that models users and their properties.
+             Users have three compulsory attributes: firstName, givenName and email and a series of optional properties:
+             residence country, nationality, age, health restrictions, beverage category preferences, etc. Users are identified
+             uniquely by their email. 
+             Using SPARQL queries, we create and/or delete user individuals with associated properties, we retrieve and/or modify properties
+             of existing users.
+          </p>
+          <div id="sparql-user-profile-create-user">
+            <p>Below there is a custom SPARQL query for retrieving all information for a given user 
+               (beverage category preferences are concatenated as a string with space separator, as well as health restrictions )
+            <embed src="./sparql/UserProfile/getUserByEmail.txt" width="120%" height="350px">
+            </p>
+          </div>
+
+          <div id="sparql-user-profile-create-user">
+            <p>This is a custom query for creating a user
+            <embed src="./sparql/UserProfile/createUser.txt" width="120%" height="150px">
+            </p>
+          </div>
+
+          <div id="sparql-user-profile-create-user">
+            <p>.. and this is the performed query for deleting a user (along with all his other information)
+            <embed src="./sparql/UserProfile/deleteUser.txt" width="120%" height="140px">
+            </p>
+          </div>
+
+          <p>Modification of user information is performed by making a delete query followed by a create.</p>
+
+        <p>
+          <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
+          table of contents
+        </p>
+        </section>
+        <section id="search-and-filter-real-usage">
+          <h4>Search & Filter Service</h4>
+          <p>
+            The search and filter service uses information from the entire ontology.
+            One can perform search & filtering for the following entities: recipe, beverage, offer, review and user.
+            
+             Below we illustrate four examples for retrieving filtered and ordered information for a beverages
+            offers and reviews entities. The "sparql" folder contains all examples for all entity types. 
+          </p>
+          <div id="sparql-search-beverage-all">
+            <p> This is an example of retrieving basic information regarding beverages sorted descending by their number of calories.
+               Multiple filters are included, such as: beverage includes or doesn't include a certain text in its ingredient list (eg.: "water", "milk"),
+               the number of calories of the beverage is at least 18 and the category of the beverages is 'teas'. 
+            <embed src="./sparql/SearchAndFilter/Beverage/allBeverages.txt" width="120%" height="820px">
+            </p>
+          </div>
+          <div id="sparql-search-beverage-one">
+            <p>This is an example of retrieving all possible information regarding a beverage with a given beverage code.
+               Many properties refer to nutrition information (calcium content, vitamin A content, etc.).
+            </p>
+            <embed src="./sparql/SearchAndFilter/Beverage/allInfoOneBeverage.txt" width="120%" height="1040px">
+          </div>
+          <div id="sparql-search-review">
+             <p>This is a SPARQL query retrieving reviews with a star rating less or equal to 4, whose review owner does not 
+                have "France" nor "Romania" as a provenance country. An important note to make is that SPARQL queries regarding
+                reviews and offers contain filters regarding the user who made/posted them.
+             </p>
+             <embed src="./sparql/SearchAndFilter/Review/allIReviewEx2.txt" width="120%" height="340px">
+          </div>
+          <div id="sparql-search-offer">
+            <p>This is an example of retrieving all offers that are made for the beverage category "Tea", which contain in their 
+              description the word "best", that accept "RON" currency, with an offer price greater than equal to 2.8 and that can 
+              be sold in a quantity of 0.5 liters.
+            </p>
+             <embed src="./sparql/SearchAndFilter/Offer/allOffers.txt" width="120%" height="480px">
+          </div>
+          <p>
+            <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
+            table of contents
+          </p>
+        </section>
+        <section id="beverage-profile-real-usage">
+          <h4>Beverage Profile Service</h4>
+          <p>This service also uses the entire ontology. Basically, using the Beverage Profile Service, users can 
+             post offers and reviews and assign scores to beverages and recipes in order to indicate their preferences.
+          </p>
+          <div id="sparql-beverage-profile-beverage-score">
+            <p>This is an example of retrieving information regarding the beverages for which a specific user has assigned scores.
+               Among important attributes returned we mention the code of the beverage and the score associated by the user to the beverage.
+               A similar query can be constructed in order to retrieve information regarding scores of recipes assigned by a user (we must change only the 
+               value for the scoreType from beverageType to recipeType ).
+            </p>
+            <embed src="./sparql/BeverageProfile/beverageScore.txt" width="120%" height="300px">
+          </div>
+          <div id="beverage-profile-CRUD">
+            <p>Users can view, create, update and delete offers and reviews on their beverage profile, thus we created several SPARQL queries
+              in order to support these operations. One SPARQL query depicting the situation in which a user adds a milkshake offer is given below.
+            </p>
+            <embed src="./sparql/BeverageProfile/insertOffer.txt" width="120%" height="250px">
+          </div>
+          <p>
+          <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
+            table of contents
+          </p>  
+        </section>
+        <section id="recommendation-real-usage">
+          <h4>Recommendations Service</h4>
+
+          <p>This service offers users three types of recommendations: beverage, recipe and (other) users recommendations.
+            In case of all recommendations, the entity identifier (beverge/recipe code, user email) is returned along with
+            a popularity indicator. The recommendations are of two types: simple & smart. We will detail below the smart type
+            of recommendations.
+          </p>
+          <div id="recommendations-beverage">
+              <p>Below is given a SPARQL query returning  maximum 10 beverage recommendations for a specific user.
+                 In the inner "select" there are chosen beverages that either have an associated beverage category which is a category 
+                 preferred by any user, or have an associated score, or have an associated review.
+                 The popularity of each beverage is calculated as the number of such beverages.
+                 In the end, there are selected beverages that have at least one category that is preffered by the given user.
+                 The results are sorted descending by popularity.
+              </p>
+              <embed src="./sparql/Recommendations/beverageRecommendation.txt" width="120%" height="590px">
+          </div>
+          <div id="recommendations-recipe">
+              <p>The SPARQL query below returns a list of maximum 10 recommended recipes along with their popularity score.
+                 In the inner "select" there are chosen only recipes that have at least one associated category.
+                 The popularity is calculated as the number of such recipes. 
+                 
+                 Only recipes that have associated a category whose name resembles the name of a beverage class 
+                 (which indicates a beverage type) are kept.
+                 The results are again sorted descending by popularity.
+              </p>
+              <embed src="./sparql/Recommendations/recipeRecommendation.txt" width="120%" height="510px">
+          </div>
+          <div id="recommendations-users">
+              <p>The last type of recommendation is user recommendations. The SPARQL query below retrieves
+                a list of maximum 10 recommended users along with their popularity. Users are selected either if they 
+                have assigned scores for beverages and/or recipes, or if they have posted reviews and/or offers,
+                or if they have a preferred category that is also a preferred category for at least another user.
+                In the end, only users that have a common category with the user for which the recommendation is made 
+                are kept. The results are again sorted descending by popularity.
+              </p>
+              <embed src="./sparql/Recommendations/userRecommendation.txt" width="120%" height="650px">
+          </div> 
+        </section>
       </section>
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
@@ -1416,25 +1566,6 @@
       </p>
     </section>
 
-    <section id="external-data-usage">
-      <h2>Pragmatic Use of External Data</h2>
-      <section id="used-knowledge-bases">
-        <h3>Used Knowledge bases and their integration</h3>
-        <p>
-          Talk about the external bases used and how we integrated them, what
-          special relations and rules we have used
-        </p>
-      </section>
-      <section id="sparql-queries">
-        <h3>SPARQL Queries - Semantics and Structure</h3>
-        <p>Talk about specific queries and their semantic implementation,</p>
-      </section>
-      <p>
-        <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
-        table of contents
-      </p>
-    </section>
-
     <section id="problems">
       <h2>Problems</h2>
       <p>
@@ -1614,5 +1745,9 @@
         </li>
       </ol>
     </section>
+
+
   </body>
+
+
 </html>

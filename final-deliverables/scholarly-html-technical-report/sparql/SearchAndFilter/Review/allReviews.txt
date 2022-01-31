@@ -1,0 +1,33 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT *  WHERE { 
+    ?review  rdf:type schema:Review .
+    
+    ?review bem:isReviewFor ?beverage . 
+    #FILTER(CONTAINS(str(?beverage), "8711000371084")) .
+
+    ?review bem:hasReviewOwner ?user . 
+    #FILTER(CONTAINS(str(?user), "dwoolaston9p_at_artisteer.com"))
+
+    ?review bem:reviewDescription ?reviewDescription .
+    #FILTER(CONTAINS(str(?reviewDescription), "I love this drink"))
+    #FILTER(CONTAINS(str(?reviewDescription), "expensive"))
+
+    # FILTER NOT EXISTS {
+    #     ?review bem:reviewDescription ?reviewDescription .
+    #     FILTER (CONTAINS(LCASE(str(?reviewDescription)), "i love this drink") ||
+    #             CONTAINS(LCASE(str(?reviewDescription)), "expensive") ||
+    #             CONTAINS(LCASE(str(?reviewDescription)), "awful")
+    #             )
+    # }
+
+    ?review bem:starRating ?starRating . 
+    #FILTER(float(?starRating) = 5)
+    #FILTER(float(?starRating) <= 3)
+
+
+    #?user foaf:age ?age .
+    #?beverage bem:beverageName ?beverageName .
+} 

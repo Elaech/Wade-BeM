@@ -1,0 +1,84 @@
+GET Endpoint /search-and-filter/categories & Endpoint /search-and-filter/categories/<category_name>
+
+A. All beverage categories (classess with at least one instance and no other subclassess)
+Reasoning on for both:
+
+Versiunea 1:
+SELECT ?subClass WHERE {
+   ?subClass rdfs:subClassOf bevon:Beverage .
+   ?instance a ?subClass .
+    FILTER(?subClass != bevon:Beverage &&
+          ?subClass != bem:JuiceAndNectar &&
+          ?subClass != dbpedia:Juice &&
+          ?subClass != bem:Nectar &&
+          ?subClass != bem:FruitJuice &&
+          ?subClass != bem:VegetableJuice
+          )
+}
+
+
+Versiunea 2:
+SELECT DISTINCT ?subClass WHERE {
+   ?subClass rdfs:subClassOf bevon:Beverage .
+   ?instance a ?subClass .
+   FILTER NOT EXISTS {
+     ?subClassOfSubClass rdfs:subClassOf ?subClass .
+     FILTER ( ?subClassOfSubClass != ?subClass
+              && ?subClassOfSubClass != owl:Nothing)
+   }
+
+}
+
+B. Select countries:
+SELECT ?country WHERE {
+   ?country rdf:type  schema:Country .
+}
+
+C. Select nationalities:
+SELECT ?nationality WHERE {
+   ?nationality rdf:type bem:Nationality .
+}
+
+D. Select health restrictions:
+SELECT ?health_restriction WHERE {
+   ?health_restriction rdf:type bem:HealthRestriction .
+}
+
+E. Select health labels:
+SELECT *
+WHERE{
+ ?health_label rdf:type bem:HealthLabel .
+}
+
+F. Select categories:
+SELECT *
+WHERE{
+ ?category rdf:type bem:Category .
+}
+
+G. Select fruits:
+SELECT *
+WHERE{
+ ?fruit rdf:type bem:Fruit .
+}
+
+H. Select vegetables:
+SELECT *
+WHERE{
+ ?vegetable rdf:type bem:Vegetable .
+}
+
+I. Select ingredients:
+SELECT *
+WHERE{
+ ?ingredient rdf:type bem:Ingredient .
+}
+
+J. (Optional) Select scores:
+SELECT *
+WHERE{
+ ?score rdf:type bem:Score .
+}
+
+
+

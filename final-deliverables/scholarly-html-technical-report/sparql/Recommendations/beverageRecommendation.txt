@@ -1,0 +1,35 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+
+  SELECT ?beverage ?popularity WHERE
+  {
+      {
+          SELECT ?beverage (COUNT(?beverage) as ?popularity) WHERE
+          {   
+              {
+                  ?beverage bem:hasCategory ?category .
+                  ?user bem:hasCategoryPreference ?category
+              }
+              UNION
+              {
+                  ?score bem:hasType ?scoreType .
+                  ?score bemd:hasItemCode ?beverage
+                  FILTER (?scoreType = bem:beverageType)
+              }
+              UNION
+              {
+                  ?review bem:isReviewFor ?beverage
+              }
+          }
+          GROUP BY ?beverage
+          ORDER BY DESC(?popularity)
+      }
+  
+      FILTER EXISTS{
+          ?beverage bem:hasCategory ?c .
+          ?u bem:hasCategoryPreference ?c
+          FILTER(?u=bemd:ggosnoll3_at_salon.com )
+      }
+  }
+  ORDER BY DESC(?popularity)
+  LIMIT 10

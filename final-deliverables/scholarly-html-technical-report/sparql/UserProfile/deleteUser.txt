@@ -1,0 +1,7 @@
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+DELETE {
+   bemd:cornei.laura9_at_gmail.com ?x ?y .
+}
+WHERE {
+   bemd:cornei.laura9_at_gmail.com ?x ?y .
+}

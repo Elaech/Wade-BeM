@@ -1,0 +1,7 @@
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+INSERT DATA {
+         bemd:cornei.laura9_at_gmail.com rdf:type foaf:Person .
+         bemd:cornei.laura9_at_gmail.com foaf:familyName 'Cornei'^^xsd:string .
+         bemd:cornei.laura9_at_gmail.com foaf:givenName 'Laura'^^xsd:string .
+         }

@@ -1,0 +1,59 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bevon: <http://rdfs.co/bevon/>
+PREFIX dbpedia: <https://dbpedia.org/resource/> 
+
+ SELECT ?beverage ?beverageName ?beverageImageUrl ?beverageUrl ?ingredientImageUrl ?nutritionImageUrl ?calciumContent ?calories ?ironContent 
+        ?magnesiumContent ?phosphorusContent ?potassiumContent ?quantity ?vitaminAContent ?vitaminB12Content ?vitaminB6Content 
+        ?vitaminCContent ?vitaminDContent ?vitaminEContent ?vitaminKContent ?zincContent ?carbohydrateContent ?cholesterolContent 
+        ?fatContent ?fiberContent ?proteinContent ?sodiumContent ?sugarContent 
+        (GROUP_CONCAT( DISTINCT ?hasGeneralCategory) as ?hasGeneralCategory ) 
+        (GROUP_CONCAT( DISTINCT ?hasProvenanceCountry) as ?hasProvenanceCountry ) 
+        (GROUP_CONCAT( DISTINCT ?hasCategory) as ?hasCategory ) 
+        (GROUP_CONCAT( DISTINCT ?isMadeOfFruit) as ?isMadeOfFruit )
+        (GROUP_CONCAT( DISTINCT ?isMadeOfVegetable) as ?isMadeOfVegetable ) 
+        (GROUP_CONCAT( DISTINCT ?hasIngredient) as ?hasIngredient ) 
+       (GROUP_CONCAT( DISTINCT ?hasHealthLabel) as ?hasHealthLabel )
+WHERE{ ?beverage rdf:type bevon:Beverage . 
+ FILTER( ?beverage = <http://www.semanticweb.org/ontologies/bem#3368951148187> )  
+ OPTIONAL {?beverage bem:beverage ?beverage . } 
+ ?beverage bem:beverageName ?beverageName . 
+ OPTIONAL {?beverage bem:beverageImageUrl ?beverageImageUrl . } 
+ OPTIONAL {?beverage bem:beverageUrl ?beverageUrl . } 
+ OPTIONAL {?beverage bem:ingredientImageUrl ?ingredientImageUrl . } 
+ OPTIONAL {?beverage bem:nutritionImageUrl ?nutritionImageUrl . } 
+ OPTIONAL {?beverage bem:calciumContent ?calciumContent . } 
+ OPTIONAL {?beverage bem:calories ?calories . } 
+ OPTIONAL {?beverage bem:ironContent ?ironContent . } 
+ OPTIONAL {?beverage bem:magnesiumContent ?magnesiumContent . } 
+ OPTIONAL {?beverage bem:phosphorusContent ?phosphorusContent . } 
+ OPTIONAL {?beverage bem:potassiumContent ?potassiumContent . } 
+ OPTIONAL {?beverage bem:quantity ?quantity . } 
+ OPTIONAL {?beverage bem:vitaminAContent ?vitaminAContent . } 
+ OPTIONAL {?beverage bem:vitaminB12Content ?vitaminB12Content . } 
+ OPTIONAL {?beverage bem:vitaminB6Content ?vitaminB6Content . } 
+ OPTIONAL {?beverage bem:vitaminCContent ?vitaminCContent . } 
+ OPTIONAL {?beverage bem:vitaminDContent ?vitaminDContent . } 
+ OPTIONAL {?beverage bem:vitaminEContent ?vitaminEContent . } 
+ OPTIONAL {?beverage bem:vitaminKContent ?vitaminKContent . } 
+ OPTIONAL {?beverage bem:zincContent ?zincContent . } 
+ OPTIONAL {?beverage schema:carbohydrateContent ?carbohydrateContent . } 
+ OPTIONAL {?beverage schema:cholesterolContent ?cholesterolContent . } 
+ OPTIONAL {?beverage schema:fatContent ?fatContent . } 
+ OPTIONAL {?beverage schema:fiberContent ?fiberContent . } 
+ OPTIONAL {?beverage schema:proteinContent ?proteinContent . } 
+ OPTIONAL {?beverage schema:sodiumContent ?sodiumContent . } 
+ OPTIONAL {?beverage schema:sugarContent ?sugarContent . } 
+ OPTIONAL {?beverage bem:hasProvenanceCountry ?hasProvenanceCountry . } 
+ OPTIONAL {?beverage bem:hasCategory ?hasCategory . } 
+ OPTIONAL {?beverage bem:isMadeOfFruit ?isMadeOfFruit . } 
+ OPTIONAL {?beverage bem:isMadeOfVegetable ?isMadeOfVegetable . } 
+ OPTIONAL {?beverage bem:hasIngredient ?hasIngredient . } 
+ OPTIONAL {?beverage bem:hasHealthLabel ?hasHealthLabel . } 
+} GROUP BY  ?beverage  ?beverageName  ?beverageImageUrl  ?beverageUrl  ?ingredientImageUrl  ?nutritionImageUrl  ?calciumContent  ?calories 
+            ?ironContent  ?magnesiumContent  ?phosphorusContent  ?potassiumContent  ?quantity  ?vitaminAContent  ?vitaminB12Content 
+            ?vitaminB6Content  ?vitaminCContent  ?vitaminDContent  ?vitaminEContent  ?vitaminKContent  ?zincContent  ?carbohydrateContent  
+            ?cholesterolContent  ?fatContent  ?fiberContent  ?proteinContent  ?sodiumContent  ?sugarContent 
+

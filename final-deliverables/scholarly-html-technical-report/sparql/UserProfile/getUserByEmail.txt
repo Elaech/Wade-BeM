@@ -1,0 +1,19 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?user ?familyName ?givenName ?age ?gender ?livesInCountry ?hasNationality
+        (GROUP_CONCAT(DISTINCT ?hasHealthRestriction) as ?hasHealthRestriction)
+        (GROUP_CONCAT(DISTINCT ?hasCategoryPreference) as ?hasCategoryPreference)
+WHERE{
+    ?user rdf:type foaf:Person .
+    ?user foaf:familyName ?familyName .
+    ?user foaf:givenName ?givenName .
+    OPTIONAL { ?user foaf:age ?age . } .
+    OPTIONAL { ?user foaf:gender ?gender . }
+    OPTIONAL { ?user bem:livesInCountry ?livesInCountry . }
+    OPTIONAL { ?user bem:hasNationality ?hasNationality . }
+    OPTIONAL { ?user bem:hasHealthRestriction ?hasHealthRestriction . }
+    OPTIONAL { ?user bem:hasCategoryPreference ?hasCategoryPreference . }
+    FILTER(?user = bemd:ggosnoll3_at_salon.com )
+} GROUP BY  ?user ?familyName ?givenName ?age ?gender ?livesInCountry ?hasNationality

@@ -1,0 +1,17 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+INSERT DATA {
+    bemd:cornei.laura9_at_gmail.com rdf:type foaf:Person .
+    bemd:cornei.laura9_at_gmail.com foaf:familyName  'Cornei' .
+    bemd:cornei.laura9_at_gmail.com foaf:givenName  'Maria' .
+    bemd:cornei.laura9_at_gmail.com foaf:age  '22' .
+    bemd:cornei.laura9_at_gmail.com foaf:gender  'female' .
+    bemd:cornei.laura9_at_gmail.com bem:hasNationality  bem:Romanian .
+    bemd:cornei.laura9_at_gmail.com bem:livesInCountry  bem:China .
+    bemd:cornei.laura9_at_gmail.com bem:hasHealthRestriction bemd:diabetes .
+    bemd:cornei.laura9_at_gmail.com bem:hasHealthRestriction bemd:lactoseIntolerance .
+    bemd:cornei.laura9_at_gmail.com bem:hasCategoryPreference bem:carrot-juices .
+    bemd:cornei.laura9_at_gmail.com bem:hasCategoryPreference bem:vanilla-milks .
+}

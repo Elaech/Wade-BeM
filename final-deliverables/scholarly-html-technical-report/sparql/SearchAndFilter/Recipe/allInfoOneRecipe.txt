@@ -1,0 +1,58 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bevon: <http://rdfs.co/bevon/>
+PREFIX dbpedia: <https://dbpedia.org/resource/>  
+SELECT ?recipe ?isRecipeFor ?recipeName ?recipeImageUrl ?recipeShareAs ?ingredientImageUrl 
+       ?recipeDescription ?recipeSource ?recipeUri ?recipeUrl ?calciumContent ?calories
+        ?ironContent ?magnesiumContent ?phosphorusContent ?potassiumContent ?quantity 
+        ?vitaminAContent ?vitaminB12Content ?vitaminB6Content ?vitaminCContent ?vitaminDContent 
+        ?vitaminEContent ?vitaminKContent ?zincContent ?carbohydrateContent ?cholesterolContent 
+        ?fatContent ?fiberContent ?proteinContent ?sodiumContent ?sugarContent 
+        (GROUP_CONCAT( DISTINCT ?hasIngredient) as ?hasIngredient ) (GROUP_CONCAT( DISTINCT ?hasHealthLabel) as ?hasHealthLabel ) 
+        (GROUP_CONCAT( DISTINCT ?recipeInformation) as ?recipeInformation )
+ WHERE{
+  ?recipe rdf:type schema:Recipe . 
+  FILTER( ?recipe = bemd:recipeNumber17490 ) 
+  OPTIONAL {?recipe bem:recipe ?recipe . } 
+  OPTIONAL {?recipe bem:isRecipeFor ?isRecipeFor . } 
+  ?recipe bem:recipeName ?recipeName . 
+  OPTIONAL {?recipe bem:recipeImageUrl ?recipeImageUrl . } 
+  OPTIONAL {?recipe bem:recipeShareAs ?recipeShareAs . } 
+  OPTIONAL {?recipe bem:ingredientImageUrl ?ingredientImageUrl . } 
+  OPTIONAL {?recipe bem:recipeDescription ?recipeDescription . } 
+  OPTIONAL {?recipe bem:recipeSource ?recipeSource . } 
+  OPTIONAL {?recipe bem:recipeUri ?recipeUri . } 
+  OPTIONAL {?recipe bem:recipeUrl ?recipeUrl . } 
+  OPTIONAL {?recipe bem:calciumContent ?calciumContent . } 
+  OPTIONAL {?recipe bem:calories ?calories . } 
+  OPTIONAL {?recipe bem:ironContent ?ironContent . } 
+  OPTIONAL {?recipe bem:magnesiumContent ?magnesiumContent . } 
+  OPTIONAL {?recipe bem:phosphorusContent ?phosphorusContent . } 
+  OPTIONAL {?recipe bem:potassiumContent ?potassiumContent . } 
+  OPTIONAL {?recipe bem:quantity ?quantity . } 
+  OPTIONAL {?recipe bem:vitaminAContent ?vitaminAContent . } 
+  OPTIONAL {?recipe bem:vitaminB12Content ?vitaminB12Content . } 
+  OPTIONAL {?recipe bem:vitaminB6Content ?vitaminB6Content . } 
+  OPTIONAL {?recipe bem:vitaminCContent ?vitaminCContent . } 
+  OPTIONAL {?recipe bem:vitaminDContent ?vitaminDContent . } 
+  OPTIONAL {?recipe bem:vitaminEContent ?vitaminEContent . } 
+  OPTIONAL {?recipe bem:vitaminKContent ?vitaminKContent . } 
+  OPTIONAL {?recipe bem:zincContent ?zincContent . } 
+  OPTIONAL {?recipe schema:carbohydrateContent ?carbohydrateContent . } 
+  OPTIONAL {?recipe schema:cholesterolContent ?cholesterolContent . } 
+  OPTIONAL {?recipe schema:fatContent ?fatContent . } 
+  OPTIONAL {?recipe schema:fiberContent ?fiberContent . } 
+  OPTIONAL {?recipe schema:proteinContent ?proteinContent . } 
+  OPTIONAL {?recipe schema:sodiumContent ?sodiumContent . } 
+  OPTIONAL {?recipe schema:sugarContent ?sugarContent . } 
+  OPTIONAL {?recipe bem:hasIngredient ?hasIngredient . } 
+  OPTIONAL {?recipe bem:hasHealthLabel ?hasHealthLabel . } 
+  OPTIONAL {?recipe bem:recipeInformation ?recipeInformation . } 
+} GROUP BY  ?recipe  ?isRecipeFor  ?recipeName  ?recipeImageUrl  ?recipeShareAs
+    ?ingredientImageUrl  ?recipeDescription  ?recipeSource  ?recipeUri  ?recipeUrl 
+    ?calciumContent  ?calories  ?ironContent  ?magnesiumContent  ?phosphorusContent 
+    ?potassiumContent  ?quantity  ?vitaminAContent  ?vitaminB12Content  ?vitaminB6Content  
+    ?vitaminCContent  ?vitaminDContent  ?vitaminEContent  ?vitaminKContent  ?zincContent
+    ?carbohydrateContent  ?cholesterolContent  ?fatContent  ?fiberContent  ?proteinContent  ?sodiumContent  ?sugarContent 

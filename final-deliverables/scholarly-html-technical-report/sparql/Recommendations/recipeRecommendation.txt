@@ -1,0 +1,29 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX bevon: <http://rdfs.co/bevon/>
+SELECT DISTINCT ?recipe ?popularity WHERE
+{   
+    
+    {
+        SELECT ?recipe ?category (COUNT(?recipe) as ?popularity) WHERE
+        {   
+            ?recipe bem:isRecipeFor ?category .
+            ?score bemd:hasItemCode ?recipe .
+        }
+        GROUP BY ?recipe ?category
+        ORDER BY DESC(?popularity)
+    }
+    {
+        SELECT DISTINCT (STR(?beverage_class) as ?beverage_class_str) WHERE{
+            ?beverage_class rdfs:subClassOf* bevon:Beverage .
+            ?beverage rdf:type ?beverage_class . 
+            bemd:ggosnoll3_at_salon.com bem:hasCategoryPreference ?beverage_category .
+            ?beverage bem:hasCategory ?beverage_category .
+        }
+    }
+    
+    FILTER(STRENDS(?beverage_class_str,?category))
+
+}
+ORDER BY DESC(?popularity)
+LIMIT 10

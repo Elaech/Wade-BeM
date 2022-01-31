@@ -1,0 +1,26 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bevon: <http://rdfs.co/bevon/>
+PREFIX dbpedia: <https://dbpedia.org/resource/> 
+SELECT ?recipe ?beverage ?recipeName ?recipeImageUrl ?recipeShareAs ?quantity
+WHERE{
+  ?recipe rdf:type schema:Recipe .
+  ?recipe bem:isRecipeFor ?beverage .
+  ?recipe bem:recipeName ?recipeName . 
+  OPTIONAL{ ?recipe bem:recipeImageUrl ?recipeImageUrl . }
+  OPTIONAL{ ?recipe bem:recipeShareAs ?recipeShareAs . }
+  OPTIONAL{ ?recipe bem:quantity ?quantity . }
+  ?recipe bem:recipeName ?recipeName0 .
+  FILTER CONTAINS (LCASE(str( ?recipeName0)), 'orange' )  
+  ?recipe bem:hasIngredient ?hasIngredient0 .
+  FILTER CONTAINS (LCASE(str( ?hasIngredient0)), 'milk' )  
+  ?recipe bem:hasIngredient ?hasIngredient1 .
+  FILTER CONTAINS (LCASE(str( ?hasIngredient1)), 'orange' )
+  FILTER NOT EXISTS{
+        ?recipe bem:hasIngredient ?hasIngredient .
+        FILTER ( CONTAINS (LCASE(str(?hasIngredient)), 'water' ) ||  CONTAINS (LCASE(str(?hasIngredient)), 'apple' )) 
+  }
+} 
+

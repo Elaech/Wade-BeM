@@ -1,0 +1,13 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX bevon: <http://rdfs.co/bevon/>
+INSERT DATA{
+    bemd:ggosnoll3_at_salon.com rdf:type schema:Offer .
+    bemd:ggosnoll3_at_salon.com bem:hasOfferOwner bemd:ggosnoll3_at_salon.com .
+    bemd:ggosnoll3_at_salon.com bem:isOfferFor "Milkshake"^^xsd:string .
+    bemd:ggosnoll3_at_salon.com bem:offerDescription "I offer high-quality bio multifruct milkshake (strawberry, banana, orange flavours) at a very cheap price. Please contact me via email for futher details."^^xsd:string .
+    bemd:ggosnoll3_at_salon.com bem:offerQuantity "0.5l"^^xsd:string .
+    bemd:ggosnoll3_at_salon.com bem:offerPrice "4.99"^^xsd:string .
+    bemd:ggosnoll3_at_salon.com schema:priceCurrency "USD"^^xsd:string
+}

@@ -1,0 +1,16 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?user ?score ?scoreValue ?scoreType ?itemCode
+WHERE{
+    ?user rdf:type foaf:Person .
+    ?score rdf:type bem:Score .
+    ?scoreType rdf:type bem:Type .
+    ?user bem:assignsScore ?score .
+    ?scoreValue bemd:hasScore ?score .
+    ?score bem:hasType ?scoreType .
+    ?score bemd:hasItemCode ?itemCode
+    FILTER (?scoreType=bem:beverageType)
+    FILTER (?user=bemd:ggosnoll3_at_salon.com)
+}

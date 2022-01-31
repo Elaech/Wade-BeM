@@ -1,0 +1,46 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX schema: <https://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bevon: <http://rdfs.co/bevon/>
+PREFIX dbpedia: <https://dbpedia.org/resource/> 
+SELECT  ?beverage ?beverageName ?beverageImageUrl ?beverageUrl   
+        ?calories  ?quantity
+        (GROUP_CONCAT( DISTINCT ?hasProvenanceCountry) as ?hasProvenanceCountry ) 
+        (GROUP_CONCAT( DISTINCT ?hasCategory) as ?hasCategory ) 
+        (GROUP_CONCAT( DISTINCT ?hasIngredient) as ?hasIngredient ) 
+        (GROUP_CONCAT( DISTINCT ?hasHealthLabel) as ?hasHealthLabel )
+  WHERE{
+  ?beverage rdf:type  bevon:Beverage . 
+  ?beverage bem:beverageName ?beverageName. 
+  OPTIONAL {?beverage bem:beverageImageUrl ?beverageImageUrl .}
+  OPTIONAL {?beverage bem:beverageUrl ?beverageUrl .} 
+  
+  OPTIONAL {?beverage bem:calories ?calories . } 
+  OPTIONAL {?beverage bem:quantity ?quantity . } 
+  OPTIONAL {?beverage bem:hasProvenanceCountry ?hasProvenanceCountry . } 
+  OPTIONAL {?beverage bem:hasCategory ?hasCategory . } 
+  OPTIONAL {?beverage bem:isMadeOfFruit ?isMadeOfFruit . } 
+  OPTIONAL {?beverage bem:isMadeOfVegetable ?isMadeOfVegetable . } 
+  OPTIONAL {?beverage bem:hasIngredient ?hasIngredient . } 
+  OPTIONAL {?beverage bem:hasHealthLabel ?hasHealthLabel . } 
+
+  FILTER (float(?calories) >= 18) 
+
+  ?beverage bem:hasIngredient ?hasIngredient0 .
+  FILTER CONTAINS (LCASE(str( ?hasIngredient0)), 'milk' )  
+  ?beverage bem:hasIngredient ?hasIngredient1 .
+  FILTER CONTAINS (LCASE(str( ?hasIngredient1)), 'water' )  
+  ?beverage bem:hasIngredient ?hasIngredient2 .  
+  FILTER CONTAINS (LCASE(str( ?hasIngredient2)), 'cocoa' )  
+
+  FILTER NOT EXISTS{
+      ?beverage bem:hasIngredient ?hasIngredient3 .
+      FILTER CONTAINS (LCASE(str( ?hasIngredient3)), 'apple' ) 
+  }
+
+  FILTER CONTAINS (LCASE(str( ?hasCategory0)), 'teas' )
+  
+  }  GROUP BY  ?beverage  ?beverageName  ?beverageImageUrl  ?beverageUrl  
+               ?ingredientImageUrl  ?nutritionImageUrl  ?calories  ?quantity
+      ORDER BY DESC( float(?calories)) 

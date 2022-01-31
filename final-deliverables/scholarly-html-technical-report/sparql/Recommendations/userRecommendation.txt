@@ -1,0 +1,38 @@
+PREFIX bem: <http://www.semanticweb.org/ontologies/bem/>
+PREFIX bemd: <http://www.semanticweb.org/ontologies/bem#>
+PREFIX bevon: <http://rdfs.co/bevon/>
+SELECT ?user ?popularity WHERE
+    {   
+        {
+        SELECT ?user (COUNT(*) as ?popularity) WHERE
+            {
+                {
+                    ?user bem:hasCategoryPreference ?category .
+                    ?y bem:hasCategoryPreference ?category
+                    FILTER(?user!=?y)
+                }
+                UNION
+                {
+                    ?score bem:isAssignedBy ?user .
+                }
+                UNION
+                {
+                    ?review bem:hasReviewOwner ?user .
+                }
+                UNION
+                {
+                    ?offer bem:hasOfferOwner ?user .
+                }
+            }
+        GROUP BY ?user
+        ORDER BY DESC(?popularity)    
+        }
+        FILTER EXISTS{
+            ?user bem:hasCategoryPreference ?c .
+            ?target_user bem:hasCategoryPreference ?c .
+            FILTER(?user!=?target_user)
+            FILTER(?target_user=bemd:ggosnoll3_at_salon.com)
+        }
+    }
+    ORDER BY DESC(?popularity) 
+    LIMIT 10
