@@ -852,20 +852,149 @@
     <h2>Project Progress</h2>
     <section id="initial-goals">
       <h3>Initial Goals</h3>
-      <p>Describe initial goals, talk about the services and user exp</p>
+      <section id="ig-intro">
+        <h4>Introduction</h4>
+        <p>The project started from the idea of having an app where users could socially interact with
+          one another through the means of beverages and recipes from a large and wide variety. The plan was to
+          have a very modular SOA architecture very adaptable and be future proof in terms of adaptability
+          in every aspect: data, microservices, backend and frontend.
+        </p>
+      </section>
+      <section id="requirements">
+        <h4>Requirements</h4>
+        <p>Having a goal, we decided go through the requirement analysis stage with an end user mindset.
+           This resulted in the following specifications:</p>
+           <p>The actors consist in a list of non managed entities:</p>
+           <ol id="nm-entitites">
+             <li>
+              User Not Authenticated
+             </li>
+             <li>
+                User Authenticated
+              </li>
+              <li>
+                Email Services
+              </li>
+           </ol>
+           <p>And a series of managed entities:</p>
+             <ol id="m-entitites">
+             <li>Stardog Database Manager</li>
+             <li>Beverage Profile Microservice</li>
+             <li>User Profile Microservice</li>
+             <li>Search & Filter Microservice</li>
+             <li>Recommendations Microservice</li>
+             <li>Authentication</li>
+             <li>Back End Gateway</li>
+             <li>Front End Client</li>
+            </ol>
+            <p>Each of the managed entities
+               have their own requirements that were made in the end user behavior in mind,
+                fact which allowed a lot of
+               scalability and modifications at develop time.</p>
+            <p>The requirements for the <b>Front End</b> (also presented as <b>Main Application</b>)
+            is to orchestrate the interaction between
+              the user and the other services, and also to provide a user interface.
+            </p>
+
+            <p>The ones for the <b>Back End Gateway</b> are to unite and manage all of the microservices and 
+              provide the upper layer (in this case, Front End) with an easier solution to access the data and
+            semantics provided by the microservices</p>
+
+            <p>The <b>Beverage Profile</b> microservice had the initial requirements of:</p>
+            <ol id="bp-req">
+              <li>As an authenticated user, I want to be able to add/update/delete positive or negative feedback (score) regarding beverages</li>
+
+                <li>As an authenticated user, I want to see the list of beverages for which I have submitted feedback</li>
+                
+                <li>As an authenticated user, I want to add/update/delete reviews regarding beverages</li>
+                
+                <li>As an authenticated user, I want to add/update/delete offers regarding beverages</li>
+            </ol>
+            <p>The <b>Search and Filter</b> microservice had the initial requirements of:</p>
+            <ol id="sf-req">
+              <li>As an authenticated user, I want to search entities (beverages, users, reviews, offers etc..) while also having the possibility to filter the results at each step.</li>
+
+              <li>As an authenticated user, I want to be able to save and access the filters for the current search as a personal search group.</li>
+            </ol>
+            <p>The <b>Recommendation</b> microservice had the initial requirements of:</p>
+            <ol id="r-req">
+              <li>As an authenticated user, I want to receive recommendations on beverages on my feed which are made based on similarities/correlations between my metadata and other users metadata</li>
+
+              <li>As an authenticated user, I want to configure my recommendations with some filters</li>
+            </ol>
+            <p>The <b>User Profile</b> microservice had the simple requirement to manage the
+               metadata of the user non related to the beverages, such as age, name, surname etc..</p>
+      </section>
+      <section id="technical-requirements">
+        <h4>Technical Requirements</h4>
+        <p>By having a list of fixed requirements for the user behavior we were able to build the
+          technical requirements and goals for each part of the project.
+        </p>
+      </section>
     </section>
-    <section id="requirements">
-      <h3>Requirements</h3>
-      <p>Describe initial app requirements made (git)</p>
-    </section>
+    
     <section id="outcome">
       <h3>Outcome</h3>
       <p>Describe final versions with all of its successes and flaws</p>
+      <section id="arch-outcome">
+        <h4>Architecture</h4>
+      </section>
+      <section id="tech-outcome">
+        <h4>Technologies</h4>
+      </section>
+      <section id="deploy-outcome">
+        <h4>Deployment</h4>
+      </section>
+      <section id="micro0-outcome">
+        <h4>Beverage Profile Microservice</h4>
+      </section>
+      <section id="micro1-outcome">
+        <h4>User Profile Microservice</h4>
+      </section>
+      <section id="micro2-outcome">
+        <h4>Search and Filter Microservice</h4>
+      </section>
+      <section id="micro3-outcome">
+        <h4>Recommendations Microservice</h4>
+      </section>
+      <section id="back-outcome">
+        <h4>Back End Gateway</h4>
+      </section>
+      <section id="front-outcome">
+        <h4>Front End Client</h4>
+      </section>
     </section>
   </section>
   <section id="api-technical-aspects">
     <h2>APIs and Technical Aspects</h2>
     <p>Talk about each API and its specifications, add OPENAPI and graphql docs + examples</p>
+    <section id="arch-tech">
+      <h4>Architecture</h4>
+    </section>
+    <section id="tech-tech">
+      <h4>Technologies</h4>
+    </section>
+    <section id="deploy-tech">
+      <h4>Deployment</h4>
+    </section>
+    <section id="micro0-api">
+      <h4>Beverage Profile REST API</h4>
+    </section>
+    <section id="micro1-outcome">
+      <h4>User Profile Microservice</h4>
+    </section>
+    <section id="micro2-outcome">
+      <h4>Search and Filter Microservice</h4>
+    </section>
+    <section id="micro3-outcome">
+      <h4>Recommendations Microservice</h4>
+    </section>
+    <section id="back-outcome">
+      <h4>Back End Gateway</h4>
+    </section>
+    <section id="front-outcome">
+      <h4>Front End Client</h4>
+    </section>
   </section>
   <section id="knowledge-model">
     <h2>RDF-based Knowledge Model</h2>
@@ -881,6 +1010,18 @@
       <h3>SPARQL Queries - Semantics and Structure</h3>
       <p>Talk about specific queries and their semantic implementation, </p>
     </section>
+  </section>
+  <section id="problems">
+    <h2>Problems</h2>
+    <p>Describe the encountered and still remaining problems (more sections)</p>
+  </section>
+  <section id="future-work">
+    <h2>Future Work</h2>
+    <p>Describe work that can be done to improve the solution</p>
+  </section>
+  <section id="conclusions">
+    <h2>Conclusions</h2>
+    <p>Conclusions of the project</p>
   </section>
   <section role="doc-bibliography" id="references">
     <h2>References</h2>
