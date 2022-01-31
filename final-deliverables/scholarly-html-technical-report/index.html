@@ -1489,6 +1489,8 @@
         </section>
         <section id="deploy-outcome">
           <h4>Deployment</h4>
+          We successfully deployed the database and the four general services of the application, the gateway and the frontend.
+          More details can be found here: <a href="#deploy-tech"></a>
         </section>
         <section id="micro0-outcome">
           <h4>Beverage Profile Microservice</h4>
@@ -1529,6 +1531,14 @@
       </section>
       <section id="deploy-tech">
         <h4>Deployment</h4>
+        In order to deploy our Stardog database we tried several solutions offered by Google Cloud: Cloud Run, Kubernetes and a Virtual Machine.
+        We soon discovered that Cloud Run is suitable only for deploying stateless services. We continued the trial by trying to deploy the database
+        on Kubernetes, because it offered a data persistency option. We first managed to make the deployment on Kubernetes, but we had to take the 
+        service down because it was expensive. The second deployment was unsuccessful. We finally managed to deploy the database using a virtual machine 
+        of type e2-standard-2, by uploading the Stardog database on it.
+        In order to deploy the four services: user profile, search and filter, 
+        beverage profile and recommendations we used Cloud Run. In order to deploy the frontend and gateway we also tried several solutions 
+        including Cloud Run, App Engine and Virtual Machine deployment. 
       </section>
       <section id="micro0-api">
         <h4>Beverage Profile REST API</h4>
