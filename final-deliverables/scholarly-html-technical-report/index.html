@@ -74,8 +74,8 @@
     <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
       <h2>Abstract</h2>
       <p>
-        This report describes all of the updated aspects and diagrams regarding
-        the final implemented solution for our
+        <b>This report describes all of the updated aspects and diagrams regarding
+        the final implemented solution </b> for our
         <a
           href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/web-projects.html"
           >WADE project</a
@@ -1468,24 +1468,24 @@
             as age, name, surname etc..
           </p>
         </section>
-        <section id="technical-requirements">
-          <h4>Technical Requirements</h4>
-          <p>
-            By having a list of fixed requirements for the user behavior we were
-            able to build the technical requirements and goals for each part of
-            the project.
-          </p>
-        </section>
       </section>
 
       <section id="outcome">
         <h3>Outcome</h3>
-        <p>Describe final versions with all of its successes and flaws</p>
+        <p>In this chapter we describe how the progress went for each of the project components
+           and what their final state consists in.</p>
         <section id="arch-outcome">
           <h4>Architecture</h4>
+          <p>From the initial scope presented in the middle term deliverables we arrived at 90% of the same
+            proposed architecture with the exception of the microservices, which now expose their API in a REST manner,
+            not a GRAPHQL one.
+          </p>
         </section>
         <section id="tech-outcome">
           <h4>Technologies</h4>
+          <p>The technologies used are the same ones with the one described in the architecture diagram, nothing being
+            changed from the initial plan apart from the use of Flask-Restful for the microservices instead of the graphql variant.
+          </p>
         </section>
         <section id="deploy-outcome">
           <h4>Deployment</h4>
@@ -1494,24 +1494,64 @@
         </section>
         <section id="micro0-outcome">
           <h4>Beverage Profile Microservice</h4>
+          <p>The Beverage Profile microservice ended up as expected by managing the user's beverage/recipe scores,
+            reviews and offers. Through its REST API one can modify the above mentioned resources in a CRUD way with 
+            the REST respective methods GET, POST, PUT, DELETE coupled with dynamic routing and request body parameters in
+            the unsafe methods.
+          </p>
         </section>
         <section id="micro1-outcome">
           <h4>User Profile Microservice</h4>
+          <p>The User Profile microservice manages the user's metadata: age, name, email, family name, and more
+            that are described in the ontology section. Through its REST API one can modify the above mentioned resources in a CRUD way with 
+            the REST respective methods GET, POST, PUT, DELETE coupled with dynamic routing and request body parameters in
+            the unsafe methods. All of the requirements were met during development.
+          </p>
         </section>
         <section id="micro2-outcome">
           <h4>Search and Filter Microservice</h4>
+          <p>The Search and Filter microservice manages searches through each of the five entities and category types: users, beverages, recipes,
+            offers, reviews and their respective categories. Through its REST API one can 
+            search the above mentioned resources with 
+            the GET REST method coupled with dynamic routing parameters.
+            The smart search and filtering made to tailor the searches to the user's beverage profile has been discontinued,
+            due to the complexity and time requirement.
+          </p>
         </section>
         <section id="micro3-outcome">
           <h4>Recommendations Microservice</h4>
+          <p>The Recommendations microservice manages intelligent SPARQL queries through each of the three entities:
+             users, beverages and  recipes. Through its REST API one can 
+            search the above mentioned resources with 
+            the GET REST method coupled with dynamic routing parameters.
+            In this case, the smart search has been developed to the end, marking this service requirements as complete.
+          </p>
         </section>
         <section id="back-outcome">
           <h4>Back End Gateway</h4>
+          <p>The Gateway has reached its proposed destination by unifying all of the microservices under the same hood
+            and providing access to them through a very well adapted REST to GRAPHQL layer. All of the front end or users calls
+            can access through the GRAPHQL API all of the microservices and their utilities. The architecture was well established
+            and can be extended to big number of microservices in the future. The other goal of the Gateway was to make it safe
+            to integrate with the Firebase API also, to allow robot users to directly access it; and the result is that while not
+            implemented in such way, it can totally be viable due to scalable architecture.
+          </p>
         </section>
         <section id="front-outcome">
           <h4>Front End Client</h4>
+          <p>The front end client has fallen short in terms of achieved requirements since there were problems with 
+            the technologies used, namely Nextjs. The problem consisted in not being able to access the Gateway through
+            the client side rendering because of CORS errors. We definitely tried to correct this behavior, but after a couple
+            of days we were forced to find a way to make it work without them. Due to time limitations it was impossible to
+            completely migrate to another technology stack, other than Nextjs, but it could, for sure, be an idea to improve this
+            projects aspect. 
+          </p>
+          <p>Apart from the faulty functionality, the design was fully implemented and all of the pages are functional, the
+            authentication and authorization is completely handles and there are currently no security issues found.  
+          </p>
+          <p>The pages were all implemented with the user journey in mind and made as simple as possible.</p>
         </section>
       </section>
-
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
         table of contents
@@ -1520,14 +1560,26 @@
     <section id="api-technical-aspects">
       <h2>APIs and Technical Aspects</h2>
       <p>
-        Talk about each API and its specifications, add OPENAPI and graphql docs
-        + examples
+        In this section we describe some of the technical aspects of the services and microservices as well as provide
+        API documentation and examples.
       </p>
       <section id="arch-tech">
-        <h4>Architecture</h4>
-      </section>
-      <section id="tech-tech">
-        <h4>Technologies</h4>
+        <h4>Technology Stack</h4>
+        <p>The technologies used are very well described by the architecture diagram presented in the beginning.</p>
+        <p>The microservices used Pystardog for managing the database connection and Flask Restful for providing the 
+          functionalities as REST resources in a CRUD manner where possible.
+        </p>
+        <p>
+          The backend Gateway was built as a Nodejs application with Typescript and Express. The most important technologies used
+          are the graphql extension and the axios module for easily integrating the REST and GRAPHQL layers.
+        </p>
+        <p>
+          The front end Client was built on the Nextjs, which is an extension to the React native. Instead of providing a single page app layout,
+          Nextjs comes with the possibility of having multiple pages and as well as a refined way to display content by allowing it to be constantly
+          updated from the server or client. The resource rendering can be made on client side and as well on the server side allowing for easier 
+          page initialization. The problem with the Nextjs choice as a main technology for the front ended up being low resources for learning and 
+          incomplete documentation which lead to the CORS problem described in the respective outcome section.    
+        </p>
       </section>
       <section id="deploy-tech">
         <h4>Deployment</h4>
@@ -1541,22 +1593,18 @@
         including Cloud Run, App Engine and Virtual Machine deployment. 
       </section>
       <section id="micro0-api">
-        <h4>Beverage Profile REST API</h4>
+        <h2>REST API requests and documentation</h2>
+        <p>All of the specifications of the REST API can be found within the folder
+           of REST requests available under the final deliverables in the final report.</p>
       </section>
-      <section id="micro1-outcome">
-        <h4>User Profile Microservice</h4>
+      <section id="back-api">
+        <h2>GRAHPQL API requests and documentation</h2>
+        <p>All of the specifications of the GRAPHQL API can be found within the folder of GRAPHQL requests available under the final deliverables
+          in the final report.</p>
       </section>
-      <section id="micro2-outcome">
-        <h4>Search and Filter Microservice</h4>
-      </section>
-      <section id="micro3-outcome">
-        <h4>Recommendations Microservice</h4>
-      </section>
-      <section id="back-outcome">
-        <h4>Back End Gateway</h4>
-      </section>
-      <section id="front-outcome">
+      <section id="front-arch">
         <h4>Front End Client</h4>
+        <p>While the front end could have had an API we didnt mention nor specify it in the requirements, but could be a thought for the future.</p>
       </section>
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
@@ -1567,8 +1615,7 @@
     <section id="knowledge-model">
       <h2>RDF-based Knowledge Model</h2>
       <p>
-        Talk about the knowledge model its expressiveness and real usage and
-        purpose of the taxonomy and ontology
+        The knowledge model and its aspects have been update in the previous section presented during the middle term.
       </p>
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
@@ -1579,8 +1626,25 @@
     <section id="problems">
       <h2>Problems</h2>
       <p>
-        Describe the encountered and still remaining problems (more sections)
+        Ever since starting the project we have dealt with a lot of expected or unexpected problems. Further we will address each one
+        of them in a paragraph.
       </p>
+      <p>The project scope was planned to be big and when the requirements and the diagrams were made we calculated
+      the time with very much care and planned the progress on weeks and features. This careful planning has proven to be very good
+    in term of results in the areas we excelled at, such as back end, data processing, databases, integrations and services/microservices.
+  The problems begin to occur when we arrived at the front end where we were in uncertain waters, and most of the problems that occured were
+fixed with very heavy time investments or not fixed at all (CORS problem referred in above sections). In future planning we should be more
+considerate of the aspects and resources that we have at hand and not go for a smaller and more feasible scope.</p>
+        <p>The research that was done on technologies turned up to be lacking forcing us to approach the REST API for the microservices when
+          we initially planned them to be exposed as GRAPHQL APIs. The Nextjs approach was also a technology for which we did not make a lot of
+          research in terms of practicability and instead we were convinced by their documentation that the capabilities are great and scalable. 
+          In further projects we will consider a much stricter method for testing the technologies that we will use and as well as dedicate more time
+          in the research phase.
+        </p>
+        <p>Another mistake was one of coordination, implying that when we initialized certain services not all of the team members were present,
+          and as a result this lead a lot of confusion and unnecessary communication. Generating a lot of friction in this way, the time for some
+          parts of the project exceeded the previously expected and calculated limit. 
+        </p>
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
         table of contents
@@ -1589,7 +1653,22 @@
 
     <section id="future-work">
       <h2>Future Work</h2>
-      <p>Describe work that can be done to improve the solution</p>
+      <p>The biggest improvement that could be made is attributed to the front end client and is represented by changing the technology stack
+        to something with much more documentation and popularity. By doing so the front end will not only look better but also provide better
+        use cases for the user and will be fully functional.
+      </p>
+
+      <p>As a result of limited time, some of the functionalities, such as smart filtering, were discontinued. A very good future improvement
+        would be to return to work on them and provide those functionalities in their respective service, the gateway and as well as a feature for the
+        human user in the client on front end.
+      </p>
+
+      <p>
+        The entire projects architecture as well as the database structure was designed with scalability and a production environment in mind.
+        This means that further development on any of the aspects: database, microservices, services, back end or front end can be made. A very
+        interesting service would have as goal to make the access to the gateway into a plugin. This would further increase the usability scope
+         from human users and robots to whole large new variety of applications on many platforms.
+      </p>
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
         table of contents
@@ -1598,7 +1677,18 @@
 
     <section id="conclusions">
       <h2>Conclusions</h2>
-      <p>Conclusions of the project</p>
+      <p>We started with a big goal in mind and we went through each step of a professional development process: analyzed the client
+        specifications, formed requirements, researched technologies,  built diagrams and requirements for the technical aspects, organized a
+        scalable architecture for the services and the database, designed data pipelines to populate our database of 3 million triplets, implemented and designed
+        most of the core features, provided many ways of interactions with the system and in the end provided very strict technical and user documentation.
+      </p>
+      <p>The final and concrete deliverables are the database, the four microservices, the back end gateway, the front end client, the deployment yaml
+        and config files for the Google Cloud, this technical documentation concluding all of the project components in details, the image and other resources
+        found on the repository and as well as a user guide for the project.  
+      </p>
+      <p>The project was meant to be a challenge, and it exceeded our expectations in that regard. Through hard work and perseverance,
+         we learned and reinforced a lot of theoretical and practical aspects in the field of software development.
+      </p>
       <p>
         <a href="#tableofcontents"><i class="fa fa-arrow-up"></i></a> Go back to
         table of contents
