@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=yes"
     />
-    <title>BeM Technical Report</title>
+    <title>BeM User Guide</title>
     <link rel="icon" role="presentation" href="/res/logo.ico" />
     <link rel="stylesheet" href="css/scholarly.css" />
     <link
@@ -69,53 +69,303 @@
         </dd>
       </dl>
     </div>
-
+    <section id="video-presentation-frontend">
+      <h2>Presentation Video</h2>
+      <iframe width="800" height="600"
+        src="https://www.youtube.com/embed/-_-qlbfNVQQ">
+    </iframe>
+    </section>
     <section id="introduction" role="doc-introduction">
       <h2>Introduction</h2>
+      <p>The user guide provides insights on how to use
+        the software built within the project and a presentation video
+        that describes all of the aspects present in the present
+        as well as some of the technicalities and implementation.
+      </p>
       <p>
-        Describe the content and how the APIs and frontend are made to be used
+        The implemented architecture is meant to be used by both
+        humans and robots by making use of the beverage manager
+        front end client and of the backend gateway GraphQL API.  
       </p>
     </section>
 
     <section id="audience">
       <h2>Target Audience</h2>
       <p>
-        Details about who the user is
+        The main target audience of the application consists in 
+        the users that will
+        manually interact with the front end of the application. The
+        usage is defined by searching, filtering and 
+        viewing beverages, recipes, offers, reviews,
+        recommendations or other users and creating offers, reviews,
+        metadata, beverage and/or recipe scores.
+      </p>
+      <p>Also part of the beach head, are the users AI's and robots
+        that parse web content and try to obtain information from it
+        or its corresponding interactions. The usage incorporates the
+        one for the human user as well as the usage of the GraphQL
+        API provided by the back end gateway.
       </p>
     </section>
 
     <section id="integration-frontend">
         <h2>BeM Client Usage</h2>
-        <p>Describe how one could use the frontend</p>
-        <section id="video-presentation-frontend">
-          <h2>Presentation Video</h2>
-          <p>Video..</p>
+        <p>The front end is composed of several individual
+          pages that each represent some form of entity behind
+          the scenes.
+        </p>
+        <section id="lr-page">
+          <h3>Login & Register Page</h3>
+        <p>The first page that will be accessed by the user
+          will always be the login and register page where 
+          the user will be prompted to enter its credentials (Fig 4.A) or
+          create an account if the email is not in the database (Fig 4.B). 
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="prints/login.JPG"
+            alt="login"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 4.A. Login - Login & Register Page
+          </figcaption>
+        </figure>
+        <figure typeof="sa:image">
+          <img
+            src="prints/create_account.JPG"
+            alt="register"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 4.B. Register - Login & Register Page
+          </figcaption>
+        </figure>
         </section>
-        <section id="integration-human-frontend">
-          <h2>Human Usage</h2>
-          <p>Describe how humans can utilize the frontend</p>
+      <section id="homepage">
+        <h3>Homepage</h3>
+        <p>After successfully creating or accessing an account
+          the user will be moved on the homepage. The upper part of
+          this page contains an introduction and a small description
+          of the application and its purpose.
+        </p>
+        <p>The homepage can also be accessed, like any other page, from
+          the navigation menu.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="prints/homepage_welcome.JPG"
+            alt="Homepage"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 4.C. Welcome - Homepage
+          </figcaption>
+        </figure>
+
+        <p>The lower part of the page contains the recommendations feed
+          which has the functionality of providing beverage/user/recipe recommendations
+          to the user. The behavior of this functionality can be controlled by
+          changing the parameters that determine the recommendations type (beverage/user/recipe)
+          the maximum number of displayed items and the "smart" recommendations
+          check box that makes the recommendations returned to be tailored to the
+          currently logged user by observing its user profile and the other
+          activities the user has done in the application. Notice that the recommendations
+          will not update until the press of the "Refresh" button.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="prints/homepage_recommendations.JPG"
+            alt="Homepage"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 4.D. Recommendations - Homepage
+          </figcaption>
+        </figure>
+
+      </section>
+      <section id="up-page">
+        <h3>User Profile Page</h3>
+        <p>The user profile page is meant for the user to add more
+          metadata about him, like the age, the country he lives in, 
+          the nationality, his health restrictions like "diabetic" or
+          also found as "sugar-free" and his beverage category preferences.
+        </p>
+        <p>All of the changes made will be sent to the database
+          for updating on the press of the submit button and will
+          impact from then on the recommendations and the search and filter
+          page results.
+        </p>
+        <figure typeof="sa:image">
+          <img
+            src="prints/user_profile.JPG"
+            alt="Homepage"
+            style="width: 100%"
+          />
+          <figcaption>
+            Fig. 4.E. User Profile Page
+          </figcaption>
+        </figure>
+      </section>
+        <section id="sf-page">
+          <h3>Search and filter page</h3>
+          <p>The search and filter page provides initially a table that contains the all of the entities from
+             the selected item type, chosen from the navbar on navigation. Its functionalities come from searching
+            by providing a keyword in the text input residing in the top right corner, sorting the items by any of the
+          columns and as well as providing the option to filter the results by the value of each one of the column values.
+          A quality of life feature is the reset on all the filters.</p>
+          <p>The table contains all the metadata associated with the beverages/reviews/offers/recipes,
+            unlike the other pages, which makes the application respect the
+            principles of Open Linked Data but in turn comes with much higher
+            loading times due to the big amount of data.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="prints/searchfilter.JPG"
+              alt="search"
+              style="width: 100%"
+            />
+            <figcaption>
+              Fig. 4.F. Search & Filter Page
+            </figcaption>
+          </figure>
         </section>
-        
-        <section id="integration-app-frontend">
-          <h2>Usage within another app</h2>
-          <p>Describe how apps can utilize/parse the frontend</p>
+        <section id="bp-page">
+          <h3>Beverage Profile page</h3>
+          <p>The bevegare profile page, which can also be accessed
+            from the navigation bar, is split into three subpages,
+            each managing its own type of entity: like with score,
+            offer for a category of beverages and a review with a star
+            rating regarding a beverage.
+          </p>
+          <figure typeof="sa:image">
+            <img
+              src="prints/offers.JPG"
+              alt="search"
+              style="width: 100%"
+            />
+            <figcaption>
+              Fig. 4.G. Offers
+            </figcaption>
+          </figure>
+          <figure typeof="sa:image">
+            <img
+              src="prints/reviews.JPG"
+              alt="search"
+              style="width: 100%"
+            />
+            <figcaption>
+              Fig. 4.H. Reviews
+            </figcaption>
+          </figure>
+          <figure typeof="sa:image">
+            <img
+              src="prints/liked.JPG"
+              alt="search"
+              style="width: 100%"
+            />
+            <figcaption>
+              Fig. 4.I. Likes
+            </figcaption>
+          </figure>
+          <p>The user can view, update, create or delete
+            his own set of the above mentioned entities by
+            completing the corresponding form and clicking
+            the submit button.
+          </p>
+          <p> Each action done on this page, apart from viewing,
+            alters the behavior of the recommendations
+            and search and filter functionalities for 
+            all of the users.
+          </p>
         </section>
+        <section id="redirects">
+          <h3>Logout and Redirects</h3>
+          <p>As previously mentioned the user actions
+            are always passed through the authorization
+          middleware provided by the Firebase API and if something
+        were to happen that would invalidate a user action, the user
+      will be automatically logged off. </p>
+      <p>Another problem that could occur is if
+        the user tries to access routes that are not open;
+        in this case the solution being a redirect to the login
+        page, which will authorize the user and in turn transport him
+        to the homepage if the authentication is still valid.
+      </p>
+      <p> The user can manually log out of the application if he presses
+        the logout button situated in the navbar.
+      </p>
+      <p>By simply closing the web application tab the user will
+        remain authenticated through the means of the firebase cookie, unless
+        the cookies for the beverage manager domain are deleted.
+      </p>
+    </section>
     </section>
     <section id="integration-graphql">
       <h2>GraphQL API Usage</h2>
-      <p>Describe how apps could use the GRAPHQL API</p>
+      <p>Bellow, there can be seen two examples of how one might use the 
+        GrahQL API to acquire data directly from the back end gateway.
+        There are many usages, such as data scrapping or integration with another app,
+        that can be achieved very easily because of the GraphQL API provided by the gateway.
+        A quality of life feature comes from the fact that the GraphQL technology used allows users
+        to experiment in a graphical manner, making the whole thing self documented in a way which
+        not many APIs can be.
+      </p>
+      <figure typeof="sa:image">
+        <img
+          src="prints/graphql_gateway.JPG"
+          alt="search"
+          style="width: 100%"
+        />
+        <figcaption>
+          Fig. 5.J. Example 1 - Graphql Usage
+        </figcaption>
+      </figure>
+      <figure typeof="sa:image">
+        <img
+          src="prints/graphql_gateway2.JPG"
+          alt="search"
+          style="width: 100%"
+        />
+        <figcaption>
+          Fig. 5.K. Example 2 - Graphql Usage
+        </figcaption>
+      </figure>
+      
+      <p>All the other example of the GraphQL queries or mutations can be found within the final deliverables.</p>
     </section>
     <section id="scenarios">
       <h2>Use Cases Examples</h2>
       <section id="scenario1">
-        <h2>Use Case 1</h2>
-        <p>decribe </p>
+        <h2>Simple Human and Beverage Interaction</h2>
+        <p>This is represented by the main scenario of the application
+          and is put into practice by any user that wants to create an
+        account and use our functionalities for searching beverages, recipes
+      or other things that are related in order to gain more knowledge about
+    the beverage world that could suit his tastes. </p>
       </section>
-    </section>
-    <section role="doc-bibliography" id="references">
-      <h2>References</h2>
-      <ol id="bibliography">
-      </ol>
-    </section>
+      <section id="scenario2">
+        <h2>API Integration into another Project</h2>
+        <p>Because the gateway is made the way it is, another
+          developer might want to integrate our entire functionality
+          into his own application. This is another powerful usecase that
+          is put into the spotlight by the well implemented gateway and
+          as well as the very big semantic database that we have built; all tied
+          together by the Open Linked Data principles that were respected.
+        </p>
+      </section>
+      <section id="scenario3">
+        <h2>Data Scrapping or Collecting</h2>
+        <p>Because the gateway is made the way it is, another
+          person can, if he builds a scrapper, parse the entirety of our
+          database and scrap whatever data is needed for their project. This
+          can be done in real time, if the data amount needed is small or
+          is needed at somewhat high time intervals but can also be compacted into
+          a real data science dataset. The dataset usage could constitute to
+          research on human and beverage behavior or just simple study the 
+          beverage and recipe types and their metadata.
+        </p>
+      </section>
   </body>
 </html>
